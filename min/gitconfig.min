@@ -1,0 +1,27 @@
+[user]
+  email = jasonlongball@gmail.com
+  name = jsnal
+[push]
+  default = matching
+[credential]
+  helper = store
+[alias]
+  co = checkout
+  cob = checkout -b
+  br = branch
+  st = status
+  aa = add -A .
+  cm = commit -m
+  po = push origin
+  pod = push origin master
+  plo = pull origin
+  plom = pull origin master
+  qp = add --all && commit && push origin master
+  # Submodules
+  subi = submodule init
+  suba = submodule add
+  subu = submodule update --recursive --remote
+[core]
+  excludesfile = $HOME/.gitignore_global
+[color]
+  ui = true

@@ -1,0 +1,20 @@
+{{*title: Useful scp commands
+{{*date: 05/09/19
+{{*filetype: sh
+Send file to server:
+
+$ scp /file/to/send username@remote:/where/to/put
+
+Get file from server to local:
+
+$ scp username@remote:/file/to/send /where/to/put
+
+Send files between two hosts
+
+$ scp username@remote_1:/file/to/send username@remote_2:/where/to/put
+
+Overall syntax:
+
+$ scp username@source:/location/to/file username@destination:/where/to/put
+
+Useful post: https://unix.stackexchange.com/a/188289

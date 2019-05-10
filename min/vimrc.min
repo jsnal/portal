@@ -1,0 +1,341 @@
+let vim_ycm=$VIM_YCM
+call plug#begin('~/.vim/plugged')
+
+" Git Notifications in Number Buffer
+Plug 'https://github.com/airblade/vim-gitgutter'
+
+" Fuzzy File Finder
+Plug 'https://github.com/junegunn/fzf.vim'
+Plug 'https://github.com/junegunn/fzf'
+
+" Easy Commenting in and out
+Plug 'https://github.com/tpope/vim-commentary'
+
+" Automatically insert common characters
+Plug 'https://github.com/jiangmiao/auto-pairs'
+
+" Autocomplete Engine
+if vim_ycm == 'true'
+  Plug 'Valloric/YouCompleteMe', { 'on': [] }
+endif
+
+" File Tree
+Plug 'https://github.com/scrooloose/nerdtree'
+
+" Change working dir to project root
+Plug 'https://github.com/airblade/vim-rooter'
+
+" Color Scheme
+Plug 'https://github.com/nanotech/jellybeans.vim'
+
+" Highlight same words in document
+Plug 'https://github.com/pboettch/vim-highlight-cursor-words'
+
+" Common syntax highlighting
+Plug 'https://github.com/sheerun/vim-polyglot'
+
+" Distraction Free Writing
+Plug 'https://github.com/junegunn/goyo.vim'
+
+" Plugin Total: 13
+call plug#end()
+
+augroup load_us_ycm
+  autocmd!
+  autocmd InsertEnter * call plug#load('YouCompleteMe')
+        \| autocmd! load_us_ycm
+augroup END
+
+filetype plugin on
+for f in split(glob('~/i3wm/vim/startup/*.vim'), '\n')
+    exe 'source' f
+endfor
+" Folds
+au BufWinLeave * silent mkview
+augroup AutoSaveFolds
+  autocmd!
+  autocmd BufWinLeave * silent! mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
+
+augroup BgHighlight
+  autocmd!
+  autocmd WinEnter * call functions#focused_win()
+  autocmd WinLeave * call functions#non_focused_win()
+  autocmd FileReadPre * call echom test
+augroup END
+
+" Markdown, txt, LaTeX
+au BufReadPost,BufNewFile *.md,*.tex call functions#spell() |  Goyo 125
+" load buffer with possible vim/zsh files to edit
+au BufReadPost,BufNewFile *.zshrc,zshrc call functions#openwithbuffer("~/i3wm/zsh/*.zsh")
+au BufReadPost,BufNewFile *.vimrc,vimrc call functions#openwithbuffer("~/i3wm/vim/startup/*.vim")
+
+" Enter and Leave Goyo
+autocmd! User GoyoEnter call functions#goyo_enter()
+autocmd! User GoyoLeave call functions#goyo_leave()
+
+" delete whitespace on save
+autocmd BufWritePre * %s/\s\+$//e
+" remove new line auto comment
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd FileType netrw setl bufhidden=wipe
+" close nerdtree if last window
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+command! Wq :wq
+command! W :w
+command! Q :q
+command! Wa :wa
+command! Qa :qa
+command! Wqa :wqa
+cabbrev fzf FZF
+command! WW :w !sudo dd of=%
+command! -bang -nargs=? -complete=dir HFiles
+      \ call fzf#vim#files(<q-args>, {
+      \ 'options': '--prompt=">> " --color fg:-1,bg:-1,hl:230,fg+:167,bg+:233,hl+:229 --color info:150,prompt:110,spinner:150,pointer:167,marker:0',
+      \ 'source': 'find . -path "*/\.*" -prune -o -type f ! -name "*~" ! -name "*.class" -print -o -type l -print'}, <bang>0)
+" FZF Buffer
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! functions#bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+nnoremap <silent> <Space><Space> :call fzf#run({
+      \   'source':  reverse(<sid>buflist()),
+      \   'sink':    function('functions#bufopen'),
+      \   'options': '--prompt=">> " --color fg:-1,bg:-1,hl:230,fg+:167,bg+:233,hl+:229 --color info:150,prompt:110,spinner:150,pointer:167,marker:0 +m',
+      \   'down':    len(<sid>buflist()) + 2
+      \ })<CR>
+
+" Better Fold Method
+function! functions#Betterfdm()
+  if &foldmethod =~ "marker"
+    set foldmethod=marker
+  else
+    set foldmethod=indent
+  endif
+endfunction
+call functions#Betterfdm()
+
+" Spell Check
+function! functions#spell() abort
+  if has('syntax')
+    setlocal spell
+    setlocal spellfile=~/.vim/spell/en.utf-7.add
+    hi SpellBad cterm=underline
+    setlocal spelllang=en
+  endif
+endfunction
+
+" Force Goyo to quite vim on q or q!
+function! functions#goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+
+function! functions#goyo_leave()
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+
+" Opens file with predefined files
+function! functions#openwithbuffer(path) abort
+  for f in split(glob(a:path), '\n')
+    exe 'badd' f
+  endfor
+
+  " call fzf#run({
+  "       \   'source':  <sid>buflist(),
+  "       \   'sink':    function('functions#bufopen'),
+  "       \   'down':    len(<sid>buflist()) + 2,
+  "       \   'options': '+m' })
+  filetype detect
+endfunction
+
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?' ('.l:branchname.')':''
+endfunction
+
+function! functions#focused_win()
+  set nocul
+endfunction
+
+function! functions#non_focused_win()
+  set nocul
+endfunction
+
+function! functions#focused_buffer()
+  let buffers = filter(range(1, bufnr('$')), 'bufexists(v:val)')
+  let j = 0
+  for i in buffers
+    let j = i
+  endfor
+endfunction
+" noremap <C-x> :! pandoc --mathjax --toc -o '%:p:h'/out.pdf '%:p:h'/*.md \| zathura '%:p:h'/out.pdf &<CR><CR>
+
+noremap <TAB><TAB> :source %<CR>
+
+" Movement
+noremap H ^
+noremap L g_
+noremap j gj
+noremap k gk
+noremap <C-y> <C-y><C-y><C-y>
+noremap <C-e> <C-e><C-e><C-e>
+
+" Very magic search
+nnoremap +/ /\v
+vnoremap +/ /\v
+map <C-R> :%s/
+
+" Leader
+let mapleader = ","
+noremap <Leader>c :Commentary<CR>
+map <Leader>a :bprev<Return>
+map <Leader>s :bnext<Return>
+map <Leader>d :bd<Return>
+map <Leader>f :b
+
+" Function Keys
+nmap <silent> <F2> :NERDTreeToggle<CR>
+map <F4> :setlocal foldmethod=marker<CR>
+map <F6> mzgg=G`z`<CR>
+
+" Fuzzy Finding Splits
+nnoremap <silent> <TAB>v :call fzf#run({
+      \   'sink':  'vertical botright split',
+      \   'source': 'find . -path "*/\.*" -prune -o -type f ! -name "*~" ! -name "*.class" -print -o -type l -print' })<CR>
+
+nnoremap <silent> <TAB>x :call fzf#run({
+      \   'sink': 'botright split',
+      \   'source': 'find . -path "*/\.*" -prune -o -type f ! -name "*~" ! -name "*.class" -print -o -type l -print' })<CR>
+
+map <C-F> :HFiles<CR>
+
+" Move Lines in Visual Mode
+xnoremap K :move '<-2 <CR> gv=gv
+xnoremap J :move '>+1 <CR> gv=gv
+
+" Check TODO List with date
+nnoremap <F5> lix<Esc>ll"=strftime("%c")<CR>P
+
+" Change SnipMate for YCM
+imap <C-C> <esc>a<Plug>snipMateNextOrTrigger
+smap <C-C> <Plug>snipMateNextOrTrigger
+
+" Better split navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+" Setup Colorscheme
+set background=dark
+syntax on
+if has('gui_running')
+  silent! colorscheme default
+else
+  silent! colorscheme jellybeans
+  hi Normal  ctermbg=NONE
+  hi LineNr  ctermbg=NONE
+  hi nonText ctermbg=NONE
+endif
+
+" General
+set nocompatible
+set laststatus=2
+set backspace=indent,eol,start
+set path+=**
+set wildmenu
+set shortmess=a
+set cmdheight=2
+set showmode
+set splitbelow splitright
+set ignorecase smartcase
+
+" Numbering and Indent
+set number
+set relativenumber
+set wrap
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set autoindent
+set foldcolumn=0
+set hlsearch
+set linebreak
+
+" File Settings
+set fileformat=unix
+set fileformats=unix
+set fileencoding=utf-8
+set fileencodings=utf-8
+set encoding=utf-8
+set ambiwidth=double
+set showcmd
+set backupdir=./.backup,.,/tmp
+set directory=.,./.backup,/tmp
+set autochdir
+
+" Hilight Cursor Words
+let g:HiCursorWords_linkStyle='Underlined'
+let g:HiCursorWords_delay = 100
+
+" Presistent Undo
+if has ('persistent_undo')
+  set undodir=$HOME/.vim_undo
+  set undolevels=5000
+  set undofile
+endif
+
+let g:fzf_nvim_statusline = 0
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:currentmode={ 'n' : 'Normal ', 'no' : 'N·Operator Pending ', 'v' : 'Visual ', 'V' : 'V-Line ', '^V' : 'V·Block ', 's' : 'Select ', 'S': 'S·Line ', '^S' : 'S·Block ', 'i' : 'Insert ', 'R' : 'Replace ', 'Rv' : 'V·Replace ', 'c' : 'Command ', 'cv' : 'Vim Ex ', 'ce' : 'Ex ', 'r' : 'Prompt ', 'rm' : 'More ', 'r?' : 'Confirm ', '!' : 'Shell ', 't' : 'Terminal '}
+
+function! ModeCurrent() abort
+  let l:modecurrent = mode()
+  let l:modelist = toupper(get(g:currentmode, l:modecurrent, 'V-Block '))
+  let l:current_status_mode = l:modelist
+  hi! StatusLine ctermfg=white
+  return l:current_status_mode
+endfunction
+
+" Badwolf Statusline
+" set statusline=\ %{ModeCurrent()}>>
+" set statusline+=\ %#PmenuSel#
+" set statusline+=\ %r%m[%n]\ %f
+" set statusline+=\ %#LineNr#
+" set statusline+=%=%#PmenuSel#
+" set statusline+=%=%{StatuslineGit()}
+" set statusline+=%=\ %P\ %p%%
+" set statusline+=%=\ (%l/%L)
+" set statusline+=\ <<
+
+hi StatusLine ctermfg=white ctermbg=NONE cterm=NONE
+hi StatusLineNC ctermfg=240 ctermbg=NONE cterm=NONE
+
+" Jellybean Statusline
+set statusline=\ %{ModeCurrent()}>>
+set statusline+=\ %r%m[%n]\ %f
+set statusline+=%=\ %P\ %p%%
+set statusline+=%=\ (%l/%L)
+set statusline+=\ <<

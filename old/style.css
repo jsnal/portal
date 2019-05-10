@@ -1,0 +1,186 @@
+body {
+	background-color:#111111;
+	font-family:"Arial", sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color:#000000;
+}
+
+a:hover {
+	color:#666666;
+}
+
+img {
+	border: 0px;
+}
+
+div#main_container {
+	width: 400px;
+	border: #000000 0px solid;
+	margin: 0 auto;
+	background-color: #111111;
+}
+
+div#header {
+	height:50px;
+	width:100%;
+	background-color:#111111;
+  color: #111111;
+}
+
+div#ribbon {
+	background-color: #EFEFEF;
+}
+
+div#ribbon img {
+	float:left;
+}
+
+h1 {
+	size:30px;
+	float:right;
+	vertical-align:middle;
+	margin: 10px 20px 0 0;
+	font-family: Impact, Arial, Helvetica, sans-serif;
+}
+
+div#navigation {
+	/* width: 100%; */
+	border-bottom: #72d3a9 2px solid;
+	background-color: #111111;
+  color: #72d3a9;
+	text-align: center;
+}
+
+div#items {
+  background-color: #111111;
+	width: 100%;
+}
+
+div#empty {
+	font-size: 0;
+}
+
+ul#itemlist {
+	padding-left: 0;
+	margin-left: 0;
+	width: 100%;
+}
+
+ul#itemlist li {
+  background-color: #111111;
+	list-style: none;
+	margin: 0;
+	padding: 0.25em;
+}
+
+ul#itemlist a {
+	display: block;
+	height: 20px;
+	width: 100%;
+	background-color: #111111;
+  color: #72d3a9;
+	text-indent: 50px;
+}
+
+ul#itemlist a:link, ul#itemlist a:visited {
+	color: #72d3a9;
+	text-decoration: none;
+}
+
+ul#itemlist a:hover {
+	background-color: #72d3a9;
+	color: #111111;
+}
+
+div#footer {
+  color: #72d3a9;
+	width: 100%;
+	border-top: #72d3a9 2px solid;
+	text-align: center;
+	background-color: #111111;
+	font-size: 12px;
+}
+
+/* Blog */
+#blogentry {
+	font-size: 16px;
+	text-align: justify;
+	padding-left: 10px;
+}
+
+#blogtitle {
+	width: 100%;
+}
+
+#blogcontent {
+	font-size: 14px;
+	text-align: justify;
+	padding: 10px;
+}
+
+#blogtime {
+	float: right;
+	padding-right: 5px;
+}
+
+strong {
+	text-transform: uppercase;
+	font-size: 14px;
+}
+
+strong a {
+	text-decoration: None;
+}
+
+#arrowleft {
+	padding-left: 5px;
+	float: left;
+}
+
+#arrowright {
+	padding-right: 5px;
+	float: right;
+}
+
+#add input {
+	width: 380px;
+}
+
+#add textarea {
+	width: 380px;
+}
+
+pre {
+	margin: 5px 10px;
+}
+
+blockquote {
+	font-size: 14px;
+	margin: 5px 10px;
+	padding: 5px 5px 5px 10px;
+	border-left: black 3px solid;
+	background: #CCCCCC;
+	font:0.8em 'LucidaGrande',Verdana,Arial,Sans-Serif;
+	font-weight: none;
+}
+
+h2 {
+	font-size: 14px;
+	padding-left: 5px;
+	margin: 5px 0px 0px 0px;
+}
+
+p {
+	font-size: 12px;
+	margin:0px;
+	padding:10px;
+	text-align:justify;
+}
+
+p a {
+	color: blue;
+	text-decoration: underline;
+}

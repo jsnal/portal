@@ -1,0 +1,11 @@
+*~
+*.swp
+*.swo
+
+nextcloud
+portfolio
+paste/build
+paste/index.html
+stagit/*
+!stagit/repos
+
