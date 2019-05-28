@@ -1,0 +1,12 @@
+Options +Indexes
+
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+ order allow,deny
+ deny from all
+</Files>
+
+<IfModule mod_autoindex.c>
+IndexOptions IgnoreCase FancyIndexing FoldersFirst NameWidth=* DescriptionWidth=* SuppressHTMLPreamble
+HeaderName header.html
+IndexIgnore header.html
+</IfModule>

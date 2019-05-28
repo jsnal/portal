@@ -1,6 +1,6 @@
-{{*title: Virtualbox Arch Install
-{{*date: 05/10/19
-{{*filetype: guide
+//*title=Virtualbox Arch Install
+//*date=05/10/19
+//*filetype=guide
 Setting up Virtualbox in Arch Linux
 
 $ sudo pacman -S linux-headers

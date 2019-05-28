@@ -1,6 +1,6 @@
-{{*title: C++ getopt parsing
-{{*date: 04/27/19
-{{*filetype: cpp
+//*title=C++ getopt parsing
+//*date=04/27/19
+//*filetype=cpp
 int parse_arguments(const int argc, char* argv[])
 {
     if (argc < 2)

@@ -1,6 +1,6 @@
-{{*title: Useful scp commands
-{{*date: 05/09/19
-{{*filetype: sh
+//*title=Useful scp commands
+//*date=05/09/19
+//*filetype=sh
 Send file to server:
 
 $ scp /file/to/send username@remote:/where/to/put

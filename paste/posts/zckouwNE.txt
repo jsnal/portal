@@ -1,6 +1,6 @@
-{{*title: Jenkins Freestyle Webhook
-{{*date: 04/24/19
-{{*filetype: guide
+//*title=Jenkins Freestyle Webhook
+//*date=04/24/19
+//*filetype=guide
 Freestyle Jenkins Webhook
 
 -------------------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
-{{*title: Public GPG Key
-{{*date: 04/22/19
-{{*filetype: gpg
+//*title=Public GPG Key
+//*date=04/22/19
+//*filetype=gpg
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQENBFzSKJkBCADg/b17oWzgeMePSYCeRzLvW4ZpzkQnZ5mu4kaAj3QPaaPVxeWe

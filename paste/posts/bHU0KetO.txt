@@ -1,6 +1,6 @@
-{{*title: Nextcloud Install Guide
-{{*date: 04/23/19
-{{*filetype: guide
+//*title=Nextcloud Install Guide
+//*date=04/23/19
+//*filetype=guide
 Installing Nextcloud on Ubuntu 18.04 LTS Server
 
 -------------------------------------------------------------------------------------------------------
