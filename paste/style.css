@@ -66,3 +66,8 @@ footer {
   color: #7e7e8f;
   text-align: center;
 }
+
+footer a {
+  text-decoration: none;
+  color: #93b9f3;
+}

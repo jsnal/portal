@@ -1,4 +1,17 @@
 paste_style=style.css
+
 paste_output=index.html
+
 paste_searchbar=true
+
 paste_title=Jason's Pastebin
+
+paste_host=http://jasonlong24.crabdance.com/paste
+
+paste_plain=true
+
+paste_plain_output=both
+
+paste_post=pandoc posts.md -f markdown -t html -s -o posts.html --metadata pagetitle="Posts"
+
+paste_footerlink=posts.html

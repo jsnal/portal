@@ -6,6 +6,10 @@ nextcloud
 portfolio
 paste/build
 paste/index.html
+paste/posts.html
+paste/posts.lst
+paste/posts.md
+intern-entries/
 stagit/*
 !stagit/repos
 

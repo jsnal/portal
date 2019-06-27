@@ -1,0 +1,3 @@
+[submodule "typetest"]
+	path = typetest
+	url = https://github.com/jsnal/typetest
