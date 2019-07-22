@@ -21,18 +21,19 @@ Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/jiangmiao/auto-pairs'
 
 " Autocomplete Engine
-if $VIM_YCM == 'true'
-  Plug 'Valloric/YouCompleteMe', { 'on': [] }
+if $VIM_COC == 'true'
+  Plug 'https://github.com/neoclide/coc.nvim', { 'branch': 'release', 'on': [] }
+  Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 endif
 
 " File Tree
-Plug 'https://github.com/scrooloose/nerdtree'
+Plug 'https://github.com/scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 " Change working dir to project root
 Plug 'https://github.com/airblade/vim-rooter'
 
 " Color Scheme
-Plug 'https://github.com/nanotech/jellybeans.vim'
+Plug 'https://github.com/jsnal/vim-serape'
 
 " Highlight same words in document
 Plug 'https://github.com/pboettch/vim-highlight-cursor-words'
@@ -40,20 +41,8 @@ Plug 'https://github.com/pboettch/vim-highlight-cursor-words'
 " Common syntax highlighting
 Plug 'https://github.com/sheerun/vim-polyglot'
 
-" Distraction Free Writing
-Plug 'https://github.com/junegunn/goyo.vim'
-
-" Plugin Total: 13
+" Plugin Total: 15
 call plug#end()
-
-" Enable YouCompleteMe only when told and on insert mode.
-if $VIM_YCM == 'true'
-  augroup load_us_ycm
-    autocmd!
-    autocmd InsertEnter * call plug#load('YouCompleteMe')
-          \| autocmd! load_us_ycm
-  augroup END
-endif
 
 " Source all files in startup
 filetype plugin on
@@ -87,11 +76,11 @@ endfunction
 " set statusline+=\ <<
 
 " Jellybean Statusline
-set statusline=\ %f\ >>
-set statusline+=\ %r[%n]
+set statusline=\ %t
+set statusline+=\ %r%m
 set statusline+=%=\ %y
 set statusline+=%=\ (%l/%L)
-set statusline+=\ <<
+set statusline+=\ %p%%
 noremap <TAB><TAB> :source %<CR>
 
 " Movement
@@ -105,24 +94,24 @@ noremap <C-e> <C-e><C-e><C-e>
 " Very magic search
 nnoremap +/ /\v
 vnoremap +/ /\v
-map <C-R> :%s/
+noremap <C-R> :%s/
 
 " Leader
 let mapleader = ","
 noremap <Leader>c :Commentary<CR>
 nnoremap <Leader>l :nohlsearch<CR>
-map <Leader>a :bprev<Return>
-map <Leader>s :bnext<Return>
-map <Leader>d :bd<Return>
-map <Leader>f :b
+noremap <Leader>a :bprev<Return>
+noremap <Leader>s :bnext<Return>
+noremap <Leader>d :bd<Return>
+noremap <Leader>f :b
 
 " Function Keys
-nmap <silent> <F2> :NERDTreeToggle<CR>
-map <F4> :setlocal foldmethod=marker<CR>
-map <F6> mzgg=G`z`<CR>
+noremap <silent> <F2> :NERDTreeToggle<CR>
+noremap <F4> :setlocal foldmethod=marker<CR>
+noremap <F6> mzgg=G`z`<CR>
 
 " FZF Bindings
-map <C-F> :HFiles<CR>
+noremap <C-f> :Files<CR>
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
@@ -136,10 +125,17 @@ xnoremap <silent> J :call visual#move_down()<CR>
 nnoremap <F5> lix<Esc>ll"=strftime("%c")<CR>P
 
 " Better split navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+" Ag for word under cursor
+nnoremap <silent> <leader>ag :Ag<CR>
+
+" Move the cursor in wildmenu
+cnoremap <Left> <Space><BS><Left>
+cnoremap <Right> <Space><BS><Right>
 " Folds
 au BufWinLeave * silent mkview
 augroup AutoSaveFolds
@@ -149,7 +145,7 @@ augroup AutoSaveFolds
 augroup END
 
 " Markdown, txt, LaTeX
-au BufReadPost,BufNewFile *.md,*.tex call functions#spell() |  Goyo 125
+au BufReadPost,BufNewFile *.md,*.tex call functions#spell()
 
 " load buffer with possible vim/zsh files to edit
 if isdirectory($HOME . "/i3wm")
@@ -176,13 +172,25 @@ autocmd! User FzfStatusLine call fzf#fzf_statusline()
 
 " Remove highlighting on insert mode
 autocmd InsertEnter * :let @/=""
-" Search
-highlight Search ctermfg=black ctermbg=blue
-highlight IncSearch ctermfg=magenta ctermbg=black
 
+" Enable coc.nvim when CursorHold is enabled, 500 Milliseconds
+if $VIM_COC == 'true'
+  augroup load_coc
+    autocmd!
+    autocmd CursorHold * call plug#load('coc.nvim') | autocmd! load_coc
+  augroup END
+endif
 " Statusline
-hi StatusLine ctermfg=white ctermbg=NONE cterm=NONE
-hi StatusLineNC ctermfg=240 ctermbg=NONE cterm=NONE
+hi StatusLine       ctermfg=15  ctermbg=235  cterm=bold
+hi StatusLineNC     ctermfg=243 ctermbg=235  cterm=bold
+
+" Vertical Split
+hi VertSplit        ctermfg=235  ctermbg=235
+
+" Git Gutter
+hi GitGutterAdd     ctermfg=2    ctermbg=none
+hi GitGutterChange  ctermfg=3    ctermbg=none
+hi GitGutterDelete  ctermfg=1    ctermbg=none
 command! Wq :wq
 command! W :w
 command! Q :q
@@ -192,17 +200,13 @@ command! Wqa :wqa
 cabbrev fzf FZF
 cabbrev help vert help
 command! WW :w !sudo dd of=%
-command! -bang -nargs=? -complete=dir HFiles
-      \ call fzf#vim#files(<q-args>, {
-      \ 'options': '--prompt=">>> " --color fg:-1,bg:-1,hl:230,fg+:-1,bg+:233,hl+:229 --color info:150,prompt:167,spinner:150,pointer:167,marker:0',
-      \ 'source': 'find . -path "*/\.*" -prune -o -type f ! -name "*~" ! -name "*.class" -print -o -type l -print | sed s/^..//'}, <bang>0)
 " Setup Colorscheme
 set background=dark
 syntax on
 if has('gui_running')
   silent! colorscheme default
 else
-  silent! colorscheme jellybeans
+  silent! colorscheme serape
   hi Normal  ctermbg=NONE
   hi LineNr  ctermbg=NONE
   hi nonText ctermbg=NONE
@@ -214,11 +218,14 @@ set laststatus=2
 set backspace=indent,eol,start
 set path+=**
 set wildmenu
+set wildmode=longest,list,full
 set shortmess=a
 set cmdheight=2
 set showmode
 set splitbelow splitright
 set ignorecase smartcase
+set hidden
+set updatetime=200
 
 " Numbering and Indent
 set number
@@ -244,6 +251,8 @@ set showcmd
 set backupdir=./.backup,.,/tmp
 set directory=.,./.backup,/tmp
 set autochdir
+set nobackup
+set nowritebackup
 
 " Hilight Cursor Words
 let g:HiCursorWords_linkStyle='Underlined'

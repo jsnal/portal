@@ -35,13 +35,13 @@ alias z='zathura'
 alias ls='ls -Fh --color=always --group-directories'
 alias ll='ls -hl --color=always --group-directories'
 alias l='ls'
+alias cp='cp -v'
+alias trash='mv -t /tmp/'
 alias aa='sudo $(fc -ln -1)'
 alias gotop='gotop --color=monokai'
-alias tll='~/i3wm/i3/Scripts/tll.sh l'
-alias tlc='~/i3wm/i3/Scripts/tll.sh c "$@"'
-alias tla='~/i3wm/i3/Scripts/tll.sh a "$@"'
-alias drivec="~/i3wm/zsh/scripts/drive-compile.sh"
 alias myip="ip -color address"
+alias crontab-all="crontab -l | grep -v '^#' | cut -f 6- -d ' ' | while read CMD; do eval $CMD; done"
+alias bat="cat /sys/class/power_supply/BAT0/capacity"
 
 # Personal Plugins
 export BM_CONFIG="$HOME/i3wm/zsh/plugins/shell-plugins/zshbookmarks/config.sh"
@@ -49,6 +49,11 @@ alias d="source $HOME/i3wm/zsh/plugins/shell-plugins/zshbookmarks/zshbookmark.sh
 alias f="source $HOME/i3wm/zsh/plugins/shell-plugins/zshbookmarks/zshbookmark.sh -c $HOME/i3wm/zsh/.filebookmarks file"
 alias stagit-gen="$HOME/i3wm/zsh/plugins/shell-plugins/stagit-gen/gen.sh"
 alias qp="git add --all && git commit  && git push $1 $(git branch 2>/dev/null | grep \* | sed -e 's/*[[:space:]]//g')"
+alias paste-search="wget -qO- jasonlong24.crabdance.com/paste/posts.lst | sed 1,5d | grep -i "$1""
+alias tll='~/i3wm/i3/Scripts/tll.sh l'
+alias tlc='~/i3wm/i3/Scripts/tll.sh c "$@"'
+alias tla='~/i3wm/i3/Scripts/tll.sh a "$@"'
+alias drivec="~/i3wm/zsh/scripts/drive-compile.sh"
 autoload -U edit-command-line
 zle -N edit-command-line
 
@@ -302,6 +307,20 @@ function vim-minify() {
     find $HOME/i3wm/vim/startup -maxdepth 1 -iname '*.vim' -not -name 'functions.vim' -exec cat {} +>> $OUT
   fi
 }
+
+function caln() {
+  if [ -z $1 ]; then local months="3"; else; local months="$1"; fi
+  cal -n $months
+}
+
+function countdown(){
+  date1=$((`date +%s` + $1));
+  while [ "$date1" -ge `date +%s` ]; do
+    echo -ne "$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)\r";
+    sleep 0.1
+  done
+  echo "Timer Done!"
+}
 autoload -Uz compinit
 autoload -U +X bashcompinit && bashcompinit
 compinit
@@ -323,9 +342,12 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 bindkey -e
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --prompt=">> " --color fg:-1,bg:-1,hl:230,fg+:167,bg+:233,hl+:229 --color info:150,prompt:110,spinner:150,pointer:167,marker:0'
+export FZF_DEFAULT_OPTS=' --prompt=">> " --color fg:-1,bg:-1,hl:208,fg+:-1,bg+:235,hl+:214 --color info:150,prompt:167,spinner:150,pointer:167,marker:0'
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export KEYTIMEOUT=1
 export VISUAL="vim"
 export EDITOR="vim"
+export PATH="$PATH:$HOME/i3wm/zsh/scripts/"
 export TERMINAL="st"
 export HIST_STAMPS="mm.dd.yyyy"
 export HISTSIZE=12000
@@ -333,6 +355,7 @@ export SAVEHIST=12000
 export HISTFILE="$HOME/.zsh_history"
 export TERM="xterm-256color"
 export VIM_YCM=false
+export WORDCHARS='*?_-.[]~=&;!#%^(){}<>'
 setopt prompt_subst
 setopt promptsubst
 setopt append_history
@@ -355,10 +378,11 @@ function preexec() {
 
 function precmd {
 
-  if [ $? -eq 0  ]; then
-    END="$PROMPTC$%(1j.*.) "
+  # Must be executed first!
+  if [ $? -eq 0 ]; then
+    END="%(1j.*.) "
   else
-    END="$ALTPROMPT\$$PROMPTC%(1j.*.) "
+    END="%B$ERROR!$PROMPTC%b%(1j.*.) "
   fi
 
   if [ $timer ]; then
@@ -370,13 +394,14 @@ function precmd {
     unset timer
   fi
 
-  function get_sudo() {
+  function get_trailing_symbol() {
     if sudo -n true 2>/dev/null; then
-      echo "sudo"
+      end_symbol="$SUDO#$PROMPTC"
     else
-      echo ""
+      end_symbol="$"
     fi
   }
+  get_trailing_symbol
 
   BRACKET="%{%F{white}%}"
   SUDO="%{%F{red}%}"
@@ -385,11 +410,12 @@ function precmd {
   CUSER="%{%F{yellow}%}"
   GIT_BRANCH="%{%F{magenta}%}"
   ALTPROMPT="%{%F{red}%}"
+  ERROR="%{%F{202}%}"
 
   DIR="[$DIR%B%(5~|../%3~|%~)%b$BRACKET$BRACKET]% "
   CUSER="$BRACKET@$CUSER%n"
 
-  PROMPT="$SUDO$(get_sudo)$CUSER$BRACKET$DIR$END%{$reset_color%}%"
+  PROMPT="$CUSER$BRACKET$DIR${end_symbol}$END%{$reset_color%}%"
   RPROMPT="%F{8}${timer_show}%F{white}%}$(git_full_prompt)"
 }
 
@@ -398,7 +424,9 @@ zsh_command_time() {
     hours=$(($ZSH_COMMAND_TIME/3600))
     min=$(($ZSH_COMMAND_TIME/60))
     sec=$(($ZSH_COMMAND_TIME%60))
-    if [ "$ZSH_COMMAND_TIME" -le 60 ]; then
+    if [ "$ZSH_COMMAND_TIME" -le 1 ]; then
+      timer_show=""
+    elif [ "$ZSH_COMMAND_TIME" -le 60 ]; then
       timer_show="${ZSH_COMMAND_TIME}s "
     elif [ "$ZSH_COMMAND_TIME" -gt 60 ] && [ "$ZSH_COMMAND_TIME" -le 180 ]; then
       timer_show="${min}min ${sec}s "
