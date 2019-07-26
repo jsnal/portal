@@ -15,3 +15,5 @@ paste_plain_output=both
 paste_post=pandoc posts.md -f markdown -t html -s -o posts.html --metadata pagetitle="Posts"
 
 paste_footerlink=posts.html
+
+paste_html_view=true

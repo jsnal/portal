@@ -1,17 +1,19 @@
 //*title=Gitweb Setup
 //*date=07/22/19
 //*filetype=guide
-Installing the Gitweb interface
+### Installing the Gitweb interface
 
--------------------------------------------------------------------------------------------------------
+---
 
-* Install git and gitweb
+Install git and gitweb
 
 ```
-sudo apt install git gitweb
+$ sudo apt install git gitweb
 ```
 
-* Configure the gitweb.conf
+### Configure the gitweb.conf
+
+---
 
 ```
 $ vi /etc/gitweb.conf
@@ -34,7 +36,9 @@ $projects_list_description_width = 100;
 $feature{'blame'}{'default'} = [1];
 ```
 
-* Configure Apache Webserver
+### Configure Apache Webserver
+
+---
 
 Depending on how your Apache webserver is setup, these steps may vary.
 
@@ -60,7 +64,7 @@ You may also want to configure your gitweb apache conf
 $ vi /etc/apache2/conf-available/gitweb.conf
 ```
 
-Add this if you are using a subdirectory within apache i.e http://localhost/gitweb
+Add this if you are using a subdirectory within apache i.e `http://localhost/gitweb`
 
 ```
 Alias /<DIRECTORY> /usr/share/gitweb
@@ -73,11 +77,11 @@ $my_uri = "/<DIRECTORY>";
 $home_link = "/<DIRECTORY>";
 ```
 
-Setting up the Git Server
+### Setting up the Git Server
 
--------------------------------------------------------------------------------------------------------
+---
 
-Create a git account with a .ssh directory
+Create a git account with a `.ssh` directory
 
 ```
 $ sudo adduser git
@@ -87,7 +91,7 @@ $ mkdir .ssh && chmod 700 .ssh
 $ touch .ssh/authorized_keys && chmod 600 .ssh/authorized_keys
 ```
 
-Add your ssh keys to the .ssh/authorized_keys file
+Add your ssh keys to the `.ssh/authorized_keys` file
 
 ```
 # On your localbox
@@ -118,7 +122,7 @@ $ git push origin master
 
 You can also clone, pull and fetch just like normal
 
-If you want to add a new computer just append their key to .ssh/authorized_keys (you may need to restart the ssh service)
+If you want to add a new computer just append their key to `.ssh/authorized_keys` (you may need to restart the ssh service)
 
 To add a new repo you need to make sure it has permissions
 

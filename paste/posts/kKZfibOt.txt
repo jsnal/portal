@@ -1,27 +1,36 @@
-//*title=getopt guide
-//*date=06-29-19
+//*title=getopt Guide
+//*date=06/29/19
 //*filetype=guide
-Guide to getopt
--------------------------------------------------------------------------------------------------------
+# Guide to getopt
 
-The getopt function is prototyped like this (in getopt.h):
+---
 
-    int getopt(int argc, char *const argv[], const char *optstring);
+The getopt function is prototyped like this (in `getopt.h`):
+
+```
+int getopt(int argc, char *const argv[], const char *optstring);
+```
 
 The first two parameters are exactly like main and are usually just passed from main to getopt as-is.
 
 There are also a few global variables defined within the API:
 
-    extern char *optarg;
-    extern int optind, opterr, optopt;
+```
+extern char *optarg;
+extern int optind, opterr, optopt;
+```
 
 The interesting part of the getopt function is the last parameter:
 
-    const char *optstring
+```
+const char *optstring
+```
 
 This string is an encoding (of sorts) that contains all of the single-letter options that a program wants to accept. For example, if the program want's to accept these options:
 
-    -a   -b   -X
+```
+-a   -b   -X
+```
 
 then optstring would simply contain the string: "abX" (The order doesn't matter, although the characters are case-sensitive. The hyphens are not present, either.) The program would contain code similar to this:
 
@@ -53,13 +62,17 @@ int main(int argc, char *argv[])
 }
 ```
 
-| Command line options | Output                                                                |
-|----------------------|-----------------------------------------------------------------------|
-| ./a.out -b           | Option b was provided                                                 |
-| ./a.out -b -X -a     | Option b was provided	 Option X was provided	 Option a was provided |
-| ./a.out -bXa         | Option b was provided  Option X was provided  Option a was provided   |
-| ./a.out -a b X       | Option a was provided                                                 |
-| ./a.out -t           | ./a.out: invalid option -- 't'                                        |
-| ./a.out a b c        |                                                                       |
+```
+| Command line options | Output                                          |
+|----------------------|-------------------------------------------------|
+| ./a.out -b           | Option b was provided                           |
+| ./a.out -b -X -a     | Option b was provided	 Option X was provided	 |
+|                      | Option a was provided                           |
+| ./a.out -bXa         | Option b was provided   Option X was provided   |
+|                      | Option a was provided                           |
+| ./a.out -a b X       | Option a was provided                           |
+| ./a.out -t           | ./a.out: invalid option -- 't'                  |
+| ./a.out a b c        |                                                 |
+```
 
-More Info: https://azrael.digipen.edu/~mmead/www/Courses/CS180/getopt.html
+Pretty much stolen from [here](https://azrael.digipen.edu/~mmead/www/Courses/CS180/getopt.html)

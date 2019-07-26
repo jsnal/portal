@@ -1,25 +1,34 @@
 //*title="command not found" Arch Support
 //*date=05/21/19
 //*filetype=zsh
-"Command not found" hook
+### "Command not found" hook
+
+---
 
 Getting output on commands in the arch repositories
 
 For Example:
 
+```
 $ htop
 htop may be found in the following packages:
-  extra/htop
+extra/htop
+```
 
 Install pkgfile:
 
+```
 $ sudo pacman -S pkgfile
+```
 
-Creates a directory in /usr/share/doc/pkgfile that contains bash, zsh and fish
+Creates a directory in `/usr/share/doc/pkgfile` that contains bash, zsh and fish
 
+```
 $ source /usr/share/doc/pkgfile/command-not-found.zsh
+```
 
-You can also just put the source code straight into your .zshrc
+You can also just put the source code straight into your `.zshrc`
+
 Make sure the function name is the same.
 
 ```
