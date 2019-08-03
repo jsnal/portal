@@ -1,0 +1,45 @@
+//*title=WeeChat Configuration
+//*date=07/29/19
+//*filetype=guide
+# Configuring WeeChat
+
+---
+
+## Enable Mouse
+
+```
+/mouse enable
+```
+
+## Encrypted Password in `sec.conf`
+
+```
+/secure passphrase <pass>
+/secure set freenodepass <pass>
+/secure set <server> <pass>
+```
+
+## Default Networking
+
+```
+/set irc.server_default.sasl_mechanism PLAIN
+/set irc.server_default.sasl_username jsnal
+/set irc.server_default.nicks jsnal,jsnal_,jsnal24
+```
+
+## Server Specifics
+
+```
+/server add freenode chat.freenode.net/6697 -ssl -autoconnect
+/set irc.server.freenode.sasl_password ${sec.data.freenodepass}
+
+/connect -all
+```
+
+## Set Execute Shell
+
+```
+/shell exec.command.shell bash
+```
+
+See [also](https://gist.github.com/pascalpoitras/8406501)
