@@ -35,6 +35,15 @@ code {
   color: #9fbb7d;
 }
 
+#title-site {
+  text-decoration: none;
+  color: #7e7e8f;
+}
+
+#title-site:hover {
+  text-decoration: underline;
+}
+
 .info-link {
   color: #97bef9;
   text-decoration: none;
