@@ -7,6 +7,6 @@ while true ; do
   x=$(nc -l -q 0 -p $SEND_OUTPUT_PORT)
   filename=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
   echo "$x" > posts/"$filename".txt
-  paste --compile
+  paste-light --compile
   echo -e "File found at $(date). Assigned $filename."
 done
