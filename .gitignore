@@ -10,6 +10,7 @@ paste/posts.html
 paste/posts.lst
 paste/posts.md
 intern-entries/
+tmp/
 stagit/*
 !stagit/repos
 openvpn
