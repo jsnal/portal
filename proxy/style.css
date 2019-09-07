@@ -1,7 +1,8 @@
 body {
   text-align: center;
-  background: #000;
+  background: #111;
   color: #7e7e8f;
+  margin-top: 5%;
 }
 
 a {
@@ -16,7 +17,9 @@ a:hover {
 
 input {
   background-color: #7e7e8f;
+  color: #111;
   margin-right: 5px;
+  margin-top: 5px;
   border-radius: 5px;
   border: 0px;
 }
