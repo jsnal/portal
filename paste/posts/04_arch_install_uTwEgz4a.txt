@@ -1,6 +1,7 @@
 //*title=Arch Linux Install Guide
 //*date=05/05/19
-//*filetype=guide
+//*id=uTwEgz4a
+//*type=guide
 # Installing Arch Linux on UEFI Enabled Machines
 
 ---

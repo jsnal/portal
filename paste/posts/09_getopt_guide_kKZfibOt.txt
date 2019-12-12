@@ -1,6 +1,7 @@
 //*title=getopt Guide
 //*date=06/29/19
-//*filetype=guide
+//*id=kKZfibOt
+//*type=guide
 # Guide to getopt
 
 ---

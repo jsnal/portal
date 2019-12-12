@@ -1,6 +1,7 @@
 //*title=Virtualbox Arch Install
 //*date=05/10/19
-//*filetype=guide
+//*id=ZA1dqUjk
+//*type=guide
 # Setting up Virtualbox in Arch Linux
 
 ---

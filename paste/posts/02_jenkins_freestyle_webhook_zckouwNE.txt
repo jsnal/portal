@@ -1,6 +1,7 @@
 //*title=Jenkins Freestyle Webhook
 //*date=04/24/19
-//*filetype=guide
+//*id=zckouwNE
+//*type=guide
 # Freestyle Jenkins Webhook
 
 ---

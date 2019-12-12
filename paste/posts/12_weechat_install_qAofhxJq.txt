@@ -1,6 +1,7 @@
 //*title=WeeChat Configuration
 //*date=07/29/19
-//*filetype=guide
+//*id=qAofhxJq
+//*type=guide
 # Configuring WeeChat
 
 ---

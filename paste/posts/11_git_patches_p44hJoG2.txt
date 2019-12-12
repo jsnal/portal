@@ -1,6 +1,7 @@
 //*title=Git Patches
 //*date=07/24/19
-//*filetype=git
+//*id=p44hJoG2
+//*type=git
 # Git Patches
 
 ---

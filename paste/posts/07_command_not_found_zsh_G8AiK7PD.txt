@@ -1,6 +1,7 @@
 //*title="command not found" Arch Support
 //*date=05/21/19
-//*filetype=zsh
+//*id=G8AiK7PD
+//*type=zsh
 ### "Command not found" hook
 
 ---

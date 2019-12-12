@@ -1,6 +1,7 @@
 //*title=Gitweb Setup
 //*date=07/22/19
-//*filetype=guide
+//*id=Iwp5MToZ
+//*type=guide
 ### Installing the Gitweb interface
 
 ---
