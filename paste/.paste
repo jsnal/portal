@@ -10,9 +10,7 @@ paste_host=http://paste.jasonlong.xyz
 
 paste_plain=true
 
-paste_plain_output=both
-
-paste_post=pandoc posts.md -f markdown -t html -s -o posts.html --metadata pagetitle="Posts"
+paste_post=nothing
 
 paste_footerlink=posts.html
 
