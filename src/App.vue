@@ -5,8 +5,24 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>
+
+    <title>{{ getTitle() }}</title>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    getTitle() {
+      if (this.$route.name === 'home') {
+        return 'jasonlong/';
+      }
+
+      return `/${this.$route.name}`;
+    },
+  },
+};
+</script>
 
 <style>
 #app {
