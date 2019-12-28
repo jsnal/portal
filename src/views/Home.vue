@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div id="home-container">
     <h1>Home</h1>
   </div>
 </template>
@@ -9,3 +9,9 @@ export default {
   name: 'home',
 };
 </script>
+
+<style>
+#home-container {
+  display: inline-block;
+}
+</style>
