@@ -6,6 +6,6 @@
 
 <style>
 #about-container {
-  display: inline-block
+  display: table-cell;
 }
 </style>

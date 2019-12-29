@@ -5,8 +5,11 @@
     <div id="header">
       <router-link to="/">Jason Long</router-link>
     </div>
-    <NavMenu :navmenuTemplate=navmenu />
-    <router-view/>
+    <div id="container">
+      <NavMenu :navmenuTemplate=navmenu />
+      <router-view/>
+    </div>
+    <div id="footer"></div>
   </div>
 </template>
 
@@ -24,16 +27,18 @@ export default {
           name: 'projects',
           header: true,
           href: '#',
-          sublinks: [
-            {
-              name: 'i3wm',
-              href: '#',
-            },
-            {
-              name: 'paste-light',
-              href: '#',
-            },
-          ],
+          sublinks: {
+            items: [
+              {
+                name: 'i3wm',
+                href: '/projects/i3wm',
+              },
+              {
+                name: 'paste-light',
+                href: '/projects/paste-light',
+              },
+            ],
+          },
         },
         {
           name: 'about',
@@ -72,6 +77,7 @@ html, body {
 
 #header {
   background: #ccc;
+  min-height: 1em;
 }
 
 #header > a {
@@ -80,5 +86,18 @@ html, body {
   font-size: 14px;
   color: #000;
   margin: 0 6px;
+}
+
+#header > a:hover {
+  color: #666;
+}
+
+#container {
+  display: table;
+}
+
+#footer {
+  background: #ccc;
+  height: 1em;
 }
 </style>

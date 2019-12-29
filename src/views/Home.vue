@@ -12,6 +12,6 @@ export default {
 
 <style>
 #home-container {
-  display: inline-block;
+  display: table-cell;
 }
 </style>

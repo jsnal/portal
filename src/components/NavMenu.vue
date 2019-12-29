@@ -4,7 +4,7 @@
       <li v-for="link in navmenuTemplate" :key="link.name">
         <router-link :to="link.href" @click.native="linkClicked">{{ link.name }}</router-link>
         <ul v-if="link.header" class="navmenu-sublinks">
-          <li v-for="sublink in link.sublinks" :key="sublink.name">
+          <li v-for="sublink in link.sublinks.items" :key="sublink.name">
             <router-link :to="sublink.href">{{ sublink.name }}</router-link>
           </li>
         </ul>
@@ -27,7 +27,6 @@ export default {
       const siblingE = e.target.nextElementSibling;
 
       if (siblingE !== null) {
-        console.log('sub links present');
         siblingE.style.display = siblingE.style.display === 'block' ? 'none' : 'block';
       }
     },
@@ -37,9 +36,10 @@ export default {
 
 <style>
 #navmenu-container {
-  display: inline-block;
+  display: table-cell;
+  vertical-align: top;
   border-right: 10px solid #ccc;
-  height: 100%;
+  height: 98%;
 }
 
 #navmenu-links {
@@ -49,7 +49,6 @@ export default {
 #navmenu-links, .navmenu-sublinks {
   list-style: none;
 }
-
 
 .navmenu-sublinks {
   display: none;
