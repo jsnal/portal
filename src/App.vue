@@ -7,6 +7,7 @@
     </div>
     <div id="container">
       <NavMenu :navmenuTemplate=navmenu />
+      <NavMenuHide />
       <router-view/>
     </div>
     <div id="footer"></div>
@@ -15,10 +16,12 @@
 
 <script>
 import NavMenu from '@/components/NavMenu.vue';
+import NavMenuHide from '@/components/NavMenuHide.vue';
 
 export default {
   components: {
     NavMenu,
+    NavMenuHide,
   },
   data() {
     return {
@@ -36,6 +39,14 @@ export default {
               {
                 name: 'paste-light',
                 href: '/projects/paste-light',
+              },
+              {
+                name: 'vim-serape',
+                href: '/projects/vim-serape',
+              },
+              {
+                name: 'abbs',
+                href: '/projects/abbs',
               },
             ],
           },
@@ -94,6 +105,7 @@ html, body {
 
 #container {
   display: table;
+  width: 100%;
 }
 
 #footer {

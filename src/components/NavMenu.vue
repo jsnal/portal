@@ -2,10 +2,20 @@
   <div id="navmenu-container">
     <ul id="navmenu-links">
       <li v-for="link in navmenuTemplate" :key="link.name">
-        <router-link :to="link.href" @click.native="linkClicked">{{ link.name }}</router-link>
+
+        <a v-if="link.header" class="navmenu-link" @click="headerClicked">
+          › {{ link.name }}
+        </a>
+
+        <router-link v-else class="navmenu-link" :to="link.href">
+          › {{ link.name }}
+        </router-link>
+
         <ul v-if="link.header" class="navmenu-sublinks">
           <li v-for="sublink in link.sublinks.items" :key="sublink.name">
-            <router-link :to="sublink.href">{{ sublink.name }}</router-link>
+            <router-link class="navmenu-link" :to="sublink.href">
+              › {{ sublink.name }}
+            </router-link>
           </li>
         </ul>
       </li>
@@ -23,7 +33,7 @@ export default {
     ],
   },
   methods: {
-    linkClicked(e) {
+    headerClicked(e) {
       const siblingE = e.target.nextElementSibling;
 
       if (siblingE !== null) {
@@ -38,12 +48,27 @@ export default {
 #navmenu-container {
   display: table-cell;
   vertical-align: top;
-  border-right: 10px solid #ccc;
-  height: 98%;
+  max-width: 10%;
+  width: inherit;
 }
 
 #navmenu-links {
-  padding: 0 2em 0 0;
+  padding: 0;
+}
+
+.navmenu-link {
+  text-decoration: none;
+  outline: 0;
+  color: #0000ff;
+}
+
+.navmenu-link:hover {
+  cursor: pointer;
+}
+
+.navmenu-link.router-link-active {
+  color: #000;
+  font-style: italic;
 }
 
 #navmenu-links, .navmenu-sublinks {
