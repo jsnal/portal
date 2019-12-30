@@ -52,6 +52,11 @@ export default {
           },
         },
         {
+          name: 'records',
+          header: false,
+          href: '/records',
+        },
+        {
           name: 'about',
           header: false,
           href: '/about',
@@ -72,20 +77,6 @@ export default {
 </script>
 
 <style>
-html, body {
-  height: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  height: 100%;
-}
-
 #header {
   background: #ccc;
   min-height: 1em;

@@ -1,6 +1,6 @@
 <template>
-  <div id="about-container">
-    <h1>About me</h1>
+  <div id="about-container" class="container">
+    <h2 class="title is-2">About me</h2>
     <p>
       I'm a high school student that loves to program.
       You can find some of my projects on this website.
@@ -15,8 +15,4 @@
 </template>
 
 <style>
-#about-container {
-  display: table-cell;
-  padding: 0 10%;
-}
 </style>

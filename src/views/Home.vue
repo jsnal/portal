@@ -1,5 +1,5 @@
 <template>
-  <div id="home-container">
+  <div id="home-container" class="container">
   </div>
 </template>
 
@@ -10,8 +10,4 @@ export default {
 </script>
 
 <style>
-#home-container {
-  display: table-cell;
-  padding: 0 10%;
-}
 </style>

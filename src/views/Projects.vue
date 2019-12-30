@@ -1,5 +1,5 @@
 <template>
-  <div id="projects-container">
+  <div id="projects-container" class="container">
     <div id="projects-github-url-container">
       <a id="projects-github-url" :href=projectUrl target="_blank">
         Open on Github 🔗
@@ -73,12 +73,6 @@ export default {
 </script>
 
 <style>
-#projects-container {
-  display: table-cell;
-  vertical-align: top;
-  padding: 0 10%;
-}
-
 #projects-github-url-container {
   text-align: center;
   margin-top: 1em;

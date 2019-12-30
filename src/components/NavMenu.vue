@@ -14,7 +14,7 @@
         <ul v-if="link.header" class="navmenu-sublinks">
           <li v-for="sublink in link.sublinks.items" :key="sublink.name">
             <router-link class="navmenu-link" :to="sublink.href">
-              › {{ sublink.name }}
+              » {{ sublink.name }}
             </router-link>
           </li>
         </ul>
