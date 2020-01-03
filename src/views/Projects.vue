@@ -10,28 +10,11 @@
 </template>
 
 <script>
+import { projectNameUrls } from '../constants';
+
 const MarkdownIt = require('markdown-it');
 
 const md = new MarkdownIt();
-
-const projectNameUrls = {
-  i3wm: [
-    'https://raw.githubusercontent.com/jsnal/i3wm/master/README.md',
-    'https://github.com/jsnal/i3wm/',
-  ],
-  'paste-light': [
-    'https://raw.githubusercontent.com/jsnal/paste-light/master/README.md',
-    'https://github.com/jsnal/paste-light',
-  ],
-  'vim-serape': [
-    'https://raw.githubusercontent.com/jsnal/vim-serape/master/README.md',
-    'https://github.com/jsnal/vim-serape',
-  ],
-  abbs: [
-    'https://raw.githubusercontent.com/jsnal/abbs/master/README.md',
-    'https://github.com/jsnal/abbs',
-  ],
-};
 
 export default {
   data() {
