@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { projectNameUrls } from '../constants';
+import { PROJECTURLS } from '../data/constants';
 
 const MarkdownIt = require('markdown-it');
 
@@ -25,14 +25,14 @@ export default {
   },
   methods: {
     getProjectUrl(targetProject) {
-      Object.keys(projectNameUrls).forEach((project) => {
+      Object.keys(PROJECTURLS).forEach((project) => {
         if (project === targetProject) {
           // Generate the Markdown from the markdown URL
-          this.getProjectMarkdown(projectNameUrls[project][0]);
+          this.getProjectMarkdown(PROJECTURLS[project][0]);
 
           // Set the project URL to the github repository
           // eslint-disable-next-line prefer-destructuring
-          this.projectUrl = projectNameUrls[project][1];
+          this.projectUrl = PROJECTURLS[project][1];
         }
       });
     },
@@ -71,5 +71,15 @@ export default {
   opacity: 60%;
   transition: 0.15s;
   cursor: pointer;
+}
+
+.markdown-body {
+  font-family: BlinkMacSystemFont,
+               -apple-system,
+               "Segoe UI",Roboto,
+               Oxygen,Ubuntu,Cantarell,
+               "Fira Sans","Droid Sans",
+               "Helvetica Neue",Helvetica,
+               Arial,sans-serifans-serif;
 }
 </style>
