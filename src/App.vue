@@ -48,6 +48,10 @@ export default {
                 name: 'abbs',
                 href: '/projects/abbs',
               },
+              {
+                name: 'portal',
+                href: '/projects/portal',
+              },
             ],
           },
         },
@@ -95,7 +99,7 @@ export default {
 }
 
 #container {
-  display: table;
+  display: flex;
   width: 100%;
 }
 

@@ -21,7 +21,7 @@ export default {
         navmenu.style.display = 'none';
         this.hideButtonIcon = '»';
       } else {
-        navmenu.style.display = 'table-cell';
+        navmenu.style.display = '';
         this.hideButtonIcon = '«';
       }
     },
@@ -31,9 +31,7 @@ export default {
 
 <style>
 #navmenu-hide-container {
-  display: table-cell;
-  height: 100%;
-  width: 10px;
+  width: 12px;
   background: #ccc;
 }
 

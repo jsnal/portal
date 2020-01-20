@@ -46,7 +46,6 @@ export default {
 
 <style>
 #navmenu-container {
-  display: table-cell;
   vertical-align: top;
   max-width: 10%;
   width: inherit;
