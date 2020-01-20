@@ -2,26 +2,31 @@
 
 Source code for [jasonlong.xyz](http://jasonlong.xyz).
 
-## Project setup
+## Development
+
+### Project setup
 ```
-npm install
+$ npm install
 ```
 
-### Compiles and hot-reloads for development
+### Development server
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+$ npm run dev
 ```
 
 ### Lints and fixes files
 ```
-npm run lint
+$ npm run lint
 ```
 
-### Customize configuration
+## Deployment
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Build the Dockerfile
+```
+# docker build . -t portal
+```
+
+### Run the container
+```
+# docker run -d -p 80:80 portal
+```
