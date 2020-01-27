@@ -1,17 +1,24 @@
 <template>
-  <div id="app">
+  <b-container id="app" fluid>
     <title>{{ getTitle() }}</title>
-
-    <div id="header">
-      <router-link to="/">Jason Long</router-link>
-    </div>
-    <div id="container">
-      <NavMenu :navmenuTemplate=navmenu />
-      <NavMenuHide />
-      <router-view/>
-    </div>
-    <div id="footer"></div>
-  </div>
+    <b-row>
+      <div id="header">
+        <router-link to="/">Jason Long</router-link>
+        <NavMenuHide />
+      </div>
+    </b-row>
+    <b-row>
+      <b-col sm="3" id="navmenu-column">
+        <NavMenu :navmenuTemplate=navmenu />
+      </b-col>
+      <b-col sm="9">
+        <router-view/>
+      </b-col>
+    </b-row>
+    <b-row>
+      <div id="footer"></div>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -84,6 +91,7 @@ export default {
 #header {
   background: #ccc;
   min-height: 1em;
+  width: 100%;
 }
 
 #header > a {
@@ -103,8 +111,13 @@ export default {
   width: 100%;
 }
 
+#nav-container {
+  height: 100%;
+}
+
 #footer {
   background: #ccc;
   height: 1em;
+  width: 100%;
 }
 </style>
