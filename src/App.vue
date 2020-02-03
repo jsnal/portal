@@ -11,7 +11,7 @@
       <b-col sm="3" id="navmenu-column">
         <NavMenu :navmenuTemplate=navmenu />
       </b-col>
-      <b-col sm="9">
+      <b-col sm="9" id="router-column">
         <router-view/>
       </b-col>
     </b-row>
@@ -111,8 +111,12 @@ export default {
   width: 100%;
 }
 
-#nav-container {
-  height: 100%;
+#nav-column {
+  margin: 0 auto;
+}
+
+#router-column {
+  margin: 0 auto;
 }
 
 #footer {
