@@ -1,28 +1,26 @@
 <template>
-  <div id="navmenu-hide-container">
-    <a id="navmenu-hide-button" @click="toggleNavMenu">
-      {{ hideButtonIcon }}
-    </a>
-  </div>
+  <a id="navmenu-hide-button" @click="toggleNavMenu">
+    {{ hideButtonIcon }}
+  </a>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      hideButtonIcon: '«',
+      hideButtonIcon: 'Close',
     };
   },
   methods: {
     toggleNavMenu() {
-      const navmenu = document.getElementById('navmenu-container');
+      const navmenu = document.getElementById('navmenu-column');
 
       if (navmenu.style.display !== 'none') {
         navmenu.style.display = 'none';
-        this.hideButtonIcon = '»';
+        this.hideButtonIcon = 'Open';
       } else {
-        navmenu.style.display = 'table-cell';
-        this.hideButtonIcon = '«';
+        navmenu.style.display = '';
+        this.hideButtonIcon = 'Close';
       }
     },
   },
@@ -30,18 +28,17 @@ export default {
 </script>
 
 <style>
-#navmenu-hide-container {
-  display: table-cell;
-  height: 100%;
-  width: 10px;
-  background: #ccc;
-}
-
 #navmenu-hide-button {
-  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 14px;
+  color: #000;
+  margin: 0 6px;
+  float: right;
 }
 
 #navmenu-hide-button:hover {
   cursor: pointer;
+  color: #666;
 }
 </style>

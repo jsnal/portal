@@ -17,4 +17,8 @@ export const PROJECTURLS = {
     'https://raw.githubusercontent.com/jsnal/abbs/master/README.md',
     'https://github.com/jsnal/abbs',
   ],
+  portal: [
+    'https://raw.githubusercontent.com/jsnal/portal/master/README.md',
+    'https://github.com/jsnal/portal',
+  ],
 };

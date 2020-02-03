@@ -46,9 +46,7 @@ export default {
 
 <style>
 #navmenu-container {
-  display: table-cell;
   vertical-align: top;
-  max-width: 10%;
   width: inherit;
 }
 
@@ -59,15 +57,17 @@ export default {
 .navmenu-link {
   text-decoration: none;
   outline: 0;
-  color: #0000ff;
+  color: #0000ff !important;
 }
 
 .navmenu-link:hover {
+  text-decoration: none;
   cursor: pointer;
+  color: #0056b3 !important;
 }
 
 .navmenu-link.router-link-active {
-  color: #000;
+  color: #000 !important;
   font-style: italic;
 }
 
