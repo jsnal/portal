@@ -15,7 +15,7 @@
                 {{ index }}
               </b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-nav-item to="/records">Records</b-nav-item>
+            <b-nav-item to="/">Notes</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
