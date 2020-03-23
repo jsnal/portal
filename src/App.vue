@@ -11,11 +11,11 @@
               <b-dropdown-item
                 v-for="(project, index) in projects"
                 :href="'/projects/' + index"
-                :key="project">
+                :key="project[index]">
                 {{ index }}
               </b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-nav-item to="/">Notes</b-nav-item>
+            <b-nav-item to="/notes">Notes</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>

@@ -22,3 +22,5 @@ export const PROJECTURLS = {
     'https://github.com/jsnal/portal',
   ],
 };
+
+export const NOTESURL = 'http://raw.githubusercontent.com/jsnal/notes/master/';
