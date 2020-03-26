@@ -5,7 +5,6 @@
         Open on Github 🔗
       </a>
     </div>
-    <h1> Notes </h1>
     <p v-html="noteHTML" class="markdown-body"></p>
   </div>
 </template>

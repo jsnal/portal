@@ -7,6 +7,7 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
+            <b-nav-item disabled>|</b-nav-item>
             <b-nav-item-dropdown text="Projects">
               <b-dropdown-item
                 v-for="(project, index) in projects"
@@ -39,10 +40,9 @@ export default {
   },
   methods: {
     getTitle() {
-      if (this.$route.name === 'home') {
-        return 'jasonlong/';
-      }
-      return `/${this.$route.name}`;
+      if (this.$route.name === 'jasonlong') return `${this.$route.name}/`;
+
+      return this.$route.path;
     },
   },
 };
@@ -61,7 +61,7 @@ export default {
 #navbar-brand {
   font-weight: bold;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
   color: #000;
   margin: 0 6px;
 }

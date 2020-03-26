@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'jasonlong',
     component: Home,
   },
   {
@@ -15,6 +15,12 @@ const routes = [
     name: 'about',
     component: () => import('../views/About.vue'),
   },
+  // {
+  //   path: '/resume',
+  //   name: 'resume',
+  //   // component: () => import('../views/About.vue'),
+  //   data: () => ({ pdf }),
+  // },
   {
     path: '/notes',
     name: 'notes',
