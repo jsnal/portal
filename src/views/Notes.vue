@@ -10,11 +10,7 @@
 </template>
 
 <script>
-import { NOTESURL } from '../data/constants';
-
-const MarkdownIt = require('markdown-it');
-
-const md = new MarkdownIt();
+import { NOTESURL, MDCOMPILE } from '../data/constants';
 
 export default {
   data() {
@@ -22,17 +18,9 @@ export default {
       noteHTML: '',
     };
   },
-  methods: {
-    getProjectMarkdown(url) {
-      fetch(url)
-        .then(data => data.text())
-        .then((text) => {
-          this.noteHTML = md.render(text);
-        });
-    },
-  },
-  created() {
-    this.getProjectMarkdown(`${NOTESURL}master.md`);
+  methods: {},
+  async created() {
+    this.noteHTML = await MDCOMPILE(`${NOTESURL}master.md`);
   },
 };
 </script>

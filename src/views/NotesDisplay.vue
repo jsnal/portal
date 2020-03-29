@@ -5,11 +5,7 @@
 </template>
 
 <script>
-import { NOTESURL } from '../data/constants';
-
-const MarkdownIt = require('markdown-it');
-
-const md = new MarkdownIt();
+import { NOTESURL, MDCOMPILE } from '../data/constants';
 
 export default {
   data() {
@@ -18,18 +14,10 @@ export default {
       noteUrl: '',
     };
   },
-  methods: {
-    getProjectMarkdown(url) {
-      fetch(url)
-        .then(data => data.text())
-        .then((text) => {
-          this.noteHTML = md.render(text);
-        });
-    },
-  },
-  created() {
+  methods: {},
+  async created() {
     this.noteUrl = `${NOTESURL}${this.$route.params.category}/${this.$route.params.pathMatch}`;
-    this.getProjectMarkdown(this.noteUrl);
+    this.noteHTML = await MDCOMPILE(this.noteUrl);
   },
 };
 </script>

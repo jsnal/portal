@@ -10,11 +10,7 @@
 </template>
 
 <script>
-import { PROJECTURLS } from '../data/constants';
-
-const MarkdownIt = require('markdown-it');
-
-const md = new MarkdownIt();
+import { PROJECTURLS, MDCOMPILE } from '../data/constants';
 
 export default {
   data() {
@@ -25,10 +21,11 @@ export default {
   },
   methods: {
     getProjectUrl(targetProject) {
-      Object.keys(PROJECTURLS).forEach((project) => {
+      Object.keys(PROJECTURLS).forEach(async (project) => {
         if (project === targetProject) {
           // Generate the Markdown from the markdown URL
-          this.getProjectMarkdown(PROJECTURLS[project][0]);
+          // this.getProjectMarkdown(PROJECTURLS[project][0]);
+          this.projectHTML = await MDCOMPILE(PROJECTURLS[project][0]);
 
           // Set the project URL to the github repository
           // eslint-disable-next-line prefer-destructuring
@@ -36,21 +33,9 @@ export default {
         }
       });
     },
-    getProjectMarkdown(url) {
-      fetch(url)
-        .then(data => data.text())
-        .then((text) => {
-          this.projectHTML = md.render(text);
-        });
-    },
   },
   created() {
     this.getProjectUrl(this.$route.params.project);
-  },
-  watch: {
-    $route() {
-      this.getProjectUrl(this.$route.params.project);
-    },
   },
 };
 </script>
