@@ -24,12 +24,11 @@ const routes = [
   {
     path: '/notes',
     name: 'notes',
+    children: [{
+      path: '/notes/:category/**',
+      component: () => import('../views/Notes.vue'),
+    }],
     component: () => import('../views/Notes.vue'),
-  },
-  {
-    path: '/notes/:category/**',
-    name: 'notesdisplay',
-    component: () => import('../views/NotesDisplay.vue'),
   },
   {
     path: '/projects/:project',

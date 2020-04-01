@@ -1,7 +1,7 @@
 <template>
   <div id="notes-container" class="container">
     <div id="notes-github-url-container">
-      <a id="notes-github-url" href="http://github.com/jsnal/notes" target="_blank">
+      <a id="notes-github-url" :href="noteUrl" target="_blank">
         Open on Github 🔗
       </a>
     </div>
@@ -16,11 +16,28 @@ export default {
   data() {
     return {
       noteHTML: '',
+      noteUrl: '',
     };
   },
-  methods: {},
+  methods: {
+    async displayNote() {
+      if (Object.keys(this.$route.params).length === 0
+          && this.$route.params.constructor === Object) {
+        this.noteUrl = `${NOTESURL}master.md`;
+      } else {
+        this.noteUrl = `${NOTESURL}${this.$route.params.category}/${this.$route.params.pathMatch}`;
+      }
+
+      this.noteHTML = await MDCOMPILE(this.noteUrl);
+    },
+  },
   async created() {
-    this.noteHTML = await MDCOMPILE(`${NOTESURL}master.md`);
+    await this.displayNote();
+  },
+  watch: {
+    $route() {
+      this.displayNote();
+    },
   },
 };
 </script>
