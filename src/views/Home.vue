@@ -5,11 +5,11 @@
       <ul>
         <li>Rising Computer Science student at North Carolina State University.</li>
         <li>Open source software lover and user.</li>
-        <li>See more <a href="#">here</a>.</li>
+        <li>See more <a href="#" target="_blank">here</a>.</li>
       </ul>
       <h2>Contact</h2>
       <ul>
-        <li><a class="info-link" href="https://github.com/jsnal">Github</a></li>
+        <li><a class="info-link" href="https://github.com/jsnal" target="_blank">Github</a></li>
         <li><a class="info-link" href="mailto:jasonlongball@gmail.com">Email</a></li>
       </ul>
     </div>
