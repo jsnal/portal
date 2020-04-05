@@ -4,10 +4,19 @@
     <async-loading v-if="loading"/>
     <table>
       <tbody>
-        <tr v-for="(track, rank) in tracklist" :key="track.name">
-          <td>{{ rank + 1 }}</td>
-          <td><a :href=track.url target="_blank">{{ track.name }}</a></td>
-          <td>{{ track.playcount }}</td>
+        <tr v-for="track in tracklist" :key="track.name">
+          <td class="tracklist-rank">{{ track['@attr'].rank }}</td>
+          <td class="tracklist-track">
+            <a :href=track.url target="_blank">
+              {{ track.name }}
+            </a>
+          </td>
+          <td class="tracklist-artist">
+            <a :href="'https://www.last.fm/music/' + track.artist['#text']" target="_blank">
+              {{ track.artist['#text'] }}
+            </a>
+          </td>
+          <td class="tracklist-playcount">{{ track.playcount }}</td>
         </tr>
       </tbody>
     </table>
@@ -71,4 +80,9 @@ export default {
 
 <style>
 #tracklist-container {}
+
+.tracklist-artist, .tracklist-track {
+  display: block;
+  clear: both;
+}
 </style>
