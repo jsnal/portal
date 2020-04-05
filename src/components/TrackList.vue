@@ -14,9 +14,9 @@ export default {
     return {
       url: new URL('http://ws.audioscrobbler.com/2.0/'),
       body: {
-        method: 'user.getweeklytrackchart', // TODO: make dynamic
-        user: 'JasonLong24', // TODO: make dynamic
-        api_key: '0f89b65f12984aeec45ded048d478781',
+        method: this.method,
+        user: process.env.VUE_APP_LASTFM_USER,
+        api_key: process.env.VUE_APP_LASTFM_KEY,
         format: 'json',
       },
     };
