@@ -1,6 +1,6 @@
 <template>
   <div id="music-container" class="container">
-    <TrackList method="user.getweeklytrackchart"/>
+    <track-list method="user.getweeklytrackchart"/>
   </div>
 </template>
 
