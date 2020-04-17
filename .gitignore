@@ -3,7 +3,6 @@
 *.swo
 
 nextcloud
-portfolio
 paste/build
 paste/index.html
 paste/posts.html
