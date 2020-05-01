@@ -17,7 +17,7 @@
               </b-dropdown-item>
             </b-nav-item-dropdown>
             <b-nav-item to="/notes">Notes</b-nav-item>
-            <b-nav-item to="/music">Music</b-nav-item>
+            <!-- <b&#45;nav&#45;item to="/music">Music</b&#45;nav&#45;item> -->
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
