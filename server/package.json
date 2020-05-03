@@ -1,0 +1,14 @@
+{
+  "name": "portal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "",
+    "build": "",
+    "lint": ""
+  },
+  "dependencies": {
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {}
+}
