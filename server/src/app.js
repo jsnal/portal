@@ -3,6 +3,16 @@ import bodyParser from 'body-parser';
 import notes from './routers/notes';
 import { m_hgetall } from './redis';
 
+import git from './git';
+import run from './run';
+
+
+async function test() {
+  let r = await run(git(['ls-tree', '--full-tree', '-r', 'content']));
+  console.log(r);
+}
+test();
+
 const PORT = 3000;
 // m_hgetall(['notes:1', 'notes:1'], function(err, arr) {
 //   console.log('Received output from Redis Multi/Exec:');
