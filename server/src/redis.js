@@ -12,22 +12,48 @@ client.select(0, function(err, res) {
 /*
  * Return raw redis client
  */
-export { client }
+export default {
+  client: client,
 
-/*
- * Get multiple hashes
- * @param {keys} hash keys
- * @param {callback} callback function
-*/
-export const m_hgetall = (keys, callback) => {
-  let uniqueKeys = [...new Set(keys)];
-  let multiClient = client.multi();
+  /*
+   * Get all keys
+   * @param {pattern} key pattern
+   */
+  keys(pattern) {
+    return new Promise((resolve, reject) => {
+      client.keys(pattern, (err, keys) => {
+        resolve(keys ? keys : err);
+      });
+    })
+  },
 
-  uniqueKeys.forEach(function(key){
-    multiClient.hgetall(key);
-  });
+  /*
+   * Get key
+   * @param {key} key-value key
+   */
+  get(key) {
+    return new Promise((resolve, reject) => {
+      client.get(key, (err, reply) => {
+        resolve(reply ? reply : err);
+      });
+    })
+  },
 
-  multiClient.exec(function(err, res){
-    callback(err, res);
-  });
+  /*
+   * Get multiple hashes
+   * @param {keys} hash keys
+   * @param {callback} callback function
+   */
+  hgetall(keys, callback) {
+    let uniqueKeys = [...new Set(keys)];
+    let multiClient = client.multi();
+
+    uniqueKeys.forEach(function(key){
+      multiClient.hgetall(key);
+    });
+
+    multiClient.exec(function(err, res){
+      callback(err, res);
+    });
+  }
 }
