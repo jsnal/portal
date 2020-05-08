@@ -2,12 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import notes from './routers/notes';
 
-import { loadContent } from './loadContent';
-import git from './git';
-import run from './run';
-import updateRedis from './bin/updateRedis';
-
-// loadContent();
+import mongoose from './mongoose';
+import Note from './models/notes';
+// import git from './git';
+// import run from './run';
+import updateRedis from './bin/updateMongo';
 
 const PORT = 3000;
 const app = express();
