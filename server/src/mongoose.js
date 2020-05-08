@@ -11,3 +11,7 @@ mongo.on('error', () => {
   console.error('Fatal: MongoDB connection error');
   process.exit(1);
 });
+
+mongo.on('open', function (ref) {
+  console.log('MongoDB connection successful');
+});

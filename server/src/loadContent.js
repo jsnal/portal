@@ -7,8 +7,7 @@ async function getChangedCommits(head, redisHead) {
   ));
 }
 
-export async function loadContent() {
-  const head = (await run(git(['rev-parse', 'content']))).trim();
-
-  // console.log(await getChangedCommits(head, redisHead));
+export async function loadContent(head, blobs) {
+  console.log('Head: ', head);
+  console.log('Blobs: ', blobs);
 }

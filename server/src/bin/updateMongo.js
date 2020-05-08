@@ -2,6 +2,7 @@ import util from 'util';
 import git from '../git';
 import run from '../run';
 import Note from '../models/notes';
+import mongoose from 'mongoose';
 import { loadContent } from '../loadContent';
 import { findObject } from '../mongoose';
 
@@ -18,6 +19,17 @@ import { findObject } from '../mongoose';
 
 (async () => {
   const head = (await run(git(['rev-parse', 'content']))).trim();
+  const noteDocuments = await Note.countDocuments().exec();
+
+  if (noteDocuments === 0) {
+    console.log('init');
+    const regExp = new RegExp('[a-f0-9]{40}');
+    const blobs = await run(git(['ls-files', '-s', '-z', 'notes']));
+    console.log(regExp.exec(blobs));
+    loadContent(head, blobs);
+  } else {
+    console.log('update');
+  }
   // const dbHead = await Note.getHead();
   //
   // console.log(dbHead[0].head);
@@ -27,6 +39,4 @@ import { findObject } from '../mongoose';
   // }
 
   // console.log(`HEAD: ${head} REDIS_HEAD: ${dbHead}`);
-
-  loadContent();
 })();
