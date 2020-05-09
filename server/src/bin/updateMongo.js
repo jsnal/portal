@@ -22,25 +22,35 @@ import { findObject } from '../mongoose';
   const noteDocuments = await Note.countDocuments().exec();
 
   if (noteDocuments === 0) {
-    const regExp = new RegExp('[a-f0-9]{40}', 'g');
-    const files = await run(git(['ls-files', '-s', '-z', 'notes']));
+    const regExp = new RegExp('([a-f0-9]{40})([^\0]+)', 'g');
 
-    let match;
+    const files = (await run(git(['ls-tree', '--full-tree', '-r', '--name-only', 'content', '--', 'notes']))).trim();
+    console.log(files.split('\n'));
+
+    const treeEntry = (
+      await run(
+        git(['ls-tree', '--full-tree', '-r', '-z', 'content', '--', 'README.md']),
+      )
+    ).match(/^\d+ (\w+) ([0-9a-f]+)\t(.+)\.(.+?)(\0|$)/);
+
+    const [match, type, hash, filename, extension] = treeEntry;
+    console.log(match);
+    console.log(hash);
+    console.log(filename);
+
+
+    // let match;
     let blobs = [];
-    while ((match = regExp.exec(files)))
-      blobs.push(match[0]);
+    // while ((match = regExp.exec(files)))
+    //   blobs.push(match[0]);
 
     loadContent(head, blobs);
   } else {
     console.log('update');
   }
-  // const dbHead = await Note.getHead();
-  //
-  // console.log(dbHead[0].head);
+
   // if (head === dbHead) {
   //   console.log(util.format('Index already up-to-date at revision %s', head));
   //   process.exit(0);
   // }
-
-  // console.log(`HEAD: ${head} REDIS_HEAD: ${dbHead}`);
 })();
