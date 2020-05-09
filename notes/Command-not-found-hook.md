@@ -1,5 +1,5 @@
 ---
-tags: zsh,wiki
+tags: zsh wiki
 created: 05/21/19
 ---
 # "Command not found" hook
