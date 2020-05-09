@@ -22,10 +22,14 @@ import { findObject } from '../mongoose';
   const noteDocuments = await Note.countDocuments().exec();
 
   if (noteDocuments === 0) {
-    console.log('init');
-    const regExp = new RegExp('[a-f0-9]{40}');
-    const blobs = await run(git(['ls-files', '-s', '-z', 'notes']));
-    console.log(regExp.exec(blobs));
+    const regExp = new RegExp('[a-f0-9]{40}', 'g');
+    const files = await run(git(['ls-files', '-s', '-z', 'notes']));
+
+    let match;
+    let blobs = [];
+    while ((match = regExp.exec(files)))
+      blobs.push(match[0]);
+
     loadContent(head, blobs);
   } else {
     console.log('update');
