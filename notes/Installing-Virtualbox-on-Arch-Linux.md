@@ -1,3 +1,7 @@
+---
+tags: virtualbox,guide
+created: 05/10/19
+---
 # Installing up Virtualbox in Arch Linux
 
 ```
@@ -36,7 +40,3 @@ $ sudo rcvboxdrv
 
 [Useful post](https://unix.stackexchange.com/a/303118)
 [Arch wiki](https://wiki.archlinux.org/index.php/VirtualBox#Install_the_Guest_Additions)
-
----
-
-**Posted:** 05/10/19

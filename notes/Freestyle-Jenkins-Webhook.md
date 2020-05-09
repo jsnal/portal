@@ -1,3 +1,7 @@
+---
+tags: jenkins,guide
+created: 04/24/19
+---
 # Freestyle Jenkins Webhook
 
 1) Create a personal ai token for your user.
@@ -11,7 +15,3 @@
 3) Add webhook to Jenkins
 
 `Settings > Webhooks > http://<URL>/github-webhook`
-
----
-
-**Posted:** 04/24/19

@@ -1,3 +1,7 @@
+---
+tags: zsh,wiki
+created: 05/05/19
+---
 # Installing Arch Linux on UEFI Enabled Machines
 
 ## Step 1: Create bootable disk
@@ -190,7 +194,3 @@ Extras
 ```
 $ sudo pacman -S noto-fonts-cjk noto-fonts-emoji noto-fonts-extra libx11 libxft
 ```
-
----
-
-**Posted:** 05/05/19

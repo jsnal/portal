@@ -1,3 +1,7 @@
+---
+tags: git,wiki
+created: 07/25/19
+---
 # Git Patches
 
 ## Creating a Git Patch
@@ -43,7 +47,3 @@ $ git am --signoff < PATCHNAME.patch
 ```
 
 More info [here](https://git-scm.com/docs/git-apply) and [here](https://git-scm.com/docs/git-am)
-
----
-
-**Posted:** 07/24/19

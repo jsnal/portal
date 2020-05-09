@@ -1,3 +1,7 @@
+---
+tags: git,wiki
+created: 08/03/19
+---
 # Remove a Git Submodule
 
 1) Delete the relevant section from the `.gitmodules` file.
@@ -33,7 +37,3 @@ git commit -m "Removed submodule NAME"
 ```
 rm -rf path_to_submodule
 ```
-
----
-
-**Posted:** 08/03/19

@@ -1,3 +1,7 @@
+---
+tags: zsh,wiki
+created: 06/02/19
+---
 # Zsh zle(Zsh command line editor)
 
 Using the built-in zsh zle functionality
@@ -67,7 +71,3 @@ zle -A [old-widget] [new-widget]
 ```
 
 See zshzle(1) for more info
-
----
-
-**Posted:** 06/02/19
