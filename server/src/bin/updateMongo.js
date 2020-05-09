@@ -37,6 +37,7 @@ import { getFileMetadata } from '../getFileMetadata';
       console.log(extension);
 
       await getFileContent(blob);
+      return;
     }
 
     // let match;
