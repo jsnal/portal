@@ -3,8 +3,8 @@ import git from '../git';
 import run from '../run';
 import Note from '../models/notes';
 import mongoose from 'mongoose';
-import { loadContent } from '../loadContent';
-import { findObject } from '../mongoose';
+import { getFileContent } from '../getFileContent';
+import { getFileMetadata } from '../getFileMetadata';
 
 // const note = new Note({
 //   title: 'The Title',
@@ -24,27 +24,26 @@ import { findObject } from '../mongoose';
   if (noteDocuments === 0) {
     const regExp = new RegExp('([a-f0-9]{40})([^\0]+)', 'g');
 
-    const files = (await run(git(['ls-tree', '--full-tree', '-r', '--name-only', 'content', '--', 'notes']))).trim();
-    console.log(files.split('\n'));
-
-    const treeEntry = (
+    const files = (
       await run(
-        git(['ls-tree', '--full-tree', '-r', '-z', 'content', '--', 'README.md']),
+        git(['ls-tree', '--full-tree', '-r', '--name-only', 'content', '--', 'notes']),
       )
-    ).match(/^\d+ (\w+) ([0-9a-f]+)\t(.+)\.(.+?)(\0|$)/);
+    ).trim();
 
-    const [match, type, hash, filename, extension] = treeEntry;
-    console.log(match);
-    console.log(hash);
-    console.log(filename);
+    for (let file of files.split('\n')) {
+      let {title, blob, blobHash, extension} = await getFileMetadata(file);
+      console.log(title);
+      console.log(blobHash);
+      console.log(extension);
 
+      await getFileContent(blob);
+    }
 
     // let match;
-    let blobs = [];
     // while ((match = regExp.exec(files)))
     //   blobs.push(match[0]);
 
-    loadContent(head, blobs);
+    // loadContent(head, blobs);
   } else {
     console.log('update');
   }

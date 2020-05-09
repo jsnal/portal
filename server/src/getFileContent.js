@@ -7,7 +7,6 @@ async function getChangedCommits(head, redisHead) {
   ));
 }
 
-export async function loadContent(head, blobs) {
-  // console.log('Head: ', head);
-  // console.log('Blobs: ', blobs);
+export async function getFileContent(blob) {
+  // console.log(blob);
 }
