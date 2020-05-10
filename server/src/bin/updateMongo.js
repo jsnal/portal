@@ -1,17 +1,24 @@
 import util from 'util';
+import mongoose from 'mongoose';
 import git from '../git';
 import run from '../run';
 import Note from '../models/notes';
-import mongoose from 'mongoose';
+import Metadata, { setHead } from '../models/metadata';
 import { getFileContent } from '../getFileContent';
 import { getFileMetadata } from '../getFileMetadata';
 
 (async () => {
   const head = (await run(git(['rev-parse', 'content']))).trim();
+  const mongoHead = await Metadata.find({ _id: 100 })
+    .select('head')
+    .exec()
+    .then(function (head) {
+      return head[0].head;
+    });
   const noteDocuments = await Note.countDocuments().exec();
 
   if (noteDocuments === 0) {
-    console.log('Initialzing MongoDB based on: ', head);
+    console.log('Initialzing MongoDB based on:', head);
 
     const files = (
       await run(
@@ -39,11 +46,11 @@ import { getFileMetadata } from '../getFileMetadata';
       });
     }
   } else {
-    console.log('update');
+    if (head === mongoHead) {
+      console.log('MongoDB is already up-to-date');
+      return null;
+    }
   }
 
-  // if (head === dbHead) {
-  //   console.log(util.format('Index already up-to-date at revision %s', head));
-  //   process.exit(0);
-  // }
+  setHead(head);
 })();
