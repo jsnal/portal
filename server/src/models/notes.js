@@ -5,9 +5,13 @@ const NotesSchema = new Schema({
   title: String,
   tags: Array,
   createdAt: String,
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
+  },
   blobHash: String,
-  headHash: String,
-  content: String,
+  html: String,
+  extension: String,
 });
 
 export default mongoose.model('NotesModel', NotesSchema);

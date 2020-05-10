@@ -6,23 +6,12 @@ import mongoose from 'mongoose';
 import { getFileContent } from '../getFileContent';
 import { getFileMetadata } from '../getFileMetadata';
 
-// const note = new Note({
-//   title: 'The Title',
-//   tags: ['tag1', 'tag2'],
-//   createdAt: '0/0/0',
-//   blobHash: 'asdf',
-//   headHash: 'ghjk',
-//   content: 'Some example content.',
-// });
-//
-// note.save();
-
 (async () => {
   const head = (await run(git(['rev-parse', 'content']))).trim();
   const noteDocuments = await Note.countDocuments().exec();
 
   if (noteDocuments === 0) {
-    const regExp = new RegExp('([a-f0-9]{40})([^\0]+)', 'g');
+    console.log('Initialzing MongoDB based on: ', head);
 
     const files = (
       await run(
@@ -32,19 +21,23 @@ import { getFileMetadata } from '../getFileMetadata';
 
     for (let file of files.split('\n')) {
       let {title, blob, blobHash, extension} = await getFileMetadata(file);
-      console.log(title);
-      console.log(blobHash);
-      console.log(extension);
+      let {html, tags, createdAt} = await getFileContent(blob);
 
-      await getFileContent(blob);
-      return;
+      Note.findOneAndUpdate({blobHash: blobHash}, {
+        title: title,
+        tags: tags,
+        createdAt: createdAt,
+        // TODO: Wrap around this so I can get MM/DD/YYYY
+        updatedAt: Date.now(),
+        blobHash: blobHash,
+        html: html,
+      }, {
+        useFindAndModify: false,
+        upsert: true,
+      }, function(err, res) {
+        if (err) console.error('Error: Unable to save ', blobHash, err);
+      });
     }
-
-    // let match;
-    // while ((match = regExp.exec(files)))
-    //   blobs.push(match[0]);
-
-    // loadContent(head, blobs);
   } else {
     console.log('update');
   }

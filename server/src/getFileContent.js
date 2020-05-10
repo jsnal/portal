@@ -1,17 +1,22 @@
+import MarkdownIt from 'markdown-it';
 import unpackContent from 'unpack-content';
 import git from './git';
 import run from './run';
 
-async function getChangedCommits(head, redisHead) {
-  return await run(git(
-    ['rev-list', '--ancestry-path', `^${redisHead}~`, head]
-  ));
-}
+// Implement a syntax highlighter for code blocks
+const md = MarkdownIt({
+  html: true,
+  typographer: true,
+});
 
 export async function getFileContent(blob) {
-  // console.log(blob);
-  const data = unpackContent(blob);
-  console.log(data);
-  // console.log(tags);
-  // console.log(metadata);
+
+  // Unpack the markdown header
+  const content = unpackContent(blob);
+
+  return {
+    html: md.render(content.body),
+    tags: content.tags,
+    createdAt: content.created,
+  }
 }
