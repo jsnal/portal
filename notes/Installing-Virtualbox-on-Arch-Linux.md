@@ -1,5 +1,5 @@
 ---
-tags: virtualbox,guide
+tags: virtualbox guide
 created: 05/10/19
 ---
 # Installing up Virtualbox in Arch Linux

@@ -1,5 +1,5 @@
 ---
-tags: zsh,wiki
+tags: zsh wiki
 created: 05/05/19
 ---
 # Installing Arch Linux on UEFI Enabled Machines

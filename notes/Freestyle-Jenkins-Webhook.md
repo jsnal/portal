@@ -1,5 +1,5 @@
 ---
-tags: jenkins,guide
+tags: jenkins guide
 created: 04/24/19
 ---
 # Freestyle Jenkins Webhook

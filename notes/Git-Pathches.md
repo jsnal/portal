@@ -1,5 +1,5 @@
 ---
-tags: git,wiki
+tags: git wiki
 created: 07/25/19
 ---
 # Git Patches

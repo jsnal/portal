@@ -1,5 +1,5 @@
 ---
-tags: git,wiki
+tags: git wiki
 created: 08/03/19
 ---
 # Remove a Git Submodule

@@ -1,5 +1,5 @@
 ---
-tags: zsh,wiki
+tags: zsh wiki
 created: 06/02/19
 ---
 # Zsh zle(Zsh command line editor)
