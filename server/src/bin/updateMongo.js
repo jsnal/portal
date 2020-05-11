@@ -7,6 +7,33 @@ import Metadata, { setHead } from '../models/metadata';
 import { getFileContent } from '../getFileContent';
 import { getFileMetadata } from '../getFileMetadata';
 import { getFilesChanged } from '../getFilesChanged';
+import isArraysEqual from '../helpers/isArraysEqual';
+
+function addNote(note) {
+  Note.create(note, function(err, res) {
+    if (err) console.error('Error: Unable to save ', note.blobHash, err)
+  });
+  // Note.findOneAndUpdate({blobHash: blobHash}, {
+  //   title: title,
+  //   tags: tags,
+  //   createdAt: createdAt,
+  //   // TODO: Wrap around this so I can get MM/DD/YYYY
+  //   updatedAt: Date.now(),
+  //   blobHash: blobHash,
+  //   html: html,
+  // }, {
+  //   useFindAndModify: false,
+  //   upsert: true,
+  // }, function(err, res) {
+  //   if (err) console.error('Error: Unable to save ', blobHash, err);
+  // });
+}
+
+function deleteNote(blobHash) {
+  Note.deleteOne({blobHash: blobHash}, function(err) {
+    if (err) console.log(err);
+  });
+}
 
 (async () => {
   const head = (await run(git(['rev-parse', 'content']))).trim();
@@ -31,7 +58,7 @@ import { getFilesChanged } from '../getFilesChanged';
       let {title, blob, blobHash, extension} = await getFileMetadata(file);
       let {html, tags, createdAt} = await getFileContent(blob);
 
-      Note.findOneAndUpdate({blobHash: blobHash}, {
+      addNote({
         title: title,
         tags: tags,
         createdAt: createdAt,
@@ -39,11 +66,6 @@ import { getFilesChanged } from '../getFilesChanged';
         updatedAt: Date.now(),
         blobHash: blobHash,
         html: html,
-      }, {
-        useFindAndModify: false,
-        upsert: true,
-      }, function(err, res) {
-        if (err) console.error('Error: Unable to save ', blobHash, err);
       });
     }
   } else {
@@ -53,12 +75,64 @@ import { getFilesChanged } from '../getFilesChanged';
     }
 
     const filesChanged = await getFilesChanged(head);
-    console.log(filesChanged);
 
     for (let file of filesChanged) {
-      console.log(file);
+      let {title, blob, blobHash, extension} = await getFileMetadata(file.filepath);
+      let {html, tags, createdAt} = await getFileContent(blob);
+      console.log(blobHash);
+      console.log(file.newBlobHash);
+
+      switch(file.status.toUpperCase()) {
+        case 'A': // Added
+          addNote({
+            title: title,
+            tags: tags,
+            createdAt: createdAt,
+            updatedAt: Date.now(),
+            blobHash: blobHash,
+            html: html,
+          })
+          break;
+        case 'D': // Delete
+          deleteNote(file.currentBlobHash);
+          break;
+        case 'M': // Modified
+          let note = {
+            blobHash: blobHash,
+            updatedAt: Date.now(),
+            html: html,
+          };
+
+          const previousTags = await Note.find({ blobHash: file.currentBlobHash })
+            .select('tags')
+            .exec()
+            .then(function (tags) {
+              return Array.from(tags[0].tags);
+            });
+
+          if (!isArraysEqual(tags, previousTags)) {
+            note.tags = tags;
+          }
+          console.log(note);
+          // Update the note!
+          break;
+      }
     }
   }
+  // Note.findOneAndUpdate({blobHash: 'a'}, {
+  //   title: 'a',
+  //   tags: ['a'],
+  //   createdAt: 'a',
+  //   // TODO: Wrap around this so I can get MM/DD/YYYY
+  //   updatedAt: Date.now(),
+  //   blobHash: 'a',
+  //   html: 'a',
+  // }, {
+  //   useFindAndModify: false,
+  //   upsert: true,
+  // }, function(err, res) {
+  //   if (err) console.error('Error: Unable to save ', err);
+  // });
 
   setHead('0');
 })();
