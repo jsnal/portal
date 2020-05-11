@@ -47,14 +47,18 @@ import { getFilesChanged } from '../getFilesChanged';
       });
     }
   } else {
-
-    const filesChanged = getFilesChanged(head);
-
     if (head === mongoHead) {
       console.log('MongoDB is already up-to-date');
       return null;
     }
+
+    const filesChanged = await getFilesChanged(head);
+    console.log(filesChanged);
+
+    for (let file of filesChanged) {
+      console.log(file);
+    }
   }
 
-  setHead(head);
+  setHead('0');
 })();
