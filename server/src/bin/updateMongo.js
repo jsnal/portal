@@ -46,6 +46,14 @@ import { getFileMetadata } from '../getFileMetadata';
       });
     }
   } else {
+    const regExp = new RegExp('([a-f0-9]{40}) ([a-f0-9]{40}) ([ADM])\t(.+)', 'g');
+
+    const diffTree = (await run(git(['diff-tree', '--no-commit-id', '-r', '-c', head]))).trim();
+    const filesChanged = diffTree.split(/\r\n|\r|\n/).length;
+
+    console.log(regExp.exec(diffTree));
+    console.log(regExp.exec(diffTree));
+    console.log(filesChanged);
     if (head === mongoHead) {
       console.log('MongoDB is already up-to-date');
       return null;
