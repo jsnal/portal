@@ -1,12 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import notes from './routers/notes';
-
 import mongoose from './mongoose';
-import Note from './models/notes';
-// import git from './git';
-// import run from './run';
-import updateRedis from './bin/updateMongo';
+import { updateMongo } from './bin/updateMongo';
 
 const PORT = 3000;
 const app = express();
@@ -19,6 +15,7 @@ app.get("/ping", (req, res) => {
 
 app.use('/notes', notes);
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await updateMongo();
   console.log(`Server is listening on port ${PORT}`);
 });

@@ -9,24 +9,11 @@ import { getFileMetadata } from '../getFileMetadata';
 import { getFilesChanged } from '../getFilesChanged';
 import isArraysEqual from '../helpers/isArraysEqual';
 
+// TODO: Wrap around this so I can get MM/DD/YYYY
 function addNote(note) {
   Note.create(note, function(err, res) {
-    if (err) console.error('Error: Unable to save ', note.blobHash, err)
+    if (err) console.error('Error: Unable to save ', note.blobHash, err);
   });
-  // Note.findOneAndUpdate({blobHash: blobHash}, {
-  //   title: title,
-  //   tags: tags,
-  //   createdAt: createdAt,
-  //   // TODO: Wrap around this so I can get MM/DD/YYYY
-  //   updatedAt: Date.now(),
-  //   blobHash: blobHash,
-  //   html: html,
-  // }, {
-  //   useFindAndModify: false,
-  //   upsert: true,
-  // }, function(err, res) {
-  //   if (err) console.error('Error: Unable to save ', blobHash, err);
-  // });
 }
 
 function deleteNote(blobHash) {
@@ -35,7 +22,15 @@ function deleteNote(blobHash) {
   });
 }
 
-(async () => {
+function updateNote(blobHash, updates) {
+  Note.findOneAndUpdate({blobHash, blobHash}, updates, { useFindAndModify: false },
+    function(err, res) {
+      if (err) console.error('Error: Unable to update ', blobHash, err);
+    }
+  );
+}
+
+export async function updateMongo() {
   const head = (await run(git(['rev-parse', 'content']))).trim();
   const mongoHead = await Metadata.find({ _id: 100 })
     .select('head')
@@ -77,10 +72,12 @@ function deleteNote(blobHash) {
     const filesChanged = await getFilesChanged(head);
 
     for (let file of filesChanged) {
-      let {title, blob, blobHash, extension} = await getFileMetadata(file.filepath);
-      let {html, tags, createdAt} = await getFileContent(blob);
-      console.log(blobHash);
-      console.log(file.newBlobHash);
+      // Imperfect solution but this is needed because you can't get a file by
+      // filepath if it no longer exists in the file system.
+      if (file.status.toUpperCase() !== 'D') {
+        let {title, blob, blobHash, extension} = await getFileMetadata(file.filepath);
+        let {html, tags, createdAt} = await getFileContent(blob);
+      }
 
       switch(file.status.toUpperCase()) {
         case 'A': // Added
@@ -103,36 +100,41 @@ function deleteNote(blobHash) {
             html: html,
           };
 
-          const previousTags = await Note.find({ blobHash: file.currentBlobHash })
+          const previousTags = await Note.find({blobHash: file.currentBlobHash})
             .select('tags')
             .exec()
             .then(function (tags) {
               return Array.from(tags[0].tags);
             });
 
+          // Check if the tags were changed and if they were update them.
           if (!isArraysEqual(tags, previousTags)) {
             note.tags = tags;
           }
-          console.log(note);
-          // Update the note!
+
+          updateNote(file.currentBlobHash, note);
           break;
       }
     }
   }
-  // Note.findOneAndUpdate({blobHash: 'a'}, {
-  //   title: 'a',
-  //   tags: ['a'],
-  //   createdAt: 'a',
-  //   // TODO: Wrap around this so I can get MM/DD/YYYY
-  //   updatedAt: Date.now(),
-  //   blobHash: 'a',
-  //   html: 'a',
-  // }, {
-  //   useFindAndModify: false,
-  //   upsert: true,
-  // }, function(err, res) {
-  //   if (err) console.error('Error: Unable to save ', err);
-  // });
 
-  setHead('0');
-})();
+  // After all the changes have been made update the HEAD within MongoDB so things
+  // don't break if we try to update already updated notes.
+  setHead(head);
+}
+
+// TODO: For testing purposes... Should move somewhere better
+// updateNote('a', {blobHash: 'new blob hash', title: 'bad title'});
+// Note.findOneAndUpdate({blobHash: 'a'}, {
+//   title: 'a',
+//   tags: ['a'],
+//   createdAt: 'a',
+//   updatedAt: Date.now(),
+//   blobHash: 'a',
+//   html: 'a',
+// }, {
+//   useFindAndModify: false,
+//   upsert: true,
+// }, function(err, res) {
+//   if (err) console.error('Error: Unable to save ', err);
+// });
