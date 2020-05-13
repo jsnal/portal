@@ -13,4 +13,20 @@ notes.get('/getContent', async (req, res) => {
   res.send(html[0].html);
 });
 
+/*
+ * GET - Total note count
+ */
+notes.get('/getNoteCount', async (req, res) => {
+  res.json({
+    notes: await Note.countDocuments().exec(),
+  });
+});
+
+/*
+ * GET - All notes currently registered
+ */
+notes.get('/getAllNotes', async (req, res) => {
+  res.json(await Note.find());
+});
+
 export default notes;

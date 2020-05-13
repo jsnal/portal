@@ -1,5 +1,5 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import cors from 'cors';
 import notes from './routers/notes';
 import mongoose from './mongoose';
 import { updateMongo } from './bin/updateMongo';
@@ -7,7 +7,8 @@ import { updateMongo } from './bin/updateMongo';
 const PORT = 3000;
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(cors());
 
 app.get("/ping", (req, res) => {
   res.json({ message: "PONG" });
