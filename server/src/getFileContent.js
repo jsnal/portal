@@ -9,7 +9,7 @@ const md = MarkdownIt({
   typographer: true,
 });
 
-export async function getFileContent(blob) {
+export default async function getFileContent(blob) {
 
   // Unpack the markdown header
   const content = unpackContent(blob);

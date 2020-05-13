@@ -1,7 +1,7 @@
 import git from './git';
 import run from './run';
 
-export async function getFilesChanged(commit) {
+export default async function getFilesChanged(commit) {
   let filesChanged = [];
   const diffTreeRegExp = new RegExp('([a-f0-9]{40}) ([a-f0-9]{40}) ([ADM])\t(.+)', 'g');
 

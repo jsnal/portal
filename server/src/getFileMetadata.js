@@ -1,7 +1,7 @@
 import git from './git';
 import run from './run';
 
-export async function getFileMetadata(filePath) {
+export default async function getFileMetadata(filePath) {
   const treeEntry = (
     await run(
       git(['ls-tree', '--full-tree', '-r', '-z', 'content', '--', filePath]),

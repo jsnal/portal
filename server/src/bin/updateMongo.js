@@ -4,12 +4,11 @@ import git from '../git';
 import run from '../run';
 import Note from '../models/notes';
 import Metadata, { setHead } from '../models/metadata';
-import { getFileContent } from '../getFileContent';
-import { getFileMetadata } from '../getFileMetadata';
-import { getFilesChanged } from '../getFilesChanged';
+import getFileContent from '../getFileContent';
+import getFileMetadata from '../getFileMetadata';
+import getFilesChanged from '../getFilesChanged';
 import isArraysEqual from '../helpers/isArraysEqual';
 
-// TODO: Wrap around this so I can get MM/DD/YYYY
 function addNote(note) {
   Note.create(note, function(err, res) {
     if (err) console.error('Error: Unable to save ', note.blobHash, err);
@@ -56,8 +55,7 @@ export async function updateMongo() {
       addNote({
         title: title,
         tags: tags,
-        createdAt: createdAt,
-        // TODO: Wrap around this so I can get MM/DD/YYYY
+        createdAt: new Date(createdAt),
         updatedAt: Date.now(),
         blobHash: blobHash,
         html: html,
@@ -74,9 +72,10 @@ export async function updateMongo() {
     for (let file of filesChanged) {
       // Imperfect solution but this is needed because you can't get a file by
       // filepath if it no longer exists in the file system.
+      let title, blob, blobHash, extension, html, tags, createdAt;
       if (file.status.toUpperCase() !== 'D') {
-        let {title, blob, blobHash, extension} = await getFileMetadata(file.filepath);
-        let {html, tags, createdAt} = await getFileContent(blob);
+        ({title, blob, blobHash, extension} = await getFileMetadata(file.filepath));
+        ({html, tags, createdAt} = await getFileContent(blob));
       }
 
       switch(file.status.toUpperCase()) {
@@ -84,11 +83,11 @@ export async function updateMongo() {
           addNote({
             title: title,
             tags: tags,
-            createdAt: createdAt,
+            createdAt: new Date(createdAt),
             updatedAt: Date.now(),
             blobHash: blobHash,
             html: html,
-          })
+          });
           break;
         case 'D': // Delete
           deleteNote(file.currentBlobHash);
@@ -114,6 +113,9 @@ export async function updateMongo() {
 
           updateNote(file.currentBlobHash, note);
           break;
+        default:
+          console.error(`Error: File status ${file.status} doesn't exist`);
+          break
       }
     }
   }
