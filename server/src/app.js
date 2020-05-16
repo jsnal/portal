@@ -1,8 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import notes from './routers/notes';
-import mongoose from './mongoose';
-import { updateMongo } from './bin/updateMongo';
+import updateMongo from './bin/updateMongo';
 
 const PORT = 3000;
 const app = express();
@@ -10,8 +9,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/ping", (req, res) => {
-  res.json({ message: "PONG" });
+app.get('/ping', (req, res) => {
+  res.json({ message: 'PONG' });
 });
 
 app.use('/notes', notes);

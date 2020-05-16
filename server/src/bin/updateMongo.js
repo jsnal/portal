@@ -1,5 +1,3 @@
-import util from 'util';
-import mongoose from 'mongoose';
 import git from '../git';
 import run from '../run';
 import Note from '../models/notes';
@@ -10,33 +8,34 @@ import getFilesChanged from '../getFilesChanged';
 import isArraysEqual from '../helpers/isArraysEqual';
 
 function addNote(note) {
-  Note.create(note, function(err, res) {
+  Note.create(note, (err) => {
     if (err) console.error('Error: Unable to save ', note.blobHash, err);
   });
 }
 
 function deleteNote(blobHash) {
-  Note.deleteOne({blobHash: blobHash}, function(err) {
-    if (err) console.log(err);
+  Note.deleteOne({ blobHash }, (err) => {
+    if (err) console.log('Error: Unable to delete ', blobHash, err);
   });
 }
 
 function updateNote(blobHash, updates) {
-  Note.findOneAndUpdate({blobHash, blobHash}, updates, { useFindAndModify: false },
-    function(err, res) {
+  Note.findOneAndUpdate(
+    { blobHash },
+    updates,
+    { useFindAndModify: false },
+    (err) => {
       if (err) console.error('Error: Unable to update ', blobHash, err);
-    }
+    },
   );
 }
 
-export async function updateMongo() {
+export default async function updateMongo() {
   const head = (await run(git(['rev-parse', 'content']))).trim();
   const mongoHead = await Metadata.find({ _id: 100 })
     .select('head')
     .exec()
-    .then(function (head) {
-      return head[0].head;
-    });
+    .then((_head) => _head[0].head);
   const noteDocuments = await Note.countDocuments().exec();
 
   if (noteDocuments === 0) {
@@ -48,19 +47,19 @@ export async function updateMongo() {
       )
     ).trim();
 
-    for (let file of files.split('\n')) {
-      let {title, blob, blobHash, extension} = await getFileMetadata(file);
-      let {html, tags, createdAt} = await getFileContent(blob);
+    files.split('\n').forEach(async (file) => {
+      const { title, blob, blobHash } = await getFileMetadata(file);
+      const { html, tags, createdAt } = await getFileContent(blob);
 
       addNote({
-        title: title,
-        tags: tags,
+        title,
+        tags,
         createdAt: new Date(createdAt),
         updatedAt: Date.now(),
-        blobHash: blobHash,
-        html: html,
+        blobHash,
+        html,
       });
-    }
+    });
   } else {
     if (head === mongoHead) {
       console.log('MongoDB is already up-to-date');
@@ -69,42 +68,45 @@ export async function updateMongo() {
 
     const filesChanged = await getFilesChanged(head);
 
-    for (let file of filesChanged) {
-      // Imperfect solution but this is needed because you can't get a file by
+    filesChanged.forEach(async (file) => {
+      // TODO: Imperfect solution but this is needed because you can't get a file by
       // filepath if it no longer exists in the file system.
-      let title, blob, blobHash, extension, html, tags, createdAt;
+      let title;
+      let blob;
+      let blobHash;
+      let html;
+      let tags;
+      let createdAt;
       if (file.status.toUpperCase() !== 'D') {
-        ({title, blob, blobHash, extension} = await getFileMetadata(file.filepath));
-        ({html, tags, createdAt} = await getFileContent(blob));
+        ({ title, blob, blobHash } = await getFileMetadata(file.filepath));
+        ({ html, tags, createdAt } = await getFileContent(blob));
       }
 
-      switch(file.status.toUpperCase()) {
+      switch (file.status.toUpperCase()) {
         case 'A': // Added
           addNote({
-            title: title,
-            tags: tags,
+            title,
+            tags,
             createdAt: new Date(createdAt),
             updatedAt: Date.now(),
-            blobHash: blobHash,
-            html: html,
+            blobHash,
+            html,
           });
           break;
         case 'D': // Delete
           deleteNote(file.currentBlobHash);
           break;
-        case 'M': // Modified
-          let note = {
-            blobHash: blobHash,
+        case 'M': { // Modified
+          const note = {
+            blobHash,
             updatedAt: Date.now(),
-            html: html,
+            html,
           };
 
-          const previousTags = await Note.find({blobHash: file.currentBlobHash})
+          const previousTags = await Note.find({ blobHash: file.currentBlobHash })
             .select('tags')
             .exec()
-            .then(function (tags) {
-              return Array.from(tags[0].tags);
-            });
+            .then((_tags) => Array.from(_tags[0].tags));
 
           // Check if the tags were changed and if they were update them.
           if (!isArraysEqual(tags, previousTags)) {
@@ -113,16 +115,18 @@ export async function updateMongo() {
 
           updateNote(file.currentBlobHash, note);
           break;
+        }
         default:
           console.error(`Error: File status ${file.status} doesn't exist`);
-          break
+          break;
       }
-    }
+    });
   }
 
   // After all the changes have been made update the HEAD within MongoDB so things
   // don't break if we try to update already updated notes.
   setHead(head);
+  return head;
 }
 
 // TODO: For testing purposes... Should move somewhere better

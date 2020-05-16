@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const MetadataSchema = new Schema({
   _id: Number,
@@ -10,17 +11,16 @@ const MetadataSchema = new Schema({
 
 const Metadata = mongoose.model('MetadataModel', MetadataSchema);
 
-async function setHead(head) {
-  Metadata.findOneAndUpdate({_id: 100}, {
+export async function setHead(head) {
+  Metadata.findOneAndUpdate({ _id: 100 }, {
     _id: 100,
-    head: head,
+    head,
   }, {
     useFindAndModify: false,
     upsert: true,
-  }, function(err, res) {
+  }, (err) => {
     if (err) console.error('Error: Unable to set head', head, err);
   });
 }
 
-export { setHead };
 export default Metadata;

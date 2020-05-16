@@ -16,13 +16,14 @@ export default async function getFileMetadata(filePath) {
   // If the tree entry isn't a blob assume something has gone wrong and return safely
   if (type !== 'blob') return null;
 
-  const canonicalTitle = filename.replace(/^.*[\\\/]/, '').replace(/-/g, ' ');
+  const canonicalTitle = filename.replace(/^.*[\\/]/, '').replace(/-/g, ' ');
   const blob = await run(git(['cat-file', 'blob', hash]));
 
   return {
+    match,
     title: canonicalTitle,
-    blob: blob,
-    blobHash: hash,
-    extension: extension,
+    blob,
+    hash,
+    extension,
   };
 }

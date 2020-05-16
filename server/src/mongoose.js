@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
+import { MONGOURI } from './constants';
 
-const mongoURI = 'mongodb://127.0.0.1/portal';
-mongoose.connect(mongoURI, {
+mongoose.connect(MONGOURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -12,6 +12,6 @@ mongo.on('error', () => {
   process.exit(1);
 });
 
-mongo.on('open', function (ref) {
+mongo.on('open', () => {
   console.log('MongoDB connection successful');
 });

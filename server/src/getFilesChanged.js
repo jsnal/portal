@@ -2,7 +2,10 @@ import git from './git';
 import run from './run';
 
 export default async function getFilesChanged(commit) {
-  let filesChanged = [];
+  const filesChanged = [];
+
+  // TODO: Figure out what this eslint error means
+  /* eslint no-control-regex: 0 */
   const diffTreeRegExp = new RegExp('([a-f0-9]{40}) ([a-f0-9]{40}) ([ADM])\t(.+)', 'g');
 
   const diffTree = (
@@ -13,13 +16,14 @@ export default async function getFilesChanged(commit) {
   // console.log(diffTree);
   // const fileChangedCount = diffTree.split(/\r\n|\r|\n/).length;
 
-  for(let part; part = diffTreeRegExp.exec(diffTree); ) {
-    const [match, currentBlobHash, newBlobHash, status, filepath] = part;
+  for (let result; result = diffTreeRegExp.exec(diffTree);) {
+    const [match, currentBlobHash, newBlobHash, status, filepath] = result;
     filesChanged.push({
-      currentBlobHash: currentBlobHash,
-      newBlobHash: newBlobHash,
-      status: status,
-      filepath: filepath,
+      match,
+      currentBlobHash,
+      newBlobHash,
+      status,
+      filepath,
     });
   }
 
@@ -27,6 +31,20 @@ export default async function getFilesChanged(commit) {
   // run into issues when trying to update the MonogDB because it would add a
   // file that already has the same blob hash. That would result in duplicated
   // posts with no way of deleting it without manually choosing.
-  filesChanged.sort((a, b) => (b.status === 'D') ? 1 : (a.status === b.status) ? ((a.size > b.size) ? 1 : -1) : -1 )
+  filesChanged.sort((a, b) => {
+    if (b.status === 'D') {
+      return 1;
+    }
+
+    if (a.status === b.status) {
+      if (a.size > b.size) {
+        return 1;
+      }
+      return -1;
+    }
+
+    return -1;
+  });
+
   return filesChanged;
 }

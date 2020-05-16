@@ -50,13 +50,13 @@ notes.post('/getNoteByBlobHash', [
   try {
     const note = await Note.find({ blobHash: req.body.blobHash }).exec().then((rNote) => rNote[0]);
     if (note.length === 0 || note == null) {
-      throw `unable to find blobHash ${req.body.blobHash}`;
+      throw new Error(`unable to find blobHash ${req.body.blobHash}`);
     }
 
-    res.status(200).json(note);
+    return res.status(200).json(note);
   } catch (err) {
     console.log(err);
-    res.status(400).json({
+    return res.status(400).json({
       message: 'failure',
       errors: err,
     });
