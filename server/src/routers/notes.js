@@ -10,16 +10,12 @@ function checkInputError(req, res) {
     res.status(422).json({
       message: 'failure',
       status: 422,
-      errors: errors.array()
+      errors: errors.array(),
     });
     return true;
   }
   return false;
 }
-
-notes.get('/tags', (req, res) => {
-  res.json({ message: "TAGS" });
-})
 
 /*
  * GET - Total note count
@@ -42,22 +38,23 @@ notes.get('/getAllNotes', async (req, res) => {
  */
 notes.post('/getNoteByBlobHash', [
   body('blobHash')
-  .trim()
-  .not()
-  .isEmpty()
-  .withMessage('blobHash can not be empty')
-  .matches(/^[A-Za-z0-9]+$/)
-  .withMessage('blobHash must be alphanumeric only'),
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('blobHash can not be empty')
+    .matches(/^[A-Za-z0-9]+$/)
+    .withMessage('blobHash must be alphanumeric only'),
 ], async (req, res) => {
   if (checkInputError(req, res)) return null;
 
   try {
-    const note = await Note.find({blobHash: req.body.blobHash}).exec().then((note) => note[0]);
-    if (note.length === 0 || note == null)
+    const note = await Note.find({ blobHash: req.body.blobHash }).exec().then((rNote) => rNote[0]);
+    if (note.length === 0 || note == null) {
       throw `unable to find blobHash ${req.body.blobHash}`;
+    }
 
     res.status(200).json(note);
-  } catch (err){
+  } catch (err) {
     console.log(err);
     res.status(400).json({
       message: 'failure',
@@ -67,7 +64,7 @@ notes.post('/getNoteByBlobHash', [
 });
 
 notes.post('/getNotesByGroup', [
-  body('group')
-])
+  body('group'),
+]);
 
 export default notes;
