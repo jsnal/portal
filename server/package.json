@@ -4,10 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "nodemon src/app.js --exec babel-node --presets babel-preset-env",
+    "dev:lint": "nodemon src/app.js --exec 'npm run lint && babel-node' --presets babel-preset-env",
     "build": "babel -d ./build ./src -s",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.4.1",

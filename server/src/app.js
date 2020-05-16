@@ -1,7 +1,10 @@
+import 'babel-polyfill';
 import express from 'express';
 import cors from 'cors';
 import notes from './routers/notes';
-import updateMongo from './bin/updateMongo';
+import connectMongo from './mongoose';
+
+connectMongo();
 
 const PORT = 3000;
 const app = express();
@@ -15,7 +18,6 @@ app.get('/ping', (req, res) => {
 
 app.use('/notes', notes);
 
-app.listen(PORT, async () => {
-  await updateMongo();
+app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
