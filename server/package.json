@@ -16,6 +16,7 @@
     "express-validator": "^6.4.1",
     "markdown-it": "^10.0.0",
     "mongoose": "^5.9.12",
+    "morgan": "^1.10.0",
     "unpack-content": "0.0.3"
   },
   "devDependencies": {

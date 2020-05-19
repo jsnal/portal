@@ -13,7 +13,6 @@ export default async function getFilesChanged(commit) {
       git(['diff-tree', '--no-commit-id', '-r', '-c', commit]),
     )
   ).trim();
-  // console.log(diffTree);
   // const fileChangedCount = diffTree.split(/\r\n|\r|\n/).length;
 
   for (let result; result = diffTreeRegExp.exec(diffTree);) {

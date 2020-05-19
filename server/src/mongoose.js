@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import logger from './utils/logger';
 import { MONGOURI } from './constants';
 import updateMongo from './bin/updateMongo';
 
@@ -9,13 +10,13 @@ export default function connect() {
   });
 
   const mongo = mongoose.connection;
-  mongo.on('error', () => {
-    console.error('Fatal: MongoDB connection error');
+  mongo.on('error', (error) => {
+    logger.error('Fatal: MongoDB connection error', error);
     process.exit(1);
   });
 
   mongo.on('open', async () => {
-    console.log('MongoDB connection successful');
+    logger.info('MongoDB connection successful');
     await updateMongo();
   });
 }

@@ -1,4 +1,5 @@
 import spawn from 'child_process';
+import logger from './utils/logger';
 
 export default function run(cmd) {
   const _cmd = cmd.binary.concat(' ', cmd.args.join(' '));
@@ -6,7 +7,7 @@ export default function run(cmd) {
   return new Promise((resolve) => {
     spawn.exec(_cmd, (error, stdout, stderr) => {
       if (error) {
-        console.warn(error);
+        logger.error(`Trouble running ${_cmd}`, error);
       }
       resolve(stdout || stderr);
     });

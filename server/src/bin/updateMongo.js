@@ -1,5 +1,6 @@
 import git from '../git';
 import run from '../run';
+import logger from '../utils/logger';
 import Note from '../models/notes';
 import Metadata, { setHead } from '../models/metadata';
 import getFileContent from '../getFileContent';
@@ -9,13 +10,13 @@ import isArraysEqual from '../helpers/isArraysEqual';
 
 function addNote(note) {
   Note.create(note, (err) => {
-    if (err) console.error('Error: Unable to save ', note.blobHash, err);
+    if (err) logger.error(`Unable to save ${note.blobHash}`, err);
   });
 }
 
 function deleteNote(blobHash) {
   Note.deleteOne({ blobHash }, (err) => {
-    if (err) console.log('Error: Unable to delete ', blobHash, err);
+    if (err) logger.error(`Unable to delete ${blobHash}`, err);
   });
 }
 
@@ -25,7 +26,7 @@ function updateNote(blobHash, updates) {
     updates,
     { useFindAndModify: false },
     (err) => {
-      if (err) console.error('Error: Unable to update ', blobHash, err);
+      if (err) logger.error(`Unable to update ${blobHash}`, err);
     },
   );
 }
@@ -39,7 +40,7 @@ export default async function updateMongo() {
   const noteDocuments = await Note.countDocuments().exec();
 
   if (noteDocuments === 0) {
-    console.log('Initialzing MongoDB based on:', head);
+    logger.info(`Initialzing MongoDB based on: ${head}`);
 
     const files = (
       await run(
@@ -62,7 +63,7 @@ export default async function updateMongo() {
     });
   } else {
     if (head === mongoHead) {
-      console.log('MongoDB is already up-to-date');
+      logger.info('MongoDB is already up-to-date');
       return null;
     }
 
@@ -117,7 +118,7 @@ export default async function updateMongo() {
           break;
         }
         default:
-          console.error(`Error: File status ${file.status} doesn't exist`);
+          logger.warn(`Error: File status ${file.status} doesn't exist`);
           break;
       }
     });
