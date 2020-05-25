@@ -3,6 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import notes from './routers/notes';
+import secret from './routers/secret';
 import logger, { morganFormat } from './utils/logger';
 import connectMongo from './mongoose';
 
@@ -20,6 +21,7 @@ app.get('/ping', (req, res) => {
 });
 
 app.use('/notes', notes);
+app.use('/secret', secret);
 
 app.listen(PORT, () => {
   logger.info(`Server is listening on port ${PORT}`);

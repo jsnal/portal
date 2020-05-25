@@ -69,6 +69,7 @@ export default async function updateMongo() {
       return null;
     }
 
+    logger.info(`Updating MongoDB based on: ${head}`);
     const filesChanged = await getFilesChanged(head);
 
     filesChanged.forEach(async (file) => {
