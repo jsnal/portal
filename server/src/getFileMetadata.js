@@ -11,19 +11,19 @@ export default async function getFileMetadata(filePath) {
   // If a tree entry doesn't exist for this filename, exit safely
   if (!treeEntry) return null;
 
-  const [match, type, hash, filename, extension] = treeEntry;
+  const [match, type, blobHash, filename, extension] = treeEntry;
 
   // If the tree entry isn't a blob assume something has gone wrong and return safely
   if (type !== 'blob') return null;
 
   const canonicalTitle = filename.replace(/^.*[\\/]/, '').replace(/-/g, ' ');
-  const blob = await run(git(['cat-file', 'blob', hash]));
+  const blob = await run(git(['cat-file', 'blob', blobHash]));
 
   return {
     match,
     title: canonicalTitle,
     blob,
-    hash,
+    blobHash,
     extension,
   };
 }

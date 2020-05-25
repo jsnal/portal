@@ -52,6 +52,8 @@ export default async function updateMongo() {
       const { title, blob, blobHash } = await getFileMetadata(file);
       const { html, tags, createdAt } = await getFileContent(blob);
 
+      console.log(await getFileMetadata(file));
+
       addNote({
         title,
         tags,
