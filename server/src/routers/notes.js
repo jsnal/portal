@@ -50,16 +50,16 @@ notes.post('/getNoteByBlobHash', [
 
   try {
     const note = await Note.find({ blobHash: req.body.blobHash }).exec().then((rNote) => rNote[0]);
-    if (typeof note === 'undefined' || note == null) {
-      throw new Error(`unable to find blobHash ${req.body.blobHash}`);
+    if (note !== Object(note) || !Object.keys(note).length) {
+      throw new Error(`Unable to find blobHash ${req.body.blobHash}`);
     }
 
     return res.status(200).json(note);
   } catch (err) {
-    logger.error(err);
+    logger.error(err.message, err.stack);
     return res.status(400).json({
       message: 'failure',
-      errors: err,
+      errors: [err.stack],
     });
   }
 });
@@ -75,37 +75,43 @@ notes.post('/getNotesByGroup', [
     .withMessage('group can not be empty')
     .matches(/^[0-9]+$/)
     .withMessage('group must be number only'),
-  // TODO: Check if it an int but keep it optional
-  body('perPage'),
+  body('perGroup')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('perGroup can not be empty')
+    .matches(/^[0-9]+$/)
+    .withMessage('perGroup must be number only'),
 ], async (req, res) => {
   if (checkInputError(req, res)) return null;
 
-  const perPage = Number(req.body.perPage) || 7;
+  const perGroup = Number(req.body.perGroup) || 5;
   const noteDocuments = await Note.countDocuments().exec();
 
-  if (req.body.group > Math.ceil(noteDocuments / perPage)) {
+  if (req.body.group > Math.ceil(noteDocuments / perGroup)) {
     return res.status(400).json({
-      message: `${req.body.group} is not a valid group`,
+      message: 'failure',
+      errors: [`${req.body.group} is not a valid group`],
     });
   }
 
   try {
     const sortedNotes = await Note.find({})
       .sort({ createdAt: -1 })
-      .skip((perPage * req.body.group) - perPage)
-      .limit(perPage)
+      .skip((perGroup * req.body.group) - perGroup)
+      .limit(perGroup)
       .exec();
 
     if (!Array.isArray(sortedNotes) || !sortedNotes.length) {
-      throw new Error(`unable to find group ${req.body.group}`);
+      throw new Error(`Unable to find group ${req.body.group}`);
     }
 
     return res.status(200).json(sortedNotes);
   } catch (err) {
-    logger.error(err);
+    logger.error(err.message, err.stack);
     return res.status(400).json({
       message: 'failure',
-      errors: err,
+      errors: [err.stack],
     });
   }
 });
