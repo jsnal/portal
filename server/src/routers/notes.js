@@ -1,5 +1,6 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
+import logger from '../utils/logger';
 import Note from '../models/notes';
 
 const notes = express.Router();
@@ -30,7 +31,7 @@ notes.get('/getNoteCount', async (req, res) => {
  * GET - All notes currently registered
  */
 notes.get('/getAllNotes', async (req, res) => {
-  res.json(await Note.find());
+  res.json(await Note.find({}).sort({ createdAt: -1 }).exec());
 });
 
 /*
@@ -55,7 +56,7 @@ notes.post('/getNoteByBlobHash', [
 
     return res.status(200).json(note);
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return res.status(400).json({
       message: 'failure',
       errors: err,
@@ -63,8 +64,50 @@ notes.post('/getNoteByBlobHash', [
   }
 });
 
+/*
+ * POST - Get sorted notes by group (pagination)
+ */
 notes.post('/getNotesByGroup', [
-  body('group'),
-]);
+  body('group')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('group can not be empty')
+    .matches(/^[0-9]+$/)
+    .withMessage('group must be number only'),
+  // TODO: Check if it an int but keep it optional
+  body('perPage'),
+], async (req, res) => {
+  if (checkInputError(req, res)) return null;
+
+  const perPage = Number(req.body.perPage) || 7;
+  const noteDocuments = await Note.countDocuments().exec();
+
+  if (req.body.group > Math.ceil(noteDocuments / perPage)) {
+    return res.status(400).json({
+      message: `${req.body.group} is not a valid group`,
+    });
+  }
+
+  try {
+    const sortedNotes = await Note.find({})
+      .sort({ createdAt: -1 })
+      .skip((perPage * req.body.group) - perPage)
+      .limit(perPage)
+      .exec();
+
+    if (!Array.isArray(sortedNotes) || !sortedNotes.length) {
+      throw new Error(`unable to find group ${req.body.group}`);
+    }
+
+    return res.status(200).json(sortedNotes);
+  } catch (err) {
+    logger.error(err);
+    return res.status(400).json({
+      message: 'failure',
+      errors: err,
+    });
+  }
+});
 
 export default notes;
