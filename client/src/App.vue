@@ -21,6 +21,7 @@
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
+      <navbar/>
     </div>
     <router-view/>
     <footer id="footer">
@@ -30,9 +31,11 @@
 
 <script>
 import { PROJECTURLS } from './data/constants';
+import Navbar from './components/Navbar.vue';
 
 export default {
   components: {
+    Navbar,
   },
   data() {
     return {
