@@ -1,16 +1,26 @@
 <template>
   <nav class="navbar">
     <ul class="navbar-links">
-      <li>
+      <li :class="{ active: currentPage === '/' }">
         <router-link class="navbar-logo" to="/">Jason Long</router-link>
         <div class="navbar-toggle">
           <box-icon name="menu" color="#ffffff" v-on:click="isToggled = !isToggled"></box-icon>
         </div>
       </li>
-      <li :class="{ 'navbar-child-link': true, toggle: isToggled}">
+      <li :class="{
+        'navbar-child-link': true,
+        toggle: isToggled,
+        active: currentPage === '/projects'
+        }"
+      >
         <router-link class="navbar-link" to="/projects">Projects</router-link>
       </li>
-      <li :class="{ 'navbar-child-link': true, toggle: isToggled}">
+      <li :class="{
+        'navbar-child-link': true,
+        toggle: isToggled,
+        active: currentPage === '/notes'
+        }"
+      >
         <router-link class="navbar-link" to="/notes">Notes</router-link>
       </li>
     </ul>
@@ -27,6 +37,7 @@ export default {
   data() {
     return {
       isToggled: true,
+      currentPage: this.$route.path,
     };
   },
   methods: {
@@ -34,6 +45,11 @@ export default {
     },
   },
   created() {
+  },
+  watch: {
+    $route(to) {
+      this.currentPage = to.path;
+    },
   },
 };
 </script>
@@ -48,6 +64,7 @@ export default {
 .navbar-links {
   list-style-type: none;
   margin: 0;
+  width: 100%;
   padding: 0;
 }
 
@@ -61,8 +78,13 @@ export default {
 
 .navbar-link, .navbar-logo {
   text-decoration: none;
+  outline: none;
   color: #ffffff;
   padding: .5em .5em;
+}
+
+.navbar-link {
+  display: block;
 }
 
 .navbar-logo {
@@ -72,11 +94,16 @@ export default {
 
 .navbar-toggle {
   position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
   right: 20px;
+  height: 3.5em;
   cursor: pointer;
 }
 
-.router-link-exact-active {
+.active {
+  background: #333333;
 }
 
 .toggle {
@@ -93,15 +120,16 @@ export default {
   .navbar-links {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-  }
-
-  .navbar-links {
+    justify-content: flex-start;
     margin: 0;
   }
 
   .navbar-links li {
     padding: 0;
+  }
+
+  .navbar-links li:hover {
+    background: #000000;
   }
 
   .navbar-link {
