@@ -31,9 +31,14 @@ const routes = [
   //   component: () => import('../views/Music.vue'),
   // },
   {
+    path: '/projects',
+    component: () => import('../views/projects/ProjectsHome.vue'),
+    name: 'projects',
+  },
+  {
     path: '/projects/:project',
     name: 'projects',
-    component: () => import('../views/Projects.vue'),
+    component: () => import('../views/projects/Project.vue'),
   },
 ];
 

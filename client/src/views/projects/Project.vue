@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { PROJECTURLS, MDCOMPILE } from '../data/constants';
+import { PROJECTURLS, MDCOMPILE } from '../../data/constants';
 
 export default {
   data() {
@@ -20,22 +20,24 @@ export default {
     };
   },
   methods: {
-    getProjectUrl(targetProject) {
-      Object.keys(PROJECTURLS).forEach(async (project) => {
-        if (project === targetProject) {
-          // Generate the Markdown from the markdown URL
-          // this.getProjectMarkdown(PROJECTURLS[project][0]);
-          this.projectHTML = await MDCOMPILE(PROJECTURLS[project][0]);
+    async getProjectUrl(project) {
+      // Generate the Markdown from the markdown URL
+      this.projectHTML = await MDCOMPILE(PROJECTURLS[project].raw);
 
-          // Set the project URL to the github repository
-          // eslint-disable-next-line prefer-destructuring
-          this.projectUrl = PROJECTURLS[project][1];
-        }
-      });
+      // Set the project URL to the github repository
+      // eslint-disable-next-line prefer-destructuring
+      this.projectUrl = PROJECTURLS[project].hub;
     },
   },
   created() {
-    this.getProjectUrl(this.$route.params.project);
+    const routeProject = this.$route.params.project;
+    const shouldRedirect = !Object.keys(PROJECTURLS).includes(routeProject);
+
+    if (shouldRedirect) {
+      this.$router.push('/projects');
+    } else {
+      this.getProjectUrl(routeProject);
+    }
   },
 };
 </script>

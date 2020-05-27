@@ -5,8 +5,9 @@ import App from './App.vue';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import '@/assets/main.css';
 import 'github-markdown-css/github-markdown.css';
+import '@/assets/main.css';
+import '@/assets/markdown.css';
 
 Vue.config.productionTip = false;
 

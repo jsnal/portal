@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <ul class="navbar-links">
-      <li :class="{ active: currentPage === '/' }">
+      <li :class="{ active: currentPage === 'jasonlong' }">
         <router-link class="navbar-logo" to="/">Jason Long</router-link>
         <div class="navbar-toggle">
           <box-icon name="menu" color="#ffffff" v-on:click="isToggled = !isToggled"></box-icon>
@@ -10,7 +10,7 @@
       <li :class="{
         'navbar-child-link': true,
         toggle: isToggled,
-        active: currentPage === '/projects'
+        active: currentPage === 'projects'
         }"
       >
         <router-link class="navbar-link" to="/projects">Projects</router-link>
@@ -18,7 +18,7 @@
       <li :class="{
         'navbar-child-link': true,
         toggle: isToggled,
-        active: currentPage === '/notes'
+        active: currentPage === 'notes'
         }"
       >
         <router-link class="navbar-link" to="/notes">Notes</router-link>
@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       isToggled: true,
-      currentPage: this.$route.path,
+      currentPage: this.$route.name,
     };
   },
   methods: {
@@ -48,7 +48,7 @@ export default {
   },
   watch: {
     $route(to) {
-      this.currentPage = to.path;
+      this.currentPage = to.name;
     },
   },
 };

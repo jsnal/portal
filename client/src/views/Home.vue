@@ -12,6 +12,7 @@
         <li><a class="info-link" href="https://github.com/jsnal" target="_blank">Github</a></li>
         <li><a class="info-link" href="mailto:jasonlongball@gmail.com">Email</a></li>
       </ul>
+      <h1>Recent Notes</h1>
     </div>
   </div>
 </template>

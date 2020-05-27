@@ -2,26 +2,31 @@
 const MarkdownIt = require('markdown-it');
 
 export const PROJECTURLS = {
-  i3wm: [
-    'https://raw.githubusercontent.com/jsnal/i3wm/master/README.md',
-    'https://github.com/jsnal/i3wm/',
-  ],
-  'paste-light': [
-    'https://raw.githubusercontent.com/jsnal/paste-light/master/README.md',
-    'https://github.com/jsnal/paste-light',
-  ],
-  'vim-serape': [
-    'https://raw.githubusercontent.com/jsnal/vim-serape/master/README.md',
-    'https://github.com/jsnal/vim-serape',
-  ],
-  abbs: [
-    'https://raw.githubusercontent.com/jsnal/abbs/master/README.md',
-    'https://github.com/jsnal/abbs',
-  ],
-  portal: [
-    'https://raw.githubusercontent.com/jsnal/portal/master/README.md',
-    'https://github.com/jsnal/portal',
-  ],
+  i3wm: {
+    raw: 'https://raw.githubusercontent.com/jsnal/i3wm/master/README.md',
+    hub: 'https://github.com/jsnal/i3wm/',
+    desc: 'my linux configuration',
+  },
+  'paste-light': {
+    raw: 'https://raw.githubusercontent.com/jsnal/paste-light/master/README.md',
+    hub: 'https://github.com/jsnal/paste-light',
+    desc: 'lightweight paste system that is managed from the terminal',
+  },
+  'vim-serape': {
+    raw: 'https://raw.githubusercontent.com/jsnal/vim-serape/master/README.md',
+    hub: 'https://github.com/jsnal/vim-serape',
+    desc: 'a bright and vivid color scheme',
+  },
+  abbs: {
+    raw: 'https://raw.githubusercontent.com/jsnal/abbs/master/README.md',
+    hub: 'https://github.com/jsnal/abbs',
+    desc: 'blazing fast a simple blogging system',
+  },
+  portal: {
+    raw: 'https://raw.githubusercontent.com/jsnal/portal/master/README.md',
+    hub: 'https://github.com/jsnal/portal',
+    desc: 'this website source',
+  },
 };
 
 export const NOTESURL = 'http://raw.githubusercontent.com/jsnal/notes/master/';
