@@ -23,7 +23,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #home-container {
   margin: 1em auto;
 }

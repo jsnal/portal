@@ -25,7 +25,7 @@ export const PROJECTURLS = {
   portal: {
     raw: 'https://raw.githubusercontent.com/jsnal/portal/master/README.md',
     hub: 'https://github.com/jsnal/portal',
-    desc: 'this website source',
+    desc: 'this website source code',
   },
 };
 

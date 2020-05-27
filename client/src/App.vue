@@ -11,17 +11,11 @@
 </template>
 
 <script>
-import { PROJECTURLS } from './data/constants';
 import Navbar from './components/Navbar.vue';
 
 export default {
   components: {
     Navbar,
-  },
-  data() {
-    return {
-      projects: PROJECTURLS,
-    };
   },
   methods: {
     getTitle() {
