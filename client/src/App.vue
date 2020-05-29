@@ -1,21 +1,22 @@
 <template>
-  <b-container id="app" fluid>
+  <div id="app" fluid>
     <title>{{ getTitle() }}</title>
     <div id="header">
-      <navbar/>
+      <Navbar/>
     </div>
     <router-view/>
-    <!-- <footer id="footer"> -->
-    <!-- </footer> -->
-  </b-container>
+    <Footer/>
+  </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue';
+import Footer from './components/Footer.vue';
 
 export default {
   components: {
     Navbar,
+    Footer,
   },
   methods: {
     getTitle() {
@@ -30,11 +31,5 @@ export default {
 <style>
 #app {
   padding: 0px;
-}
-
-#footer {
-  background: #000000;
-  height: 1em;
-  width: 100%;
 }
 </style>

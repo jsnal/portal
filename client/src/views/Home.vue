@@ -23,8 +23,4 @@ export default {
 };
 </script>
 
-<style scoped>
-#home-container {
-  margin: 1em auto;
-}
-</style>
+<style scoped></style>

@@ -21,7 +21,7 @@
           <td data-column="Description">{{ project.desc }}</td>
           <td data-column="Git">
             <a :href=project.hub target="_blank">
-              <box-icon name="git" type="logo"></box-icon>
+              <span class="icon bx bxl-git"></span>
             </a>
           </td>
         </tr>
@@ -32,7 +32,6 @@
 
 <script>
 import { PROJECTURLS } from '../../data/constants';
-import 'boxicons';
 
 export default {
   data() {
@@ -44,10 +43,6 @@ export default {
 </script>
 
 <style scoped>
-#projects-home-container {
-  margin: 1em auto;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -109,5 +104,4 @@ only screen and (max-width: 760px),
     font-weight: bold;
   }
 }
-
 </style>

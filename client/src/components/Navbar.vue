@@ -4,13 +4,17 @@
       <li :class="{ active: currentPage === 'jasonlong' }">
         <router-link class="navbar-logo" to="/">Jason Long</router-link>
         <div class="navbar-toggle">
-          <box-icon name="menu" color="#ffffff" v-on:click="isToggled = !isToggled"></box-icon>
+          <span
+            class="icon bx bx-menu"
+            style="color: #ffffff"
+            v-on:click="isToggled = !isToggled">
+          </span>
         </div>
       </li>
       <li :class="{
         'navbar-child-link': true,
         toggle: isToggled,
-        active: currentPage === 'projects'
+        active: currentPage === 'project' || currentPage === 'projectsHome'
         }"
       >
         <router-link class="navbar-link" to="/projects">Projects</router-link>
@@ -28,7 +32,6 @@
 </template>
 
 <script>
-import 'boxicons';
 
 export default {
   name: 'navbar',
