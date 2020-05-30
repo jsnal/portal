@@ -22,7 +22,7 @@
       <li :class="{
         'navbar-child-link': true,
         toggle: isToggled,
-        active: currentPage === 'notes'
+        active: currentPage === 'note' || currentPage === 'notesHome'
         }"
       >
         <router-link class="navbar-link" to="/notes">Notes</router-link>

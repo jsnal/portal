@@ -18,12 +18,13 @@ const routes = [
   // },
   {
     path: '/notes',
-    name: 'notes',
-    children: [{
-      path: '/notes/:category/**',
-      component: () => import('../views/Notes.vue'),
-    }],
-    component: () => import('../views/Notes.vue'),
+    name: 'notesHome',
+    component: () => import('../views/notes/NotesHome.vue'),
+  },
+  {
+    path: '/notes/:note',
+    name: 'note',
+    component: () => import('../views/notes/Note.vue'),
   },
   // {
   //   path: '/music',
@@ -32,8 +33,8 @@ const routes = [
   // },
   {
     path: '/projects',
-    component: () => import('../views/projects/ProjectsHome.vue'),
     name: 'projectsHome',
+    component: () => import('../views/projects/ProjectsHome.vue'),
   },
   {
     path: '/projects/:project',
