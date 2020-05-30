@@ -13,8 +13,6 @@ import '@/assets/markdown.css';
 Vue.config.productionTip = false;
 ApiService.init();
 
-console.log(ApiService.get('/ping'));
-
 new Vue({
   router,
   store,

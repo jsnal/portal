@@ -17,13 +17,13 @@ const ApiService = {
     return Vue.axios.post(resource, params).catch((error) => {
       throw new Error(`ApiService POST ${error}`);
     });
-  }
+  },
 };
 
 export default ApiService;
 
 export const NotesService = {
   getCount() {
-    return ApiService.get('/getNoteCount');
-  }
-}
+    return ApiService.get('/notes/getNoteCount');
+  },
+};

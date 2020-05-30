@@ -33,10 +33,9 @@
 <script>
 export default {
   name: 'NotesList',
-  mounted() {
-  },
 };
 </script>
+
 <style scoped>
 table {
   width: 100%;
