@@ -23,7 +23,11 @@
       </div>
       <div class="col-xs-2">
         <div id="colophon" class="box">
-          <p>Made by Jason Long using VueJS, ExpressJs, and MongoDB</p>
+          <p>Made by Jason Long using
+            <a href="https://vuejs.org" target="_blank">VueJS</a>,
+            <a href="https://expressjs.com" target="_blank">Expres.js</a>, and
+            <a href="https://mongodb.com" target="_blank">MongoDB</a>.
+          </p>
         </div>
       </div>
     </div>
@@ -49,8 +53,11 @@ li {
   padding-top: .5em;
 }
 
-a {
+li a {
   font-size: .8em;
+}
+
+a {
   text-decoration: none;
   color: #1480a2;
 }
