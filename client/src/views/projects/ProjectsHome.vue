@@ -31,12 +31,10 @@
 </template>
 
 <script>
-import { PROJECTURLS } from '../../data/constants';
-
 export default {
   data() {
     return {
-      projects: PROJECTURLS,
+      projects: this.$store.getters.getProjects,
     };
   },
 };

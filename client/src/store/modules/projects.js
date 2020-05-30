@@ -1,7 +1,4 @@
-/* eslint-disable import/prefer-default-export */
-const MarkdownIt = require('markdown-it');
-
-export const PROJECTURLS = {
+const state = {
   i3wm: {
     raw: 'https://raw.githubusercontent.com/jsnal/i3wm/master/README.md',
     hub: 'https://github.com/jsnal/i3wm/',
@@ -29,17 +26,14 @@ export const PROJECTURLS = {
   },
 };
 
-export const NOTESURL = 'http://raw.githubusercontent.com/jsnal/notes/master/';
+const getters = {
+  getProjects: _state => _state,
+  getProjectsName: _state => Object.keys(_state),
+  getProjectRaw: _state => project => _state[project].raw,
+  getProjectHub: _state => project => _state[project].hub,
+};
 
-export const MDCOMPILER = new MarkdownIt();
-
-export const MDCOMPILE = async (url) => {
-  let html;
-  await fetch(url)
-    .then(data => data.text())
-    .then((text) => {
-      html = MDCOMPILER.render(text);
-    });
-
-  return html;
+export default {
+  state,
+  getters,
 };

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { NOTESURL, MDCOMPILE } from '../data/constants';
+import { NOTESURL, MDCOMPILE } from '../constants';
 
 export default {
   data() {

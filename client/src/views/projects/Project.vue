@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { PROJECTURLS, MDCOMPILE } from '../../data/constants';
+import { MDCOMPILE } from '../../constants';
 
 export default {
   data() {
@@ -22,16 +22,16 @@ export default {
   methods: {
     async getProjectUrl(project) {
       // Generate the Markdown from the markdown URL
-      this.projectHTML = await MDCOMPILE(PROJECTURLS[project].raw);
+      this.projectHTML = await MDCOMPILE(this.$store.getters.getProjectRaw(project));
 
       // Set the project URL to the github repository
       // eslint-disable-next-line prefer-destructuring
-      this.projectUrl = PROJECTURLS[project].hub;
+      this.projectUrl = this.$store.getters.getProjectHub(project);
     },
   },
   created() {
     const routeProject = this.$route.params.project;
-    const shouldRedirect = !Object.keys(PROJECTURLS).includes(routeProject);
+    const shouldRedirect = !this.$store.getters.getProjectsName.includes(routeProject);
 
     if (shouldRedirect) {
       this.$router.push('/projects');
