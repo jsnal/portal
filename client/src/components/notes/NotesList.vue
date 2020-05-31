@@ -22,7 +22,12 @@
       </tbody>
     </table>
     <div id="load-more">
-      <button v-if="full === false" id="load-more-button" @click="loadMore">Load More...</button>
+      <button
+        v-if="group <= Math.ceil(notesCount / perGroup)"
+        id="load-more-button"
+        @click="loadMore">
+        Load More...
+      </button>
     </div>
   </div>
 </template>
@@ -35,6 +40,7 @@ export default {
   data() {
     return {
       currentGroup: 0,
+      perGroup: 5,
       full: false,
     };
   },
@@ -43,28 +49,22 @@ export default {
       const localDate = new Date(date);
       return localDate.toDateString();
     },
-    loadMore() {
-      this.currentGroup += 1;
-
-      // Check if we are at our maximum limit
-      if (this.currentGroup < (this.notesCount / 3)) {
-        this.$store.dispatch('setDisplayNotes', this.currentGroup);
-        this.full = false;
-      } else {
-        this.full = true;
-      }
-    },
-    updateNotesByGroup() {
+    async loadMore() {
+      await this.$store.dispatch('getNextGroup', this.perGroup);
     },
   },
   computed: mapState({
-    notes: state => state.notes.displayNotes,
+    notes: state => state.notes.notes,
     notesCount: state => state.notes.notesCount,
-    fetched: state => state.notes.notesFetched,
+    group: state => state.notes.group,
   }),
-  created() {
-    if (!this.fetched) {
-      this.$store.dispatch('setAllNotes');
+  async created() {
+    // Update the amount of notes in the database
+    await this.$store.dispatch('updateCount');
+
+    // Get the inital first group of notes
+    if (!this.notes.length) {
+      await this.$store.dispatch('getNextGroup', this.perGroup);
     }
   },
 };

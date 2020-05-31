@@ -1,11 +1,7 @@
 import { NotesService } from '@/common/api';
 
-const groupSize = 3;
-
 const state = {
   notes: [],
-  notesFetched: false,
-  displayNotes: [],
   notesCount: 0,
   group: 1,
 };
@@ -17,8 +13,8 @@ const getters = {
 };
 
 const actions = {
-  updateCount({ commit }) {
-    NotesService.getCount()
+  async updateCount({ commit }) {
+    await NotesService.getCount()
       .then(({ data }) => {
         commit('setNotesCount', data.notes);
       })
@@ -26,24 +22,12 @@ const actions = {
         throw new Error(error);
       });
   },
-  setAllNotes({ commit }) {
-    state.displayNotes = [];
-
-    NotesService.getAll()
-      .then(({ data }) => {
-        commit('setNotes', data);
-        actions.setDisplayNotes(null, 0);
-        state.notesFetched = true;
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  },
-  setDisplayNotes(_state, group) {
-    const start = Number(group) * groupSize;
-    const localGroup = state.notes.slice(start, start + groupSize);
-    if (localGroup.length) {
-      state.displayNotes.push(...localGroup);
+  async getNextGroup(_state, perGroup) {
+    if (state.group <= Math.ceil(state.notesCount / perGroup)) {
+      console.log('getting next group');
+      const subNotes = await NotesService.getByGroup(state.group, perGroup);
+      state.notes.push(...subNotes.data.notes);
+      state.group += 1;
     }
   },
 };
@@ -54,9 +38,6 @@ const mutations = {
   },
   setNotes(_state, notes) {
     _state.notes = notes;
-  },
-  setGroup(_state, group) {
-    _state.group = group;
   },
 };
 

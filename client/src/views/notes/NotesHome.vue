@@ -19,9 +19,6 @@ export default {
   computed: mapState({
     notesCount: state => state.notes.notesCount,
   }),
-  created() {
-    this.$store.dispatch('updateCount');
-  },
 };
 </script>
 <style scoped></style>
