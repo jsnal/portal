@@ -26,4 +26,13 @@ export const NotesService = {
   getCount() {
     return ApiService.get('/notes/getNoteCount');
   },
+  getAll() {
+    return ApiService.get('/notes/getAllNotes');
+  },
+  getByGroup(group, perGroup) {
+    return ApiService.post('/notes/getNotesByGroup', {
+      group,
+      perGroup,
+    });
+  },
 };

@@ -8,31 +8,39 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Linux Command Line</td>
-        <td>Created 05/01/20</td>
-        <td>linux guide</td>
-      </tr>
-      <!-- <tr v&#45;for="(project, name) in projects" :key="project.desc"> -->
-      <!--   <td data&#45;column="Name"> -->
-      <!--     <router&#45;link :to="'projects/' + name"> -->
-      <!--       projects<span style="font&#45;weight: bold">/{{ name }}</span> -->
-      <!--     </router&#45;link> -->
-      <!--   </td> -->
-      <!--   <td data&#45;column="Description">{{ project.desc }}</td> -->
-      <!--   <td data&#45;column="Git"> -->
-      <!--     <a :href=project.hub target="_blank"> -->
-      <!--       <span class="icon bx bxl&#45;git"></span> -->
-      <!--     </a> -->
-      <!--   </td> -->
+      <!-- <tr v&#45;for="note in notes" :key="note.title"> -->
+      <!--   <td>{{ note }}</td> -->
       <!-- </tr> -->
     </tbody>
+    {{ notes }}
+    {{ currentGroup }}
+    <button @click="loadMore">Load More</button>
   </table>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'NotesList',
+  data() {
+    return {
+      currentGroup: 1,
+    };
+  },
+  methods: {
+    loadMore() {
+    },
+    updateNotesByGroup() {
+    },
+  },
+  computed: mapState({
+    notes: state => state.notes.displayNotes,
+  }),
+  created() {
+    this.$store.dispatch('setAllNotes');
+    // this.$store.dispatch('setDisplayNotes', 1);
+  },
 };
 </script>
 
