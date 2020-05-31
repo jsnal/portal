@@ -1,9 +1,10 @@
 import { NotesService } from '@/common/api';
 
-const groupSize = 2;
+const groupSize = 3;
 
 const state = {
   notes: [],
+  notesFetched: false,
   displayNotes: [],
   notesCount: 0,
   group: 1,
@@ -26,11 +27,13 @@ const actions = {
       });
   },
   setAllNotes({ commit }) {
+    state.displayNotes = [];
+
     NotesService.getAll()
       .then(({ data }) => {
         commit('setNotes', data);
-
         actions.setDisplayNotes(null, 0);
+        state.notesFetched = true;
       })
       .catch((error) => {
         throw new Error(error);
@@ -38,7 +41,10 @@ const actions = {
   },
   setDisplayNotes(_state, group) {
     const start = Number(group) * groupSize;
-    state.displayNotes.push(...state.notes.slice(start, start + groupSize));
+    const localGroup = state.notes.slice(start, start + groupSize);
+    if (localGroup.length) {
+      state.displayNotes.push(...localGroup);
+    }
   },
 };
 
