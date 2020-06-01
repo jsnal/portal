@@ -2,8 +2,6 @@
 tags: virtualbox guide
 created: 05/10/19
 ---
-# Installing up Virtualbox in Arch Linux
-
 ```
 $ sudo pacman -S linux-headers
 $ sudo pacman -S virtualbox virtualbox-guest-iso

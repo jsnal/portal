@@ -2,8 +2,6 @@
 tags: nextcloud guide
 created: 04/23/19
 ---
-# Installing Nextcloud on Ubuntu 18.04 LTS Server
-
 If you have snap:
 
 ```

@@ -2,8 +2,6 @@
 tags: git wiki
 created: 07/25/19
 ---
-# Git Patches
-
 ## Creating a Git Patch
 
 First make sure the branch you're on has the commits you want to patch. Find a log of your branch with.

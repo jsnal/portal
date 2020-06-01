@@ -2,8 +2,6 @@
 tags: zsh wiki
 created: 05/21/19
 ---
-# "Command not found" hook
-
 Getting output on commands in the arch repositories
 
 For Example:

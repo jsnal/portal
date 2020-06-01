@@ -2,8 +2,6 @@
 tags: git wiki
 created: 08/03/19
 ---
-# Remove a Git Submodule
-
 1) Delete the relevant section from the `.gitmodules` file.
 
 2) Stage the `.gitmodules` changes:

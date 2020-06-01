@@ -2,8 +2,6 @@
 tags: zsh wiki
 created: 05/05/19
 ---
-# Installing Arch Linux on UEFI Enabled Machines
-
 ## Step 1: Create bootable disk
 
 Download an iso from https://www.archlinux.org/download and flash it to a usb stick.
