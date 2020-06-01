@@ -89,17 +89,6 @@ notes.post('/getNotesByGroup', [
   const noteDocuments = await Note.countDocuments().exec();
   const maxGroups = Math.ceil(noteDocuments / perGroup);
 
-  // If the max ammount of groups is reached notify the client
-  // TODO: just use a variable to set the last state in the return so
-  //       I don't have to send back a whole other reponse just with this.
-  if (Number(req.body.group) === maxGroups + 1) {
-    console.log('a');
-    return res.status(200).json({
-      message: 'max ammount of groups reached',
-      last: true,
-    });
-  }
-
   // If the number is anything over the max throw an error
   if (Number(req.body.group) > maxGroups) {
     return res.status(400).json({
@@ -119,10 +108,7 @@ notes.post('/getNotesByGroup', [
       throw new Error(`Unable to find group ${req.body.group}`);
     }
 
-    return res.status(200).json({
-      notes: sortedNotes,
-      last: false,
-    });
+    return res.status(200).json(sortedNotes);
   } catch (err) {
     logger.error(err.message, err.stack);
     return res.status(400).json({

@@ -11,7 +11,15 @@
       <tbody>
         <tr v-for="note in notes" :key="note.title">
           <td>
-            <router-link :to="'/notes/' + note.title">{{ note.title }}</router-link>
+            <router-link :to="{
+                name: 'note',
+                params: {
+                  'note': note.title.replace(/\s+/g, '-').toLowerCase(),
+                  'routeObject': note
+                },
+              }">
+              {{ note.title }}
+            </router-link>
           </td>
           <td class="date-cell">
             <i>Created {{ formatDate(note.createdAt) }}

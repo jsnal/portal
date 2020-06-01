@@ -25,6 +25,7 @@ const routes = [
     path: '/notes/:note',
     name: 'note',
     component: () => import('../views/notes/Note.vue'),
+    props: true,
   },
   // {
   //   path: '/music',

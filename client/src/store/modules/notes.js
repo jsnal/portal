@@ -24,9 +24,8 @@ const actions = {
   },
   async getNextGroup(_state, perGroup) {
     if (state.group <= Math.ceil(state.notesCount / perGroup)) {
-      console.log('getting next group');
       const subNotes = await NotesService.getByGroup(state.group, perGroup);
-      state.notes.push(...subNotes.data.notes);
+      state.notes.push(...subNotes.data);
       state.group += 1;
     }
   },
