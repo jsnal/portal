@@ -43,3 +43,97 @@ html, body {
 .icon {
   font-size: 20px;
 }
+
+/*
+ * PORTAL BODY THEME
+ */
+
+/* GENERAL */
+
+.portal-body {
+  font-family: Georgia;
+}
+
+.portal-body h1 {
+  color: #000000;
+  font-weight: 300;
+  font-size: 2.5rem;
+}
+
+.portal-body p {
+  color: #000000;
+  font-weight: 300;
+}
+
+.portal-body a {
+  text-decoration: none;
+  color: #1480a2;
+}
+
+.portal-body a:hover {
+  text-decoration: underline;
+  color: #1480a2;
+}
+
+/* TABLE */
+
+.portal-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em auto;
+}
+
+.portal-body tr {
+}
+
+.portal-body th {
+  color: #000000;
+  font-weight: bold;
+}
+
+.portal-body td, .portal-body th {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 16px;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+@media only screen and (max-width: 768px) {
+  .portal-body table,
+  .portal-body thead,
+  .portal-body tbody,
+  .portal-body th,
+  .portal-body td,
+  .portal-body tr {
+    display: block;
+  }
+
+  .portal-body thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .portal-body td:nth-child(3n) {
+    border-bottom: 1px solid #000;
+  }
+
+  .portal-body td {
+    border: none;
+    border-bottom: 1px solid #e1e1e1;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .portal-body td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-column);
+    color: #000;
+    font-weight: bold;
+  }
+}

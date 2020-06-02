@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="portal-body">
     <table id="projects-table">
       <thead>
         <tr>
@@ -10,7 +10,7 @@
       </thead>
       <tbody>
         <tr v-for="note in notes" :key="note.title">
-          <td>
+          <td data-column="Title">
             <router-link :to="{
                 name: 'note',
                 params: {
@@ -21,11 +21,13 @@
               {{ note.title }}
             </router-link>
           </td>
-          <td class="date-cell">
+          <td class="date-cell" data-column="Date">
             <i>Created {{ formatDate(note.createdAt) }}
               , updated {{ formatDate(note.updatedAt) }}</i>
           </td>
-          <td>{{ note.tags.toString() }}</td>
+          <td data-column="Tags">
+            {{ note.tags.toString() }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -79,29 +81,6 @@ export default {
 </script>
 
 <style scoped>
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5em auto;
-}
-
-/* Zebra striping */
-tr:nth-of-type(odd) {
-  background: #eee;
-}
-
-th {
-  background: #000000;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-td, th {
-  padding: .5em;
-  text-align: left;
-  font-size: 16px;
-}
-
 .date-cell {
   font-size: 14px;
 }

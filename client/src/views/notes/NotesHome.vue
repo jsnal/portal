@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <div class="markdown-body">
-      <h1>Notes: {{ notesCount }} notes found</h1>
+    <div class="portal-body">
+      <h1 id="note-title">Notes</h1>
+      <p id="note-count"><span>{{ notesCount }}</span> notes have been published</p>
     </div>
     <notes-list/>
   </div>
@@ -21,4 +22,16 @@ export default {
   }),
 };
 </script>
-<style scoped></style>
+<style scoped>
+#note-title {
+  margin-bottom: .2em;
+}
+
+#note-count {
+  margin: 0;
+}
+
+#note-count span {
+  font-weight: bold;
+}
+</style>
