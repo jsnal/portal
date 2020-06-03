@@ -99,7 +99,7 @@ notes.post('/getNotesByGroup', [
 
   try {
     const sortedNotes = await Note.find({})
-      .sort({ createdAt: -1 })
+      .sort({ updatedAt: -1 })
       .skip((perGroup * req.body.group) - perGroup)
       .limit(perGroup)
       .exec();

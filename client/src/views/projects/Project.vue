@@ -2,7 +2,8 @@
   <div id="projects-container" class="container">
     <div id="projects-github-url-container">
       <a id="projects-github-url" :href=projectUrl target="_blank">
-        Open on Github 🔗
+        Open on Github
+        <i class="bx bx-link"></i>
       </a>
     </div>
     <p v-html="projectHTML" class="markdown-body"></p>
