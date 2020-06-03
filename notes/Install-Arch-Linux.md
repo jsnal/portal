@@ -1,5 +1,5 @@
 ---
-tags: zsh wiki
+tags: linux guide
 created: 05/05/19
 ---
 ## Step 1: Create bootable disk
