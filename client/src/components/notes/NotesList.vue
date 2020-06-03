@@ -22,11 +22,13 @@
             </router-link>
           </td>
           <td class="date-cell" data-column="Date">
-            <i>Created {{ formatDate(note.createdAt) }}
-              , updated {{ formatDate(note.updatedAt) }}</i>
+            <i class='bx bx-calendar'></i>
+            <i> Created {{ formatDate(note.createdAt) }}, </i>
+            <i>updated {{ formatDate(note.updatedAt) }}</i>
           </td>
           <td data-column="Tags">
-            {{ note.tags.toString() }}
+            <i class='bx bxs-purchase-tag'></i>
+            {{ note.tags.toString().replace(/\,/g, ' ') }}
           </td>
         </tr>
       </tbody>
@@ -56,8 +58,11 @@ export default {
   },
   methods: {
     formatDate(date) {
-      const localDate = new Date(date);
-      return localDate.toDateString();
+      const d = new Date(date);
+      const yr = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+      const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
+      const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+      return `${mo}/${da}/${yr}`;
     },
     async loadMore() {
       await this.$store.dispatch('getNextGroup', this.perGroup);
