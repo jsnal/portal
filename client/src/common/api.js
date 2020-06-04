@@ -29,6 +29,11 @@ export const NotesService = {
   getAll() {
     return ApiService.get('/notes/getAllNotes');
   },
+  getByTitle(title) {
+    return ApiService.post('/notes/getNoteByTitle', {
+      title,
+    });
+  },
   getByGroup(group, perGroup) {
     return ApiService.post('/notes/getNotesByGroup', {
       group,

@@ -65,6 +65,41 @@ notes.post('/getNoteByBlobHash', [
 });
 
 /*
+ * POST - Get a note by a specific title
+ */
+notes.post('/getNoteByTitle', [
+  body('title')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('title can not be empty'),
+], async (req, res) => {
+  if (checkInputError(req, res)) return null;
+
+  try {
+    // Get the correct object based soley on the title
+    const note = await Note.find({
+      title: new RegExp(`^${req.body.title.replace(/-/g, ' ')}$`, 'i'),
+    })
+      .exec()
+      .then((rNote) => rNote[0]);
+
+    if (note !== Object(note) || !Object.keys(note).length) {
+      throw new Error(`Unable to find title ${req.body.blobHash}`);
+    }
+
+    return res.status(200).json(note);
+  } catch (err) {
+    logger.error(err.message, err.stack);
+    return res.status(400).json({
+      message: 'failure',
+      errors: [err.stack],
+    });
+  }
+});
+
+
+/*
  * POST - Get sorted notes by group (pagination)
  */
 notes.post('/getNotesByGroup', [

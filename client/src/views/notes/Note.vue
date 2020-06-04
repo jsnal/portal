@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { NotesService } from '@/common/api';
+
 export default {
   name: 'Note',
   props: {
@@ -39,13 +41,12 @@ export default {
       return `${mo}/${da}/${yr}`;
     },
   },
-  created() {
+  async created() {
     if (typeof this.$route.params.routeObject === 'object') {
-      console.log(this.$route.params.routeObject);
       this.note = this.$route.params.routeObject;
     } else {
-      console.log('request the data!');
-      console.log(this.$route.params.note);
+      const note = await NotesService.getByTitle(this.$route.params.note);
+      this.note = note.data;
     }
   },
 };
