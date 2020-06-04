@@ -1,12 +1,20 @@
 <template>
   <div class="container">
     <div class="portal-body">
-      <h1>{{ note.title }}</h1>
-      <h1>{{ note.formatDate }}</h1>
-      <h1>{{ note.updatedAt }}</h1>
-      <h1>{{ note.tags }}</h1>
+      <h1 id="note-title">
+        {{ note.title }}
+      </h1>
+      <p id="note-date">
+        <i class='bx bx-calendar'></i>
+        Created {{ formatDate(note.createdAt) }} &#8226;
+        Updated {{ formatDate(note.updatedAt) }}
+      </p>
       <div class="markdown-body" v-html="note.html">
       </div>
+      <p id="note-tags">
+        <i class='bx bxs-purchase-tag'></i>
+        {{ note.tags.toString().replace(/\,/g, ' ') }}
+      </p>
     </div>
   </div>
 </template>
@@ -42,4 +50,14 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+
+#note-date, #note-tags {
+  font-style: italic;
+  color: #777676;
+}
+
+#note-tags {
+  text-align: right;
+}
+</style>
