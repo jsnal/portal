@@ -1,4 +1,4 @@
-FROM node:latest as build-stage
+FROM node:lts-buster
 
 # Build the code
 WORKDIR /app
@@ -8,7 +8,7 @@ RUN npm ci
 RUN npm run build
 
 # Add the notes worktree
-RUN git worktree add content origin/content
+RUN git worktree add content content
 
 # Run the code
 CMD [ "npm", "run", "start" ]

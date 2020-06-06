@@ -1,4 +1,4 @@
-FROM node:latest as build-stage
+FROM node:lts-buster as build-stage
 
 # Build the code
 WORKDIR /app
