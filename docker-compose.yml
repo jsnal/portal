@@ -13,7 +13,9 @@ services:
     depends_on:
       - mongodb_container
   server_container:
-    build: server/.
+    build:
+      context: ./
+      dockerfile: ./server/Dockerfile
     ports:
       - 3000:3000
     depends_on:

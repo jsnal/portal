@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon src/app.js --exec babel-node --presets babel-preset-env",
-    "dev:lint": "nodemon src/app.js --exec 'npm run lint && babel-node' --presets babel-preset-env",
+    "dev": "NODE_ENV=dev nodemon src/app.js --exec babel-node --presets babel-preset-env",
+    "dev:lint": "NODE_ENV=dev nodemon src/app.js --exec 'npm run lint && babel-node' --presets babel-preset-env",
+    "start": "NODE_ENV=production node build/app.js",
     "build": "babel -d ./build ./src -s",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix"

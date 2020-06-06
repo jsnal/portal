@@ -2,10 +2,13 @@ FROM node:latest as build-stage
 
 # Build the code
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
 COPY ./ .
+WORKDIR /app/server
+RUN npm ci
 RUN npm run build
 
+# Add the notes worktree
+RUN git worktree add content origin/content
+
 # Run the code
-CMD [ "node", "build/app.js" ]
+CMD [ "npm", "run", "start" ]
