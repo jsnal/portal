@@ -17,11 +17,11 @@ jobs:
         with:
           node-version: '10.x'
       - name: Dependencies
-        run: npm -C client ci
+        run: npm --prefix ./client ci
       - name: Lint
-        run: npm -C client run lint
+        run: npm --prefix ./client run lint
       - name: Build
-        run: npm -C client run build
+        run: npm --prefix ./client run build
   server:
     runs-on: ubuntu-latest
     steps:
@@ -32,8 +32,8 @@ jobs:
         with:
           node-version: '10.x'
       - name: Dependencies
-        run: npm -C server ci
+        run: npm --prefix ./server ci
       - name: Lint
-        run: npm -C server run lint
+        run: npm --prefix ./server run lint
       - name: Build
-        run: npm -C server run build
+        run: npm --prefix ./server run build
