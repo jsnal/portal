@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import TrackList from '../components/TrackList.vue';
+import TrackList from '../components/music/TrackList.vue';
 
 export default {
   name: 'music',

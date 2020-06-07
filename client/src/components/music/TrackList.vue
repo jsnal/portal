@@ -24,12 +24,9 @@
 </template>
 
 <script>
-import AsyncLoading from './AsyncLoading.vue';
-
 export default {
   name: 'tracklist',
   components: {
-    AsyncLoading,
   },
   props: [
     'method',

@@ -1,0 +1,39 @@
+name: Test and Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Dependencies
+        run: npm -C client ci
+      - name: Lint
+        run: npm -C client run lint
+      - name: Build
+        run: npm -C client run build
+  server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Dependencies
+        run: npm -C server ci
+      - name: Lint
+        run: npm -C server run lint
+      - name: Build
+        run: npm -C server run build
