@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update mongo
-        run: curl -XGET --connection-timeout 30 http://jasonlong.xyz:3000/secret/updateMongo
+        run: curl -XGET --connect-timeout 15 http://jasonlong.xyz:3000/secret/updateMongo
