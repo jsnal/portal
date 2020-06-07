@@ -1,0 +1,12 @@
+on:
+  push:
+    branches: [ content ]
+
+jobs:
+  curl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: curl
+        uses: wei/curl@master
+        with:
+          args: http://jasonlong.xyz:3000/secret/updateMongo
