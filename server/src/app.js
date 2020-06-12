@@ -15,6 +15,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan((tokens, req, res) => morganFormat(tokens, req, res)));
+app.use(function(req, res) {
+  res.header("Access-Control-Allow-Origin", "http://jasonlong.xyz");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+});
 
 app.get('/ping', (req, res) => {
   res.json({ message: 'PONG' });
