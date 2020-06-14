@@ -26,15 +26,15 @@ This is a sample article show-casing how different kinds of Markdown syntax get 
 
 -   Bullet point
 -   Bullet point
-  -   Nested point
-  -   Nested point
+    -   Nested point
+    -   Nested point
 
 # Ordered lists
 
 1.  First
 2.  Second
-  1.  Nested
-  2.  Nested
+    1.  Nested
+    2.  Nested
 
 # Code
 
