@@ -4,7 +4,9 @@
     <div id="header">
       <Navbar/>
     </div>
-    <router-view/>
+    <section>
+      <router-view/>
+    </section>
     <Footer/>
   </div>
 </template>
@@ -29,7 +31,19 @@ export default {
 </script>
 
 <style>
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  overflow: hidden;
+}
+
 #app {
-  padding: 0px;
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  overflow: auto;
 }
 </style>
