@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      isToggled: true,
+      isToggled: false,
       currentPage: this.$route.name,
     };
   },
@@ -52,6 +52,7 @@ export default {
   watch: {
     $route(to) {
       this.currentPage = to.name;
+      this.isToggled = false;
     },
   },
 };
