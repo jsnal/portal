@@ -1,12 +1,12 @@
 <template>
-  <div id="projects-container" class="container">
+  <div class="container portal-body">
     <div id="projects-github-url-container">
       <a id="projects-github-url" :href=projectUrl target="_blank">
         Open on Github
         <i class="bx bx-link"></i>
       </a>
     </div>
-    <p v-html="projectHTML" class="markdown-body"></p>
+    <div v-html="projectHTML"></div>
   </div>
 </template>
 
@@ -59,15 +59,5 @@ export default {
   opacity: 60%;
   transition: 0.15s;
   cursor: pointer;
-}
-
-.markdown-body {
-  font-family: BlinkMacSystemFont,
-               -apple-system,
-               "Segoe UI",Roboto,
-               Oxygen,Ubuntu,Cantarell,
-               "Fira Sans","Droid Sans",
-               "Helvetica Neue",Helvetica,
-               Arial,sans-serifans-serif;
 }
 </style>

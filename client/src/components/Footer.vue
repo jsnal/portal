@@ -1,7 +1,7 @@
 <template>
   <footer id="footer">
     <div class="footer-cell">
-      <p>Site</p>
+      <p class="footer-header">Site</p>
       <ul>
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/projects">Projects</router-link></li>
@@ -9,7 +9,7 @@
       </ul>
     </div>
     <div class="footer-cell">
-      <p>External</p>
+      <p class="footer-header">External</p>
       <ul>
         <li><a href="https://github.com/jsnal" target="_blank">Github</a></li>
         <li><a href="mailto:jasonlongball@gmail.com">Email</a></li>
@@ -75,5 +75,9 @@ a:hover {
   .footer-cell {
     display: table-row;
   }
+}
+
+.footer-header {
+  font-weight: 700;
 }
 </style>

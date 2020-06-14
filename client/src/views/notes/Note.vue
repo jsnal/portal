@@ -52,10 +52,17 @@ export default {
 };
 </script>
 <style>
+#note-title {
+  margin-bottom: .2em;
+}
 
 #note-date, #note-tags {
   font-style: italic;
   color: #777676;
+}
+
+#note-date {
+  margin: 0;
 }
 
 #note-tags {
