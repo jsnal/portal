@@ -6,7 +6,6 @@ import ApiService from './common/api';
 
 import 'boxicons/css/boxicons.min.css';
 import '@/assets/main.css';
-import '@/assets/markdown.css';
 
 Vue.config.productionTip = false;
 ApiService.init();
