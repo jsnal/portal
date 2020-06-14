@@ -21,12 +21,12 @@
               {{ note.title }}
             </router-link>
           </td>
-          <td class="date-cell" data-column="Date">
+          <td class="metadata-cell date-cell" data-column="Date">
             <i class='bx bx-calendar'></i>
             <i> Created {{ formatDate(note.createdAt) }}, </i>
             <i>updated {{ formatDate(note.updatedAt) }}</i>
           </td>
-          <td data-column="Tags">
+          <td class="metadata-cell" data-column="Tags">
             <i class='bx bxs-purchase-tag'></i>
             {{ note.tags.toString().replace(/\,/g, ' ') }}
           </td>
@@ -88,6 +88,10 @@ export default {
 <style scoped>
 .date-cell {
   font-size: 14px;
+}
+
+.metadata-cell {
+  color: #4a4a4a;
 }
 
 #load-more {

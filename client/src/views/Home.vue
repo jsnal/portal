@@ -1,5 +1,5 @@
 <template>
-  <div id="home-container" class="container">
+  <div class="container portal-body">
     <div class="markdown-body">
       <h1>Jason Long</h1>
       <ul>

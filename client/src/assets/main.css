@@ -2,7 +2,7 @@ html, body {
   height: 100%;
   padding: 0px;
   margin: 0px;
-  color: #4a4a4a;
+  color: #000000;
 }
 
 #app {
@@ -53,13 +53,10 @@ html, body {
 
 .portal-body {
   font-family: Georgia;
+  line-height: 1.6;
 }
 
-.portal-body h1 {
-  color: #000000;
-  font-weight: 300;
-  font-size: 2.5rem;
-}
+/* General Text */
 
 .portal-body p {
   color: #000000;
@@ -74,6 +71,58 @@ html, body {
 .portal-body a:hover {
   text-decoration: underline;
   color: #1480a2;
+}
+
+/* HEADERS */
+
+.portal-body h1,
+.portal-body h2,
+.portal-body h3,
+.portal-body h4,
+.portal-body h5,
+.portal-body h6 {
+  color: #000000;
+  font-weight: 300;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+.portal-body h1 { font-size: 2.5rem; }
+.portal-body h2 { font-size: 2rem; }
+.portal-body h3 { font-size: 1.67rem; }
+.portal-body h4 { font-size: 1.5rem; }
+.portal-body h5 { font-size: 1.33rem; }
+.portal-body h6 { font-size: 1.17rem; }
+
+/* CODE/PRE */
+
+.portal-body pre > code {
+  display: block;
+  overflow: auto;
+  padding: .7rem 1rem;
+  white-space: pre;
+}
+
+.portal-body code {
+  color: #000000;
+  padding: .2rem .5rem;
+  margin: 0 .2rem;
+  font-size: 90%;
+  white-space: nowrap;
+  background: #f1f1f1;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+}
+
+/* Lists */
+
+.portal-body ol, .portal-body ul {
+  padding-left: 1em;
+  /* margin-top: 0; */
+}
+
+.portal-body li {
+  margin-bottom: 1rem;
 }
 
 /* TABLE */
