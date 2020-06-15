@@ -69,61 +69,72 @@ export default async function updateMongo() {
       return null;
     }
 
-    logger.info(`Updating MongoDB based on: ${head}`);
-    const filesChanged = await getFilesChanged(head);
+    logger.info('Recursively updating MongoDB');
 
-    filesChanged.forEach(async (file) => {
-      // TODO: Imperfect solution but this is needed because you can't get a file by
-      // filepath if it no longer exists in the file system.
-      let title;
-      let blob;
-      let blobHash;
-      let html;
-      let tags;
-      let createdAt;
-      if (file.status.toUpperCase() !== 'D') {
-        ({ title, blob, blobHash } = await getFileMetadata(file.filepath));
-        ({ html, tags, createdAt } = await getFileContent(blob));
-      }
+    const newCommits = (
+      await run(
+        git(['rev-list', `${mongoHead}...${head}`]),
+      )
+    ).trim().split('\n');
 
-      switch (file.status.toUpperCase()) {
-        case 'A': // Added
-          addNote({
-            title,
-            tags,
-            createdAt: new Date(createdAt),
-            updatedAt: Date.now(),
-            blobHash,
-            html,
-          });
-          break;
-        case 'D': // Delete
-          deleteNote(file.currentBlobHash);
-          break;
-        case 'M': { // Modified
-          const note = {
-            blobHash,
-            updatedAt: Date.now(),
-            html,
-          };
+    newCommits.forEach(async (commit) => {
+      logger.info(`Changes found in ${commit}`);
 
-          const previousTags = await Note.find({ blobHash: file.currentBlobHash })
-            .select('tags')
-            .exec()
-            .then((_tags) => Array.from(_tags[0].tags));
+      const filesChanged = await getFilesChanged(commit);
 
-          // Check if the tags were changed and if they were update them.
-          if (!isArraysEqual(tags, previousTags)) {
-            note.tags = tags;
-          }
-
-          updateNote(file.currentBlobHash, note);
-          break;
+      filesChanged.forEach(async (file) => {
+        // TODO: Imperfect solution but this is needed because you can't get a file by
+        // filepath if it no longer exists in the file system.
+        let title;
+        let blob;
+        let blobHash;
+        let html;
+        let tags;
+        let createdAt;
+        if (file.status.toUpperCase() !== 'D') {
+          ({ title, blob, blobHash } = await getFileMetadata(file.filepath));
+          ({ html, tags, createdAt } = await getFileContent(blob));
         }
-        default:
-          logger.warn(`Error: File status ${file.status} doesn't exist`);
-          break;
-      }
+
+        switch (file.status.toUpperCase()) {
+          case 'A': // Added
+            addNote({
+              title,
+              tags,
+              createdAt: new Date(createdAt),
+              updatedAt: Date.now(),
+              blobHash,
+              html,
+            });
+            break;
+          case 'D': // Delete
+            deleteNote(file.currentBlobHash);
+            break;
+          case 'M': { // Modified
+            const note = {
+              blobHash,
+              updatedAt: Date.now(),
+              html,
+            };
+
+            const previousTags = await Note.find({ blobHash: file.currentBlobHash })
+              .select('tags')
+              .exec()
+              .then((_tags) => Array.from(_tags[0].tags));
+
+            // Check if the tags were changed and if they were update them.
+            if (!isArraysEqual(tags, previousTags)) {
+              note.tags = tags;
+            }
+
+            updateNote(file.currentBlobHash, note);
+            break;
+          }
+          default:
+            logger.warn(`Error: File status ${file.status} doesn't exist`);
+            break;
+        }
+      });
     });
   }
 
@@ -132,19 +143,3 @@ export default async function updateMongo() {
   setHead(head);
   return head;
 }
-
-// TODO: For testing purposes... Should move somewhere better
-// updateNote('a', {blobHash: 'new blob hash', title: 'bad title'});
-// Note.findOneAndUpdate({blobHash: 'a'}, {
-//   title: 'a',
-//   tags: ['a'],
-//   createdAt: 'a',
-//   updatedAt: Date.now(),
-//   blobHash: 'a',
-//   html: 'a',
-// }, {
-//   useFindAndModify: false,
-//   upsert: true,
-// }, function(err, res) {
-//   if (err) console.error('Error: Unable to save ', err);
-// });
