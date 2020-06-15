@@ -21,7 +21,7 @@ function checkInputError(req, res) {
 /*
  * GET - Total note count
  */
-notes.get('/getNoteCount', async (req, res) => {
+notes.get('/getCount', async (req, res) => {
   res.json({
     notes: await Note.countDocuments().exec(),
   });
@@ -30,14 +30,14 @@ notes.get('/getNoteCount', async (req, res) => {
 /*
  * GET - All notes currently registered
  */
-notes.get('/getAllNotes', async (req, res) => {
+notes.get('/getAll', async (req, res) => {
   res.json(await Note.find({}).sort({ createdAt: -1 }).exec());
 });
 
 /*
  * POST - Get a note by a specific blob hash
  */
-notes.post('/getNoteByBlobHash', [
+notes.post('/getByBlobHash', [
   body('blobHash')
     .trim()
     .not()
@@ -67,7 +67,7 @@ notes.post('/getNoteByBlobHash', [
 /*
  * POST - Get a note by a specific title
  */
-notes.post('/getNoteByTitle', [
+notes.post('/getByTitle', [
   body('title')
     .trim()
     .not()
@@ -102,7 +102,7 @@ notes.post('/getNoteByTitle', [
 /*
  * POST - Get sorted notes by group (pagination)
  */
-notes.post('/getNotesByGroup', [
+notes.post('/getByGroup', [
   body('group')
     .trim()
     .not()

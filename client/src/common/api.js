@@ -24,18 +24,18 @@ export default ApiService;
 
 export const NotesService = {
   getCount() {
-    return ApiService.get('/notes/getNoteCount');
+    return ApiService.get('/notes/getCount');
   },
   getAll() {
-    return ApiService.get('/notes/getAllNotes');
+    return ApiService.get('/notes/getAll');
   },
   getByTitle(title) {
-    return ApiService.post('/notes/getNoteByTitle', {
+    return ApiService.post('/notes/getByTitle', {
       title,
     });
   },
   getByGroup(group, perGroup) {
-    return ApiService.post('/notes/getNotesByGroup', {
+    return ApiService.post('/notes/getByGroup', {
       group,
       perGroup,
     });
