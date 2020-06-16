@@ -8,7 +8,7 @@
 # any already running, it will instantly SIGTERM itself. All docker services must
 # be down in order to issue a new deploy.
 is_running() {
-  echo "Checking if docker is running..."
+  printf "Checking if docker is running...\n"
 
   local docker_services=("mongodb_container" "client_container" "server_container")
   for service in "${docker_services[@]}"; do
@@ -32,12 +32,12 @@ is_repo() {
 }
 
 if ! is_repo; then
-  echo "Currently not in a .git directory. Exiting..."
+  printf "Currently not in a .git directory. Exiting...\n"
   exit 1
 fi
 
 if [[ ! -z $(git diff --stat) ]]; then
-  read -p "Current worktree is dirty... Continue? [Y/n] " -n 1 -r && echo
+  read -p "Current worktree is dirty... Continue? [Y/n] " -n 1 -r && printf "\n"
   [[ ! $REPLY =~ ^[Yy]$ ]] && exit 1
 fi
 
@@ -46,11 +46,11 @@ fi
 [ "$UID" -eq 0  ] || command sudo bash -c "$(declare -f is_running); is_running"
 
 # Update portal to the latest changes on master
-echo "Fetching the latest changes..."
+printf "Fetching the latest changes...\n"
 command git pull --all
 
-echo "Current portal version $(git rev-parse HEAD)"
+printf "Current portal version %s\n" $(git rev-parse HEAD)
 
 # Build and start the Docker containers
-echo "Starting Docker..."
+printf "Starting Docker...\n"
 [ "$UID" -eq 0  ] || command sudo docker-compose up --build -d
