@@ -15,7 +15,7 @@ const Metadata = mongoose.model('MetadataModel', MetadataSchema);
 async function setInitialData() {
   return Metadata.collection.insertOne({
     _id: 100,
-    head: null,
+    head: '0',
   }, (err) => {
     if (err) {
       logger.error('Unable to set initial HEAD data', err);
@@ -38,7 +38,7 @@ export async function setHead(head) {
     useFindAndModify: false,
     upsert: true,
   }, (err) => {
-    if (err) console.error('Error: Unable to set head', head, err);
+    if (err) logger.error('Unable to set HEAD', err);
   });
 }
 
