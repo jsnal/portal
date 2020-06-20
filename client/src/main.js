@@ -5,6 +5,7 @@ import store from './store';
 import ApiService from './common/api';
 
 import 'boxicons/css/boxicons.min.css';
+import 'highlight.js/styles/default.css';
 import '@/assets/main.css';
 
 Vue.config.productionTip = false;
