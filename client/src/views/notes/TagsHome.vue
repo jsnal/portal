@@ -3,7 +3,7 @@
     <div class="portal-body">
       <h1 id="tags-title">Tags</h1>
       <p id="tags-count"><span>{{ tags.length }}</span> unique tags have been found</p>
-      <input type="text" placeholder="Search..." v-on:keyup="filterTags($event.target.value)"/>
+      <input type="text" placeholder="Search Tags..." v-on:keyup="filterTags($event.target.value)"/>
       <table>
         <thead>
           <tr>
@@ -33,7 +33,6 @@ export default {
   name: 'TagsHome',
   methods: {
     filterTags(keyword) {
-      console.log(keyword);
       this.$store.dispatch('filterTags', keyword);
     },
   },
@@ -58,7 +57,7 @@ export default {
 }
 
 #tags-count {
-  margin: 0;
+  margin: 0 0 .5em 0;
 }
 
 #tags-count span {
