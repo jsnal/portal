@@ -1,3 +1,5 @@
+// TODO: Ignore console.logs in eslint for this file only
+
 function _getDate() {
   return new Date().toGMTString();
 }

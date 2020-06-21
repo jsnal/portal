@@ -153,4 +153,43 @@ notes.post('/getByGroup', [
   }
 });
 
+
+/*
+ * GET - All tags and the number of times it shows up
+ */
+notes.get('/getTags', async (req, res) => {
+  const tags = await Note.aggregate([
+    { $unwind: '$tags' },
+    { $group: { _id: '$tags', count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+  ]);
+
+  return res.status(200).json(tags);
+});
+
+/*
+ * POST - Get posts that have a certain tag
+ */
+notes.post('/getByTags', [
+  body('tag')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('tag can not be empty'),
+], async (req, res) => {
+  if (checkInputError(req, res)) return null;
+  try {
+    const posts = await Note.find({ tags: req.body.tag }).exec();
+
+    if (!Array.isArray(posts) || !posts.length) {
+      throw new Error(`Unable to find tag ${req.body.tag}`);
+    }
+
+    return res.status(200).json(posts);
+  } catch (err) {
+    logger.error(err.message, err.stack);
+  }
+  return res.send('asdf');
+});
+
 export default notes;
