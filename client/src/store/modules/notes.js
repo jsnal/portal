@@ -2,6 +2,8 @@ import { NotesService } from '@/common/api';
 
 const state = {
   notes: [],
+  masterTags: [],
+  filteredTags: [],
   notesCount: 0,
   group: 1,
 };
@@ -29,6 +31,26 @@ const actions = {
       state.group += 1;
     }
   },
+  async getTags({ commit }) {
+    await NotesService.getTags()
+      .then(({ data }) => {
+        commit('setMasterTags', data);
+        commit('setFilteredTags', data);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  },
+  filterTags({ commit }, keyword) {
+    const filterTags = [];
+    state.masterTags.forEach((tag) => {
+      if (tag._id.indexOf(keyword) > -1) {
+        filterTags.push(tag);
+      }
+    });
+
+    commit('setFilteredTags', filterTags);
+  },
 };
 
 const mutations = {
@@ -37,6 +59,12 @@ const mutations = {
   },
   setNotes(_state, notes) {
     _state.notes = notes;
+  },
+  setMasterTags(_state, masterTags) {
+    _state.masterTags = masterTags;
+  },
+  setFilteredTags(_state, filteredTags) {
+    _state.filteredTags = filteredTags;
   },
 };
 

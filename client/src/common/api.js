@@ -40,4 +40,12 @@ export const NotesService = {
       perGroup,
     });
   },
+  getTags() {
+    return ApiService.get('/notes/getTags');
+  },
+  getByTags(tag) {
+    return ApiService.post('/notes/getByTags', {
+      tag,
+    });
+  },
 };

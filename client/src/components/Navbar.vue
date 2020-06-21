@@ -27,6 +27,14 @@
       >
         <router-link class="navbar-link" to="/notes">Notes</router-link>
       </li>
+      <li :class="{
+        'navbar-child-link': true,
+        toggle: isToggled,
+        active: currentPage === 'tag' || currentPage === 'tagsHome'
+        }"
+      >
+        <router-link class="navbar-link" to="/tags">Tags</router-link>
+      </li>
     </ul>
 </nav>
 </template>

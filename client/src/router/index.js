@@ -16,6 +16,11 @@ const routes = [
   //   // component: () => import('../views/About.vue'),
   //   data: () => ({ pdf }),
   // },
+  // {
+  //   path: '/music',
+  //   name: 'music',
+  //   component: () => import('../views/Music.vue'),
+  // },
   {
     path: '/notes',
     name: 'notesHome',
@@ -27,11 +32,17 @@ const routes = [
     component: () => import('../views/notes/Note.vue'),
     props: true,
   },
-  // {
-  //   path: '/music',
-  //   name: 'music',
-  //   component: () => import('../views/Music.vue'),
-  // },
+  {
+    path: '/tags',
+    name: 'tagsHome',
+    component: () => import('../views/notes/TagsHome.vue'),
+  },
+  {
+    path: '/tags/:tag',
+    name: 'tag',
+    component: () => import('../views/notes/Tag.vue'),
+    props: true,
+  },
   {
     path: '/projects',
     name: 'projectsHome',
