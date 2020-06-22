@@ -1,5 +1,5 @@
 ---
-tags: android lora wiki
+tags: android guide
 created: 06/18/20
 ---
 Follow these steps to cross compile the LoRa and all of its dependencies for Android.
