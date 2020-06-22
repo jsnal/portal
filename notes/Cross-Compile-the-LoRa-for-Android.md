@@ -78,13 +78,28 @@ You can find liquid-dsp [here](https://github.com/jgaeddert/liquid-dsp.git). Liq
 api_version=23
 ```
 
-The build from that point is really similar to fftw3.
+Get started by cloning down the repository and running the `bootstrap.sh` script.
 
 ```bash
 $ git clone https://github.com/jgaeddert/liquid-dsp.git
 $ cd liquid-dsp
 $ ./bootstrap.sh
+```
+
+Before you run the configuration, you need to comment out some library checks in the `configure.ac` file. Specifically you need to remove the `AC_FUNC_MALLOC` and `AC_FUNC_REALLOC`. Edit the `configure.ac` file and see the changes below.
+
+```txt
+AC_FUNC_ERROR_AT_LINE
+# AC_FUNC_MALLOC
+# AC_FUNC_REALLOC
+```
+
+From this point, the build is pretty typical.
+
+```bash
 $ ./configure --prefix=/home/jason.long/SS_SDR/Libraries/ARM/Android/liquid/
+$ make -j
+$ make install
 ```
 
 ## Boost
