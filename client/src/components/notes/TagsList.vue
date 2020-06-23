@@ -19,5 +19,10 @@ export default {
   async created() {
     await this.$store.dispatch('getByTags', this.$route.params.tag);
   },
+  watch: {
+    async $route(to) {
+      await this.$store.dispatch('getByTags', to.params.tag);
+    },
+  },
 };
 </script>

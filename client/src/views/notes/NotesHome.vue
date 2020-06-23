@@ -1,8 +1,10 @@
 <template>
   <div class="container">
     <div class="portal-body">
-      <h1 id="note-title">Notes</h1>
-      <p id="note-count"><span>{{ notesCount }}</span> notes have been published</p>
+      <div class="portal-list-header">
+        <h1>Notes</h1>
+        <p><span>{{ notesCount }}</span> notes have been published</p>
+      </div>
       <notes-list/>
     </div>
   </div>
@@ -22,16 +24,4 @@ export default {
   }),
 };
 </script>
-<style scoped>
-#note-title {
-  margin-bottom: .2em;
-}
-
-#note-count {
-  margin: 0;
-}
-
-#note-count span {
-  font-weight: bold;
-}
-</style>
+<style scoped></style>

@@ -1,9 +1,15 @@
 <template>
   <div class="container">
     <div class="portal-body">
-      <h1 id="tags-title">Tags</h1>
-      <p id="tags-count"><span>{{ tags.length }}</span> unique tags have been found</p>
-      <input type="text" placeholder="Search Tags..." v-on:keyup="filterTags($event.target.value)"/>
+      <div class="portal-list-header">
+        <h1>Tags</h1>
+        <p><span>{{ tags.length }}</span> unique tags have been found</p>
+        <input
+          type="text"
+          id="tags-search"
+          placeholder="Search Tags..."
+          v-on:keyup="filterTags($event.target.value)"/>
+      </div>
       <table>
         <thead>
           <tr>
@@ -52,15 +58,7 @@ export default {
 </script>
 
 <style scoped>
-#tags-title {
-  margin-bottom: .2em;
-}
-
-#tags-count {
-  margin: 0 0 .5em 0;
-}
-
-#tags-count span {
-  font-weight: bold;
+#tags-search {
+  margin-top: .5em;
 }
 </style>

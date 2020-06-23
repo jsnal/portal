@@ -1,7 +1,11 @@
 <template>
   <div class="container portal-body">
-    <h1>{{ $route.params.tag }}</h1>
-    <p id="note-count"><span>{{ notesCount }}</span> notes have been published</p>
+    <div class="portal-list-header">
+      <h1>{{ $route.params.tag }}</h1>
+      <p><span>{{ notesCount }}</span>
+        note<span v-if="notesCount > 1" id="trailing-s">s</span> published under this tag
+      </p>
+    </div>
     <tags-list/>
   </div>
 </template>
@@ -20,3 +24,7 @@ export default {
   }),
 };
 </script>
+
+<style scoped>
+#trailing-s { font-weight: 500 !important; }
+</style>

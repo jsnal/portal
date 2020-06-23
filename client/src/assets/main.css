@@ -47,6 +47,14 @@ html, body {
 }
 
 /*
+ * PORTAL LIST HEADER
+ */
+
+.portal-list-header h1 { margin-bottom: .2em !important; }
+.portal-list-header p { margin: 0 !important; }
+.portal-list-header span { font-weight: 700 !important; }
+
+/*
  * PORTAL BODY THEME
  */
 

@@ -21,13 +21,17 @@
           </router-link>
         </td>
         <td class="metadata-cell date-cell" data-column="Date">
-          <i class='bx bx-calendar'></i>
+          <i class="bx bx-calendar"></i>
           <i> Created {{ formatDate(note.createdAt) }}, </i>
           <i>updated {{ formatDate(note.updatedAt) }}</i>
         </td>
         <td class="metadata-cell" data-column="Tags">
-          <i class='bx bxs-purchase-tag'></i>
-          {{ note.tags.toString().replace(/\,/g, ' ') }}
+          <i class="bx bxs-purchase-tag"></i>
+          <span v-for="tag in note.tags" :key="tag">
+            <router-link :to="/tags/ + tag" class="tag-link">
+              {{ tag }}
+            </router-link>
+          </span>
         </td>
       </tr>
     </tbody>
@@ -59,5 +63,14 @@ export default {
 
 .metadata-cell {
   color: #4a4a4a;
+}
+
+.tag-link {
+  display: inline-block;
+  padding-left: .3em;
+}
+
+.bxs-purchase-tag {
+  color: #1480a2;
 }
 </style>

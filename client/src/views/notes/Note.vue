@@ -13,7 +13,11 @@
       </div>
       <p id="note-tags">
         <i class='bx bxs-purchase-tag'></i>
-        {{ note.tags.toString().replace(/\,/g, ' ') }}
+        <span v-for="tag in note.tags" :key="tag">
+          <router-link :to="/tags/ + tag" class="tag-link">
+            {{ tag }}
+          </router-link>
+        </span>
       </p>
     </div>
   </div>
@@ -67,5 +71,14 @@ export default {
 
 #note-tags {
   text-align: right;
+}
+
+.tag-link {
+  display: inline-block;
+  padding-left: .3em;
+}
+
+.bxs-purchase-tag {
+  color: #1480a2;
 }
 </style>
