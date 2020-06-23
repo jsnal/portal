@@ -4,9 +4,7 @@
     <div id="header">
       <Navbar/>
     </div>
-    <section>
-      <router-view/>
-    </section>
+    <router-view/>
     <Footer/>
   </div>
 </template>

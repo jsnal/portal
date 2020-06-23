@@ -41,6 +41,15 @@ const actions = {
         throw new Error(error);
       });
   },
+  async getByTags({ commit }, tag) {
+    await NotesService.getByTags(tag)
+      .then(({ data }) => {
+        commit('setMasterTags', data);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  },
   filterTags({ commit }, keyword) {
     const filterTags = [];
     state.masterTags.forEach((tag) => {

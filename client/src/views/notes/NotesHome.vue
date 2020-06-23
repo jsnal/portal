@@ -3,8 +3,8 @@
     <div class="portal-body">
       <h1 id="note-title">Notes</h1>
       <p id="note-count"><span>{{ notesCount }}</span> notes have been published</p>
+      <notes-list/>
     </div>
-    <notes-list/>
   </div>
 </template>
 
