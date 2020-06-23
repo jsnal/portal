@@ -55,6 +55,22 @@ $ chmod +x env.sh
 $ source env.sh
 ```
 
+### Dependencies
+
+These are some dependencies that you are going to need to compile one or more of the libraries below.
+
+```bash
+# apt install cmake make autoconf automake binutils python3-distutils
+```
+
+### LoRa Code
+
+Finally, grab the latest version of the LoRa android app code from the Gitlab. You will need to recursively clone the app because it has a submodule to the underlying LoRa code itself that you will need.
+
+```bash
+$ git clone --recurse-submodules git@githost.raleigh.signalscape.com:SS_SDR/lora_android/lora_app.git
+```
+
 ## FFTW
 
 Now it's time to build [FFTW](http://www.fftw.org/). Assuming you have sourced the NDK into your PATH, these are the steps you should follow.
@@ -67,8 +83,6 @@ $ ./configure --prefix=/home/jason.long/SS_SDR/Libraries/ARM/Android/fftw3/ --ho
 $ make -j
 $ make install
 ```
-
-Troubles with `--enable-neon`
 
 ## Liquid-dsp
 
@@ -154,14 +168,18 @@ $ mkdir build && cd build
 Currently, there is an issue with Volk static library linking for `arm` and `arm64` that causes the Volk profiler build to fail. To get around this, you must disable the `/apps` subdirectory. Open up the root `CMakeLists.txt` and comment out these two lines.
 
 ```cmake
-add_subdirectory(apps)
-add_subdirectory(python/volk_modtool)
+# add_subdirectory(apps)
+# add_subdirectory(python/volk_modtool)
 ```
 
 Once you've made that important change, you can build Volk with the following commands.
 
 ```bash
-$ cmake .. -DCMAKE_INSTALL_PREFIX=/home/jason.long/-DBOOST_ROOT=/home/jason.long/SS_SDR/Libraries/ARM/Android/volk/ SS_SDR/Libraries/ARM/Android/boost/ -DENABLE_STATIC_LIBS=TRUE -DENABLE_TESTING=OFF
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/home/jason.long/SS_SDR/Libraries/ARM/Android/boost/ -DBOOST_ROOT=/home/jason.long/SS_SDR/Libraries/ARM/Android/volk/ -DENABLE_STATIC_LIBS=TRUE -DENABLE_TESTING=OFF
 $ make -j
 $ make install
 ```
+
+## LoRa Android App
+
+Now it's time to finally compile the LoRa codebase. By this point you should have all four of the libraries compiled for the proper architecture and in the proper location. If everything has been done properly, just open Android Studio and click the play button to compile and deploy the code. Alternatively, you click the hammer to just compile the code without attempting to deploy it.
