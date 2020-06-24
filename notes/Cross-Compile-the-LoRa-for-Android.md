@@ -122,7 +122,7 @@ Cross compiling Boost takes some configuration in the build files so pay attenti
 
 ```bash
 $ wget http://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.bz
-$ tar xf boost_1_65_1.tar.bz
+$ tar xf boost_1_65_1.tar.bz2
 $ cd boost_1_65_1
 ```
 
@@ -162,7 +162,7 @@ You should have built and installed Boost in the last step. This is important be
 ```bash
 $ git clone https://github.com/gnuradio/volk.git
 $ cd volk
-$ mkdir build && cd build
+$ mkdir build
 ```
 
 Currently, there is an issue with Volk static library linking for `arm` and `arm64` that causes the Volk profiler build to fail. To get around this, you must disable the `/apps` subdirectory. Open up the root `CMakeLists.txt` and comment out these two lines.
@@ -172,10 +172,52 @@ Currently, there is an issue with Volk static library linking for `arm` and `arm
 # add_subdirectory(python/volk_modtool)
 ```
 
+Next, you need to add a cmake toolchain. Create and edit a file in `cmake/Toolchains/aarch64-linux-android.cmake`
+
+```cmake
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR ARM)
+
+if(MINGW OR CYGWIN OR WIN32)
+  set(UTIL_SEARCH_CMD where)
+elseif(UNIX OR APPLE)
+  set(UTIL_SEARCH_CMD which)
+endif()
+
+set(TOOLCHAIN_PREFIX aarch64-linux-android)
+set(TOOLCHAIN_API_VERSION 23)
+
+execute_process(
+  COMMAND ${UTIL_SEARCH_CMD} ${TOOLCHAIN_PREFIX}${TOOLCHAIN_API_VERSION}-clang
+  OUTPUT_VARIABLE BINUTILS_PATH
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+get_filename_component(ARM_TOOLCHAIN_DIR ${BINUTILS_PATH} DIRECTORY)
+
+set(CMAKE_C_COMPILER ${TOOLCHAIN_PREFIX}${TOOLCHAIN_API_VERSION}-clang)
+set(CMAKE_ASM_COMPILER ${CMAKE_C_COMPILER})
+set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}${TOOLCHAIN_API_VERSION}-clang++)
+
+set(CMAKE_C_FLAGS "-fPIE -fPIC -mfpu=neon" CACHE STRING "" FORCE)
+set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "" FORCE)
+
+set(CMAKE_OBJCOPY ${ARM_TOOLCHAIN_DIR}/${TOOLCHAIN_PREFIX}-objcopy CACHE INTERNAL "objcopy tool")
+set(CMAKE_SIZE_UTIL ${ARM_TOOLCHAIN_DIR}/${TOOLCHAIN_PREFIX}-size CACHE INTERNAL "size tool")
+
+set(CMAKE_FIND_ROOT_PATH ${BINUTILS_PATH})
+```
+
+Before you can build Volk, you need to restart your shell so you don't have the sourced environment variables in your path. Do this by either closing and reopening your terminal or just run `bash`.Then you need to manually add the NDK to your path **without** running the environment script we made above. Do that by running the following.
+
+```bash
+$ export PATH="$PATH:/home/jsnal-lora/android/arm64/bin"
+```
+
 Once you've made that important change, you can build Volk with the following commands.
 
 ```bash
-$ cmake .. -DCMAKE_INSTALL_PREFIX=/home/jason.long/SS_SDR/Libraries/ARM/Android/boost/ -DBOOST_ROOT=/home/jason.long/SS_SDR/Libraries/ARM/Android/volk/ -DENABLE_STATIC_LIBS=TRUE -DENABLE_TESTING=OFF
+$ cd build
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/home/jason.long/SS_SDR/Libraries/ARM/Android/volk/ -DBOOST_ROOT=/home/jason.long/SS_SDR/Libraries/ARM/Android/boost/ -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchains/aarch64-linux-android.cmake -DENABLE_STATIC_LIBS=TRUE -DENABLE_TESTING=OFF
 $ make -j
 $ make install
 ```
