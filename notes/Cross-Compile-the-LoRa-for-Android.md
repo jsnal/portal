@@ -60,7 +60,7 @@ $ source env.sh
 These are some dependencies that you are going to need to compile one or more of the libraries below.
 
 ```bash
-# apt install cmake make autoconf automake binutils python3-distutils
+$ sudo apt install cmake make autoconf automake binutils python3-distutils
 ```
 
 ### LoRa Code
@@ -68,7 +68,9 @@ These are some dependencies that you are going to need to compile one or more of
 Finally, grab the latest version of the LoRa android app code from the Gitlab. You will need to recursively clone the app because it has a submodule to the underlying LoRa code itself that you will need.
 
 ```bash
-$ git clone --recurse-submodules git@githost.raleigh.signalscape.com:SS_SDR/lora_android/lora_app.git
+$ git clone git@githost.raleigh.signalscape.com:SS_SDR/lora_android/lora_app.git
+$ git checkout feat-port-lora
+$ git submodule init && git submodule update
 ```
 
 ## FFTW
@@ -79,7 +81,7 @@ Now it's time to build [FFTW](http://www.fftw.org/). Assuming you have sourced t
 $ wget http://www.fftw.org/fftw-3.3.2.tar.gz
 $ tar xf fftw-3.3.2.tar.gz
 $ cd fftw-3.3.2
-$ ./configure --prefix=/home/jason.long/SS_SDR/Libraries/ARM/Android/fftw3/ --host=$target_host --enable-single --enable-static
+$ ./configure --prefix=/home/jason.long/lora_app/app/libs/fftw3/ --host=$target_host --enable-single --enable-static
 $ make -j
 $ make install
 ```
@@ -111,7 +113,7 @@ AC_FUNC_ERROR_AT_LINE
 From this point, the build is pretty typical.
 
 ```bash
-$ ./configure --prefix=/home/jason.long/SS_SDR/Libraries/ARM/Android/liquid/
+$ ./configure --prefix=/home/jason.long/lora_app/app/libs/liquid/
 $ make -j
 $ make install
 ```
@@ -129,7 +131,7 @@ $ cd boost_1_65_1
 Next we are going to configure Boost. We only want to install three of the Boost libraries (system, filesystem, thread).
 
 ```bash
-$ ./bootstrap.sh --prefix=/home/jason.long/SS_SDR/Libraries/ARM/Android/boost/ --with-libraries=system,filesystem,thread
+$ ./bootstrap.sh --prefix=/home/jason.long/lora_app/app/libs/boost/ --with-libraries=system,filesystem,thread
 ```
 
 This should generate a `project-config.jam` file in the root of the project. Open this in a text editor and make the following edits.
@@ -208,21 +210,58 @@ set(CMAKE_AR ${ARM_TOOLCHAIN_DIR}/${TOOLCHAIN_PREFIX}-ar CACHE FILEPATH "" FORCE
 set(CMAKE_FIND_ROOT_PATH ${BINUTILS_PATH})
 ```
 
-Before you can build Volk, you need to restart your shell so you don't have the sourced environment variables in your path. Do this by either closing and reopening your terminal or just run `bash`.Then you need to manually add the NDK to your path **without** running the environment script we made above. Do that by running the following.
+Before you can build Volk, you need to restart your shell so you don't have the sourced environment variables in your path. Do this by either closing and reopening your terminal or just run `bash`. Then you need to manually add the NDK to your path **without** running the environment script we made above. Do that by running the following.
 
 ```bash
-$ export PATH="$PATH:/home/jsnal-lora/android/arm64/bin"
+$ export PATH="$PATH:/home/jason.long/android/arm64/bin"
 ```
 
-Once you've made that important change, you can build Volk with the following commands.
+Once you've made those important changes, you can build Volk with the following commands.
 
 ```bash
 $ cd build
-$ cmake .. -DCMAKE_INSTALL_PREFIX=/home/jason.long/SS_SDR/Libraries/ARM/Android/volk/ -DBOOST_ROOT=/home/jason.long/SS_SDR/Libraries/ARM/Android/boost/ -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchains/aarch64-linux-android.cmake -DENABLE_STATIC_LIBS=TRUE -DENABLE_TESTING=OFF
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/home/jason.long/lora_app/app/libs/volk/ -DBOOST_ROOT=/home/jason.long/lora_app/app/libs/boost/ -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchains/aarch64-linux-android.cmake -DENABLE_STATIC_LIBS=TRUE -DENABLE_TESTING=OFF
 $ make -j
 $ make install
 ```
 
 ## LoRa Android App
 
-Now it's time to finally compile the LoRa codebase. By this point you should have all four of the libraries compiled for the proper architecture and in the proper location. If everything has been done properly, just open Android Studio and click the play button to compile and deploy the code. Alternatively, you click the hammer to just compile the code without attempting to deploy it.
+Now it's time to finally compile the LoRa codebase. By this point you should have all four of the libraries compiled for the proper architecture and in the proper location. Your directory tree of `lora_app` should look something like this.
+
+```
+$ tree -L 3
+.
+├── app
+│   ├── build
+│   │   ├── generated
+│   │   ├── intermediates
+│   │   ├── outputs
+│   │   └── tmp
+│   ├── build.gradle
+│   ├── libs
+│   │   ├── boost
+│   │   ├── fftw3
+│   │   ├── liquid
+│   │   └── volk
+│   ├── proguard-rules.pro
+│   └── src
+│       ├── androidTest
+│       ├── main
+│       └── test
+├── build
+├── build.gradle
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── local.properties
+├── README.md
+└── settings.gradle
+```
+
+If everything has been done properly, just open Android Studio and click the play button to compile and deploy the code. Alternatively, you click the hammer to just compile the code without attempting to deploy it.
+
