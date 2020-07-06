@@ -6,6 +6,7 @@
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/projects">Projects</router-link></li>
         <li><router-link to="/notes">Notes</router-link></li>
+        <li><router-link to="/tags">Tags</router-link></li>
       </ul>
     </div>
     <div class="footer-cell">
@@ -19,7 +20,7 @@
     <div class="footer-cell">
       <p>Made by Jason Long using
         <a href="https://vuejs.org" target="_blank">VueJS</a>,
-        <a href="https://expressjs.com" target="_blank">Expres.js</a>, and
+        <a href="https://expressjs.com" target="_blank">Express.js</a>, and
         <a href="https://mongodb.com" target="_blank">MongoDB</a>.
       </p>
     </div>
