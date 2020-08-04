@@ -5,7 +5,7 @@
       <ul>
         <li>Rising Computer Science student at North Carolina State University.</li>
         <li>Open source software lover and user.</li>
-        <li>See more <router-link to="/projects">here</router-link>.</li>
+        <li>See more <a href="/resume.pdf">here</a>.</li>
       </ul>
       <h2>Contact</h2>
       <ul>
