@@ -1,32 +1,19 @@
 # portal
 
-Source code for [jasonlong.xyz](http://jasonlong.xyz).
-
-## Development
-
-### Project setup
+## Project setup
 ```
-$ npm install
+npm install
 ```
 
-### Development server
+### Compiles and hot-reloads for development
 ```
-$ npm run dev
-```
-
-### Lints and fixes files
-```
-$ npm run lint
+npm run serve
 ```
 
-## Deployment
-
-### Build the Dockerfile
+### Compiles and minifies for production
 ```
-# docker build . -t portal
+npm run build
 ```
 
-### Run the container
-```
-# docker run -d -p 80:80 portal
-```
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
