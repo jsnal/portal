@@ -5,28 +5,31 @@
         <span>Open on Github</span><i class="material-icons-outlined">public</i>
       </a>
     </div>
-    <div v-html="projectHTML"></div>
+    <MarkdownBlock :rawMarkdown="rawMarkdown" />
   </div>
 </template>
 
 <script>
+import MarkdownBlock from '../components/MarkdownBlock.vue';
+
 export default {
+  name: 'Project',
+  components: {
+    MarkdownBlock,
+  },
   data() {
     return {
       name: this.$route.params.project,
-      projectHTML: '',
-      projectUrl: '',
+      rawMarkdown: '',
     };
   },
-  methods: {
-    async getProjectUrl(project) {
-      // Generate the Markdown from the markdown URL
-      // this.projectHTML = await MDCOMPILE(this.$store.getters.getProjectRaw(project));
-
-      // Set the project URL to the github repository
-      // eslint-disable-next-line prefer-destructuring
-      // this.projectUrl = this.$store.getters.getProjectHub(project);
-    },
+  created() {
+    document.title = "Project: " + this.name;
+    fetch("http://raw.githubusercontent.com/jsnal/" + this.name + "/master/README.md")
+      .then(data => data.text())
+      .then((text) => {
+        this.rawMarkdown = text;
+      });
   },
 };
 </script>
@@ -51,8 +54,8 @@ export default {
   cursor: pointer;
 }
 
-#projects-github-url > span {
-  text-size: 14px;
+#projects-github-url>span {
+  font-size: 14px;
   padding-right: 5px;
 }
 </style>

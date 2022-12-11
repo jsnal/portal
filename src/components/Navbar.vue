@@ -4,40 +4,29 @@
       <li :class="{ active: currentPage === 'Home' }">
         <router-link class="navbar-logo" to="/">Jason Long</router-link>
         <div class="navbar-toggle">
-          <span class="material-icons-outlined"
-            style="color: #ffffff"
-            v-on:click="isToggled = !isToggled">menu</span>
+          <span class="material-icons-outlined" style="color: #ffffff" v-on:click="isToggled = !isToggled">menu</span>
         </div>
       </li>
       <li :class="{
         'navbar-child-link': true,
         toggle: isToggled,
-        active: currentPage === 'Projects'
-        }"
-      >
+        active: currentPage != undefined && currentPage.includes('Project')
+      }">
         <router-link class="navbar-link" to="/projects">Projects</router-link>
       </li>
     </ul>
-</nav>
+  </nav>
 </template>
 
 <script>
 
 export default {
   name: 'navbar',
-  components: {
-  },
   data() {
     return {
       isToggled: false,
       currentPage: this.$route.name,
     };
-  },
-  methods: {
-    setActive() {
-    },
-  },
-  created() {
   },
   watch: {
     $route(to) {
@@ -71,7 +60,8 @@ export default {
   display: none;
 }
 
-.navbar-link, .navbar-logo {
+.navbar-link,
+.navbar-logo {
   text-decoration: none;
   outline: none;
   color: #ffffff;
