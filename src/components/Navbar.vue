@@ -7,12 +7,17 @@
           <span class="material-icons-outlined" style="color: #ffffff" v-on:click="isToggled = !isToggled">menu</span>
         </div>
       </li>
-      <li :class="{
-        'navbar-child-link': true,
+      <li class="navbar-child-link" :class="{
         toggle: isToggled,
         active: currentPage != undefined && currentPage.includes('Project')
       }">
         <router-link class="navbar-link" to="/projects">Projects</router-link>
+      </li>
+      <li class="navbar-child-link" :class="{
+        toggle: isToggled,
+        active: currentPage === 'Resume'
+      }">
+        <router-link class="navbar-link" to="/resume">Resume</router-link>
       </li>
     </ul>
   </nav>
@@ -118,7 +123,7 @@ export default {
   }
 
   .navbar-link {
-    color: #cccccc;
+    color: #dddddd;
     margin-left: .1em;
     display: inline-block;
   }

@@ -3,8 +3,9 @@
     <h1>Jason Long</h1>
     <ul>
       <li>Computer Science Student at North Carolina State University.</li>
-      <li>Open source software lover and user.</li>
-      <li>See more <a href="/resume.pdf">here</a>.</li>
+      <li>Specifically interested in Systems Engineering and Embedded Software.</li>
+      <li>Also into all things music.</li>
+      <li>See more <a href="/resume">here</a>.</li>
     </ul>
     <h2>Contact</h2>
     <ul>
@@ -23,4 +24,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
