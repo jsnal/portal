@@ -25,7 +25,7 @@ export default {
   },
   created() {
     document.title = "Project: " + this.name;
-    fetch("http://raw.githubusercontent.com/jsnal/" + this.name + "/master/README.md")
+    fetch("https://raw.githubusercontent.com/jsnal/" + this.name + "/master/README.md")
       .then(data => data.text())
       .then((text) => {
         this.rawMarkdown = text;
