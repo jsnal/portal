@@ -1,6 +1,7 @@
 *~
 *.swp
 *.swo
+<<<<<<< HEAD
 
 .DS_Store
 node_modules
@@ -25,3 +26,5 @@ yarn-error.log*
 *.sw?
 
 content/
+=======
+>>>>>>> d625e4aa17261fe678fb5bac52da9cd2216d3373

@@ -1,0 +1,12 @@
+name: Content
+
+on:
+  push:
+    branches: [ content ]
+
+jobs:
+  curl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update mongo
+        run: curl -XGET --connect-timeout 15 http://jasonlong.xyz:3000/secret/updateMongo
