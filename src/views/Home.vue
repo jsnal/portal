@@ -5,7 +5,7 @@
       <li>Computer Science Student at North Carolina State University.</li>
       <li>Specifically interested in Systems Engineering and Embedded Software.</li>
       <li>Also into all things music.</li>
-      <li>See more <a href="/resume">here</a>.</li>
+      <li>See more <a href="/#/resume">here</a>.</li>
     </ul>
     <h2>Contact</h2>
     <ul>
