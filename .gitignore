@@ -24,4 +24,4 @@ yarn-error.log*
 *.sln
 *.sw?
 
-content/
+.nuxt

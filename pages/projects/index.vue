@@ -5,21 +5,21 @@
       <table id="projects-table">
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Title</th>
             <th>Description</th>
             <th>Git</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="project in projects" :key="project.name">
-            <td data-column="Name">
-              <router-link :to="'projects/' + project.name">
-                {{ project.name }}
+          <tr v-for="project in projects" :key="project.title">
+            <td data-column="Title">
+              <router-link :to="'projects/' + project.title">
+                {{ project.title }}
               </router-link>
             </td>
             <td data-column="Description">{{ project.description }}</td>
             <td data-column="Git">
-              <a :href="'https://github.com/jsnal/' + project.name" target="_blank">
+              <a :href="'https://github.com/jsnal/' + project.title" target="_blank">
                 <span class="material-icons-outlined">source</span>
               </a>
             </td>
@@ -33,14 +33,16 @@
 <script>
 export default {
   name: 'Projects',
+  async asyncData({ $content, params }) {
+    const projects = await $content('projects')
+      .only(['title', 'description', 'tags'])
+      .sortBy('createdAt', 'asc')
+      .fetch();
+
+    return { projects }
+  },
   data() {
     return {
-      projects: [
-        { name: 'i3wm', description: 'My linux configuration' },
-        { name: 'paste-light', description: 'Lightweight paste system that is managed from the terminal' },
-        { name: 'vim-serape', description: 'A bright and vivid vim colorscheme' },
-        { name: 'portal', description: 'This website\'s code!' },
-      ]
     };
   },
 };

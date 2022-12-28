@@ -1,23 +1,19 @@
 <template>
   <nav class="navbar">
     <ul class="navbar-links">
-      <li :class="{ active: currentPage === 'Home' }">
-        <router-link class="navbar-logo" to="/">Jason Long</router-link>
+      <li>
+        <NuxtLink class="navbar-logo" to="/">Jason Long</NuxtLink>
         <div class="navbar-toggle">
-          <span class="material-icons-outlined" style="color: #ffffff" v-on:click="isToggled = !isToggled">menu</span>
+          <span class="material-icons-outlined" style="color: #ffffff" v-on:click="is_toggled = !is_toggled">
+            menu
+          </span>
         </div>
       </li>
-      <li class="navbar-child-link" :class="{
-        toggle: isToggled,
-        active: currentPage != undefined && currentPage.includes('Project')
-      }">
-        <router-link class="navbar-link" to="/projects">Projects</router-link>
+      <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
+        <NuxtLink class="navbar-link" to="/projects">Projects</NuxtLink>
       </li>
-      <li class="navbar-child-link" :class="{
-        toggle: isToggled,
-        active: currentPage === 'Resume'
-      }">
-        <router-link class="navbar-link" to="/resume">Resume</router-link>
+      <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
+        <NuxtLink class="navbar-link" to="/resume">Resume</NuxtLink>
       </li>
     </ul>
   </nav>
@@ -29,15 +25,12 @@ export default {
   name: 'navbar',
   data() {
     return {
-      isToggled: false,
-      currentPage: this.$route.name,
+      is_toggled: false,
     };
   },
   watch: {
     $route(to) {
-      this.currentPage = to.name;
-      this.isToggled = false;
-      document.title = this.currentPage;
+      // this.isToggled = false;
     },
   },
 };
@@ -65,6 +58,11 @@ export default {
   display: none;
 }
 
+/* FIXME: Mobile rendering for this property */
+a.nuxt-link-exact-active {
+  background: #333333;
+}
+
 .navbar-link,
 .navbar-logo {
   text-decoration: none;
@@ -90,10 +88,6 @@ export default {
   right: 20px;
   height: 3.5em;
   cursor: pointer;
-}
-
-.active {
-  background: #333333;
 }
 
 .toggle {
