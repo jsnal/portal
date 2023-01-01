@@ -13,6 +13,9 @@
         <NuxtLink class="navbar-link" to="/projects">Projects</NuxtLink>
       </li>
       <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
+        <NuxtLink class="navbar-link" to="/wiki">Wiki</NuxtLink>
+      </li>
+      <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
         <NuxtLink class="navbar-link" to="/resume">Resume</NuxtLink>
       </li>
     </ul>

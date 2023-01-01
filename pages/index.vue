@@ -12,14 +12,23 @@
       <li><a class="info-link" href="https://github.com/jsnal" target="_blank">Github</a></li>
       <li><a class="info-link" href="mailto:jasonlongball@gmail.com">Email</a></li>
     </ul>
+    <h2>Recent Wiki Articles</h2>
+    <WikiList :articles="articles" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'index',
-  layout: 'default',
-  components: { }
+  async asyncData({ $content, params }) {
+    const articles = await $content('wiki')
+      .only(['title', 'slug', 'updatedAt', 'tags'])
+      .sortBy('updatedAt', 'desc')
+      .limit(10)
+      .fetch();
+
+    return { articles }
+  },
 }
 </script>
 

@@ -11,11 +11,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="project in projects" :key="project.title">
+          <tr v-for="project of projects" :key="project.slug">
             <td data-column="Title">
-              <router-link :to="'projects/' + project.title">
+              <NuxtLink :to="{ name: 'projects-slug', params: { slug: project.slug } }">
                 {{ project.title }}
-              </router-link>
+              </NuxtLink>
             </td>
             <td data-column="Description">{{ project.description }}</td>
             <td data-column="Git">
@@ -35,7 +35,7 @@ export default {
   name: 'Projects',
   async asyncData({ $content, params }) {
     const projects = await $content('projects')
-      .only(['title', 'description', 'tags'])
+      .only(['title', 'slug', 'description', 'tags'])
       .sortBy('createdAt', 'asc')
       .fetch();
 
@@ -48,4 +48,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
