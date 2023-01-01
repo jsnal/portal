@@ -16,7 +16,10 @@
                 </td>
                 <td data-column="Tags">
                     <IconText class="tags-icon-container" icon="sell">
-                        <a href="#" v-for="tag in article.tags">{{ tag }}</a>
+                        <NuxtLink v-for="tag in article.tags" :key="tag"
+                            :to="{ name: 'tags-slug', params: { slug: tag } }">
+                            <span>{{ tag }}</span>
+                        </NuxtLink>
                     </IconText>
                 </td>
                 <td data-column="Updated">
@@ -46,7 +49,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
 .tags-icon-container .portal-icon,
 .updated-icon-container .portal-icon {
     color: #777676;
@@ -55,7 +58,7 @@ export default {
 
 .tags-icon-container .portal-icon-text a {
     font-style: italic;
-    margin-right: .4rem;
+    margin-right: 0.4rem;
     font-size: 0.9rem;
 }
 

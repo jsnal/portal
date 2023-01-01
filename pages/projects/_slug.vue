@@ -25,7 +25,9 @@
       </IconText>
 
       <IconText class="tags-icon-container" icon="sell">
-        <a href="#" v-for="tag in project.tags">{{ tag }}</a>
+        <NuxtLink v-for="tag in project.tags" :key="tag" to="#">
+          <span>{{ tag }}</span>
+        </NuxtLink>
       </IconText>
     </div>
   </article>

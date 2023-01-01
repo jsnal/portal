@@ -16,7 +16,7 @@
         <NuxtLink class="navbar-link" to="/wiki">Wiki</NuxtLink>
       </li>
       <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
-        <NuxtLink class="navbar-link" to="/resume">Resume</NuxtLink>
+        <NuxtLink class="navbar-link" to="/tags">Tags</NuxtLink>
       </li>
     </ul>
   </nav>

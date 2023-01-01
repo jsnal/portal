@@ -1,8 +1,8 @@
 <template>
-  <div id="projects-home-container" class="container">
+  <div class="container">
     <div class="portal-body">
       <h1>Wiki Articles</h1>
-      <p>{{ articles.length }} found</p>
+      <p>{{ articles.length }} articles have been published</p>
       <WikiList :articles="articles" />
     </div>
   </div>

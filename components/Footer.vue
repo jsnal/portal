@@ -5,6 +5,9 @@
       <ul>
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/projects">Projects</router-link></li>
+        <li><router-link to="/wiki">Wiki</router-link></li>
+        <li><router-link to="/tags">Tags</router-link></li>
+        <li><router-link to="/resume">Resume</router-link></li>
       </ul>
     </div>
     <div class="footer-cell">
@@ -16,7 +19,8 @@
       </ul>
     </div>
     <div class="footer-cell">
-      <p>Made by Jason Long using <a href="https://vuejs.org" target="_blank">VueJS</a>.</p>
+      <p>Made by Jason Long using <a href="https://vuejs.org" target="_blank">VueJS</a> and <a
+          href="https://nuxtjs.org/" target="_blank">NuxtJS</a>.</p>
     </div>
   </footer>
 </template>

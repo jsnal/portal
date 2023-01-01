@@ -1,7 +1,7 @@
 ---
 title: paste-light
 description: Lightweight paste system that is managed from the terminal
-tags: [projects, c/c++]
+tags: [projects, c++]
 ---
 
 lightweight paste system that is managed from the terminal.

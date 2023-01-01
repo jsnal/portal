@@ -7,7 +7,9 @@
         <span>{{ formatDate(article.updatedAt) }}</span>
       </IconText>
       <IconText class="tags-icon-container" icon="sell">
-        <a href="#" v-for="tag in article.tags">{{ tag }}</a>
+        <NuxtLink v-for="tag in article.tags" :key="tag" :to="{ name: 'tags-slug', params: { slug: tag } }">
+          <span>{{ tag }}</span>
+        </NuxtLink>
       </IconText>
     </div>
   </article>
