@@ -36,7 +36,7 @@ export default {
   async asyncData({ $content, params }) {
     const projects = await $content('projects')
       .only(['title', 'slug', 'description', 'tags'])
-      .sortBy('updatedAt', 'desc')
+      .sortBy('gitUpdatedAt', 'desc')
       .fetch();
 
     return { projects }

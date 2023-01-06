@@ -22,8 +22,8 @@ export default {
   name: 'index',
   async asyncData({ $content, params }) {
     const articles = await $content('wiki')
-      .only(['title', 'slug', 'updatedAt', 'tags'])
-      .sortBy('updatedAt', 'desc')
+      .only(['title', 'slug', 'gitUpdatedAt', 'tags'])
+      .sortBy('gitUpdatedAt', 'desc')
       .limit(10)
       .fetch();
 

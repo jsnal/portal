@@ -4,7 +4,7 @@
     <nuxt-content :document="article" />
     <div id="article-metadata">
       <IconText class="updated-icon-container" icon="calendar_month">
-        <span>{{ formatDate(article.updatedAt) }}</span>
+        <span>{{ formatDate(article.gitUpdatedAt) }}</span>
       </IconText>
       <IconText class="tags-icon-container" icon="sell">
         <NuxtLink v-for="tag in article.tags" :key="tag" :to="{ name: 'tags-slug', params: { slug: tag } }">

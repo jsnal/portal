@@ -14,9 +14,9 @@ export default {
     async asyncData({ $content, params }) {
         const tag = await $content('tags', params.slug).fetch()
         const articles = await $content('wiki')
-            .only(['title', 'slug', 'updatedAt', 'tags'])
+            .only(['title', 'slug', 'gitUpdatedAt', 'tags'])
             .where({ tags: { $contains: tag.name } })
-            .sortBy('updatedAt', 'desc')
+            .sortBy('gitUpdatedAt', 'desc')
             .fetch();
 
         return { tag, articles }

@@ -21,7 +21,7 @@
     <nuxt-content :document="project" />
     <div id="project-metadata">
       <IconText class="updated-icon-container" icon="calendar_month">
-        <span>{{ formatDate(project.updatedAt) }}</span>
+        <span>{{ formatDate(project.gitUpdatedAt) }}</span>
       </IconText>
 
       <IconText class="tags-icon-container" icon="sell">

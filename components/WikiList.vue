@@ -24,7 +24,7 @@
                 </td>
                 <td data-column="Updated">
                     <IconText class="updated-icon-container" icon="calendar_month">
-                        <span>{{ formatDate(article.updatedAt) }}</span>
+                        <span>{{ formatDate(article.gitUpdatedAt) }}</span>
                     </IconText>
                 </td>
             </tr>
