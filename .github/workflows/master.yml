@@ -29,4 +29,4 @@ jobs:
           chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy
-        run: rsync -avz dist root@jalong.xyz:/var/www/portal
+        run: rsync -avz dist/* root@jalong.xyz:/var/www/portal
