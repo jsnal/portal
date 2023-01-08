@@ -8,7 +8,7 @@ This is some example code that can be used to return an `ArrayList<String>` from
 ```cpp
 extern "C"
 JNIEXPORT jobject JNICALL
-Java_com_example_jni_JNITest_testing(JNIEnv *env, jobject, jstring j_pcap_path)
+Java_com_example_jni_JNITest_testing(JNIEnv *env, jobject)
     // Setup a sample vector
     std::vector<std::string> my_strings;
     my_strings.push_back("A");
