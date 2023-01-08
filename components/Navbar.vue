@@ -33,7 +33,7 @@ export default {
   },
   watch: {
     $route(to) {
-      // this.isToggled = false;
+      this.is_toggled = false;
     },
   },
 };
@@ -61,8 +61,7 @@ export default {
   display: none;
 }
 
-/* FIXME: Mobile rendering for this property */
-a.nuxt-link-exact-active {
+.navbar-child-link>a.nuxt-link-active {
   background: #333333;
 }
 
