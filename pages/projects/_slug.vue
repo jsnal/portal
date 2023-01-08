@@ -23,11 +23,14 @@
       <IconText class="updated-icon-container" icon="calendar_month">
         <span>{{ formatDate(project.gitUpdatedAt) }}</span>
       </IconText>
-
       <IconText class="tags-icon-container" icon="sell">
         <NuxtLink v-for="tag in project.tags" :key="tag" to="#">
           <span>{{ tag }}</span>
         </NuxtLink>
+      </IconText>
+      <IconText class="updated-icon-container" icon="edit">
+        <a :href="'https://github.com/jsnal/portal/blob/master/content' + project.path + project.extension"
+          target="_blank">Edit</a>
       </IconText>
     </div>
   </article>

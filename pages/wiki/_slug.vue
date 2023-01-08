@@ -11,6 +11,10 @@
           <span>{{ tag }}</span>
         </NuxtLink>
       </IconText>
+      <IconText class="updated-icon-container" icon="edit">
+        <a :href="'https://github.com/jsnal/portal/blob/master/content' + article.path + article.extension"
+          target="_blank">Edit</a>
+      </IconText>
     </div>
   </article>
 </template>
