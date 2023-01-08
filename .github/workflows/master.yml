@@ -23,7 +23,7 @@ jobs:
         run: npm run generate
 
       - name: SSH Authorized Keys
-        run: echo ${{ secrets.DEPLOY_SSH_PRIVATE }} > ~/.ssh/id_rsa
+        run: echo "${{ secrets.DEPLOY_SSH_PRIVATE }}" > ~/.ssh/id_rsa
 
       - name: SSH Known Hosts
         run: ssh-keyscan -H jalong.xyz >> ~/.ssh/known_hosts
