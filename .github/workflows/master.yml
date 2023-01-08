@@ -1,0 +1,32 @@
+name: Master
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Node.js
+        uses: actions/setup-node@v1
+
+      - name: Dependencies
+        run: npm install
+
+      - name: Generate
+        run: npm run generate
+
+      - name: SSH Authorized Keys
+        run: echo ${{ secrets.DEPLOY_SSH_PRIVATE }} > ~/.ssh/id_rsa
+
+      - name: SSH Known Hosts
+        run: ssh-keyscan -H jalong.xyz >> ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: rsync -avz dist root@jalong.xyz:/var/www/portal

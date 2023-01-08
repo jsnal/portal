@@ -19,7 +19,7 @@
                                 {{ tag.name }}
                             </NuxtLink>
                         </td>
-                        <td data-column="Tags">
+                        <td data-column="Count">
                             {{ tag.count }}
                         </td>
                     </tr>
