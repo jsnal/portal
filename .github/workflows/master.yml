@@ -3,8 +3,6 @@ name: Master
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build-and-deploy:
@@ -22,11 +20,11 @@ jobs:
       - name: Generate
         run: npm run generate
 
-      - name: SSH Authorized Keys
-        run: echo "${{ secrets.DEPLOY_SSH_PRIVATE }}" > ~/.ssh/id_rsa
-
-      - name: SSH Known Hosts
-        run: ssh-keyscan -H jalong.xyz >> ~/.ssh/known_hosts
+      - name: SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_PRIVATE }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H jalong.xyz >> ~/.ssh/known_hosts
 
       - name: Deploy
         run: rsync -avz dist root@jalong.xyz:/var/www/portal
