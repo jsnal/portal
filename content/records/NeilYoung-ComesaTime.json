@@ -1,0 +1,53 @@
+{
+    "title": "Comes a Time",
+    "artist": "Neil Young",
+    "genre": "Rock",
+    "style": [
+        "Country Folk"
+    ],
+    "year": "1978",
+    "label": "Reprise",
+    "cover": "/records/NeilYoung-ComesaTime.jpg",
+    "tracklist": {
+        "0": {
+            "title": "Goin' Back",
+            "length": "4:43"
+        },
+        "1": {
+            "title": "Comes a Time",
+            "length": "3:05"
+        },
+        "2": {
+            "title": "Look Out for My Love",
+            "length": "3:35"
+        },
+        "3": {
+            "title": "Peace of Mind",
+            "length": "4:06"
+        },
+        "4": {
+            "title": "Lotta Love",
+            "length": "2:40"
+        },
+        "5": {
+            "title": "Human Highway",
+            "length": "3:09"
+        },
+        "6": {
+            "title": "Already One",
+            "length": "4:53"
+        },
+        "7": {
+            "title": "Field of Opportunity",
+            "length": "3:08"
+        },
+        "8": {
+            "title": "Motorcycle Mama",
+            "length": "3:08"
+        },
+        "9": {
+            "title": "Four Strong Winds",
+            "length": "4:07"
+        }
+    }
+}

@@ -1,0 +1,50 @@
+{
+    "title": "American Stars 'n Bars",
+    "artist": "Neil Young",
+    "genre": "Rock",
+    "style": [
+        "Hard Rock",
+        "Country Rock"
+    ],
+    "year": "1977",
+    "label": "Reprise & Warner Bros.",
+    "cover": "/records/NeilYoung-AmericanStars.jpg",
+    "tracklist": {
+        "0": {
+            "title": "The Old Country Waltz",
+            "length": "2:58"
+        },
+        "1": {
+            "title": "Saddle Up the Palomino",
+            "length": "3:00"
+        },
+        "2": {
+            "title": "Hey Babe",
+            "length": "3:35"
+        },
+        "3": {
+            "title": "Hold Back the Tears",
+            "length": "4:18"
+        },
+        "4": {
+            "title": "Bite the Bullet",
+            "length": "3:30"
+        },
+        "5": {
+            "title": "Star of Bethlehem",
+            "length": "2:42"
+        },
+        "6": {
+            "title": "Will to Love",
+            "length": "7:11"
+        },
+        "7": {
+            "title": "Like a Hurricane",
+            "length": "8:20"
+        },
+        "8": {
+            "title": "Homegrown",
+            "length": "2:20"
+        }
+    }
+}

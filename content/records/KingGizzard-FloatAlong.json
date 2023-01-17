@@ -1,0 +1,46 @@
+{
+    "title": "Float Along - Fill Your Lungs",
+    "artist": "King Gizzard & the Lizard Wizard",
+    "genre": "Rock",
+    "style": [
+        "Psychedelic Rock",
+        "Garage Rock"
+    ],
+    "year": "2013",
+    "label": "Flightless",
+    "cover": "/records/KingGizzard-FloatAlong.jpg",
+    "tracklist": {
+        "0": {
+            "title": "Head On/Pill",
+            "length": "15:59"
+        },
+        "1": {
+            "title": "I'm Not a Man Unless I Have a Woman",
+            "length": "2:54"
+        },
+        "2": {
+            "title": "God Is Calling Me Back Home",
+            "length": "4:24"
+        },
+        "3": {
+            "title": "30 Past 7",
+            "length": "3:43"
+        },
+        "4": {
+            "title": "Let Me Mend the Past",
+            "length": "3:30"
+        },
+        "5": {
+            "title": "Mystery Jack",
+            "length": "2:48"
+        },
+        "6": {
+            "title": "Pop In My Step",
+            "length": "2:50"
+        },
+        "7": {
+            "title": "Float Along - Fill Your Lungs",
+            "length": "6:45"
+        }
+    }
+}

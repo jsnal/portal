@@ -1,0 +1,38 @@
+{
+    "title": "Breezin'",
+    "artist": "George Benson",
+    "genre": "Jazz",
+    "style": [
+        "Smooth Jazz",
+        "Jazz-Funk"
+    ],
+    "year": "1976",
+    "label": "Capital",
+    "cover": "/records/GeorgeBenson-Breezin.jpg",
+    "tracklist": {
+        "0": {
+            "title": "Breezin'",
+            "length": "5:40"
+        },
+        "1": {
+            "title": "This Masquerade",
+            "length": "8:03"
+        },
+        "2": {
+            "title": "Six to Four",
+            "length": "5:06"
+        },
+        "3": {
+            "title": "Affirmation",
+            "length": "7:01"
+        },
+        "4": {
+            "title": "So This is Love?",
+            "length": "7:03"
+        },
+        "5": {
+            "title": "Lady",
+            "length": "5:49"
+        }
+    }
+}

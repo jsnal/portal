@@ -1,0 +1,46 @@
+{
+    "title": "Signals",
+    "artist": "Rush",
+    "genre": "Rock",
+    "style": [
+        "Hard Rock",
+        "Prog Rock"
+    ],
+    "year": "1982",
+    "label": "Anthem",
+    "cover": "/records/Rush-Signals.jpg",
+    "tracklist": {
+        "0": {
+            "title": "Subdivisions",
+            "length": "5:34"
+        },
+        "1": {
+            "title": "The Analog Kid",
+            "length": "4:47"
+        },
+        "2": {
+            "title": "Chemistry",
+            "length": "4:56"
+        },
+        "3": {
+            "title": "Digital Man",
+            "length": "6:23"
+        },
+        "4": {
+            "title": "The Weapon",
+            "length": "6:27"
+        },
+        "5": {
+            "title": "New World Man",
+            "length": "3:44"
+        },
+        "6": {
+            "title": "Losing It",
+            "length": "4:53"
+        },
+        "7": {
+            "title": "Countdown",
+            "length": "5:48"
+        }
+    }
+}

@@ -1,0 +1,77 @@
+{
+    "title": "Live Rust",
+    "artist": "Neil Young",
+    "genre": "Rock",
+    "style": [
+        "Hard Rock"
+    ],
+    "year": "1979",
+    "label": "Reprise",
+    "cover": "/records/NeilYoung-LiveRust.jpg",
+    "tracklist": {
+        "0": {
+            "title": "Sugar Mountain",
+            "length": "4:53"
+        },
+        "1": {
+            "title": "I Am a Child",
+            "length": "2:53"
+        },
+        "2": {
+            "title": "Comes a Time",
+            "length": "3:05"
+        },
+        "3": {
+            "title": "After the Gold Rust",
+            "length": "3:38"
+        },
+        "4": {
+            "title": "My My, Hey Hey (Out of the Blue)",
+            "length": "3:49"
+        },
+        "5": {
+            "title": "When You Dance I Can Really Love",
+            "length": "3:39"
+        },
+        "6": {
+            "title": "The Loner",
+            "length": "4:51"
+        },
+        "7": {
+            "title": "The Needle and the Damage Done",
+            "length": "2:12"
+        },
+        "8": {
+            "title": "Lotta Love",
+            "length": "3:39"
+        },
+        "9": {
+            "title": "Sedan Delivery",
+            "length": "4:46"
+        },
+        "10": {
+            "title": "Powderfinger",
+            "length": "5:29"
+        },
+        "11": {
+            "title": "Cortez the Killer",
+            "length": "7:25"
+        },
+        "12": {
+            "title": "Cinnamon Girl",
+            "length": "3:08"
+        },
+        "13": {
+            "title": "Like a Hurricane",
+            "length": "7:10"
+        },
+        "14": {
+            "title": "Hey Hey, My My (Into the Black)",
+            "length": "4:59"
+        },
+        "15": {
+            "title": "Tonight's the Night",
+            "length": "6:59"
+        }
+    }
+}
