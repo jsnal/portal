@@ -16,7 +16,6 @@ export default {
                 { slug: 'index', name: 'Portal' },
                 { slug: 'wiki', name: 'Portal: Wiki' },
                 { slug: 'tags', name: 'Portal: Tags' },
-                { slug: 'projects', name: 'Portal: Projects' },
                 { slug: 'resume', name: 'Portal: Resume' },
             ]
         }
