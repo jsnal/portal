@@ -43,8 +43,14 @@ export default {
                 .where({ tags: { $contains: tags[tag].name } })
                 .fetch();
 
-            tags[tag].count = articles.length;
+            const books = await $content('books')
+                .only(['title'])
+                .where({ tags: { $contains: tags[tag].name } })
+                .fetch();
+
+            tags[tag].count = articles.length + books.length;
         }
+
 
         tags.sort((a, b) => {
             return a.count < b.count;

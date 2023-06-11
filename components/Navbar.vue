@@ -10,10 +10,10 @@
         </div>
       </li>
       <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
-        <NuxtLink class="navbar-link" to="/projects">Projects</NuxtLink>
+        <NuxtLink class="navbar-link" to="/wiki">Wiki</NuxtLink>
       </li>
       <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
-        <NuxtLink class="navbar-link" to="/wiki">Wiki</NuxtLink>
+        <NuxtLink class="navbar-link" to="/books">Books</NuxtLink>
       </li>
       <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
         <NuxtLink class="navbar-link" to="/tags">Tags</NuxtLink>
