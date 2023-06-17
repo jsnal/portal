@@ -4,6 +4,7 @@
       <p class="footer-header">Site</p>
       <ul>
         <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/books">Books</router-link></li>
         <li><router-link to="/wiki">Wiki</router-link></li>
         <li><router-link to="/tags">Tags</router-link></li>
         <li><router-link to="/resume">Resume</router-link></li>
@@ -23,8 +24,6 @@
     </div>
   </footer>
 </template>
-
-<script></script>
 
 <style scoped>
 p {

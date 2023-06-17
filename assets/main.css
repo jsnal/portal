@@ -207,43 +207,12 @@ button::-moz-focus-inner {
   border-bottom: 1px solid #e1e1e1;
 }
 
+.portal-body .portal-td-hide {
+  display: auto;
+}
+
 @media only screen and (max-width: 768px) {
-
-  .portal-body table,
-  .portal-body thead,
-  .portal-body tbody,
-  .portal-body th,
-  .portal-body td,
-  .portal-body tr {
-    display: block;
-  }
-
-  .portal-body thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
-  .portal-body td:nth-child(3n) {
-    border-bottom: 1px solid #000;
-  }
-
-  .portal-body td {
-    border: none;
-    border-bottom: 1px solid #e1e1e1;
-    position: relative;
-    padding-left: 50%;
-  }
-
-  .portal-body td:before {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-    content: attr(data-column);
-    color: #000;
-    font-weight: bold;
+  .portal-body .portal-td-hide {
+    display: none;
   }
 }

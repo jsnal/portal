@@ -3,7 +3,6 @@
         <span class="portal-icon material-icons-outlined">{{ icon }}</span>
         <div class="portal-icon-text">
             <slot></slot>
-            <!-- {{ text }} -->
         </div>
     </div>
 </template>
@@ -13,7 +12,6 @@ export default {
     name: 'IconText',
     props: {
         'icon': String,
-        'text': String
     }
 }
 </script>

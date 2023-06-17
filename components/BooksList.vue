@@ -1,45 +1,50 @@
 <template>
-    <table id="book-table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Rating</th>
-                <th>Tags</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="book in books" :key="book.slug">
-                <td data-column="Title">
-                    {{ book.title }}
-                </td>
-                <td data-column="Author">
-                    {{ book.author }}
-                </td>
-                <td data-column="Rating">
-                    <StarRating :rating="book.rating" />
-                </td>
-                <td data-column="Tags">
-                    <IconText class="tags-icon-container" icon="sell">
+    <div id="book-list">
+        <List :rows="books" :columns="columns">
+            <template>
+                <tr v-for="book in books" :key="book.slug">
+                    <td data-column="Title">
+                        {{ book.title }}
+                    </td>
+                    <td data-column="Author">
+                        {{ book.author }}
+                    </td>
+                    <td data-column="Rating" class="portal-td-hide">
+                        <StarRating :rating="book.rating" />
+                    </td>
+                    <td data-column="Tags" class="portal-td-hide">
+                        <IconText class="tags-icon-container" icon="sell">
                         <NuxtLink v-for="tag in book.tags" :key="tag"
-                            :to="{ name: 'tags-slug', params: { slug: tag } }">
-                            <span>{{ tag }}</span>
+                                  :to="{ name: 'tags-slug', params: { slug: tag } }">
+                        <span>{{ tag }}</span>
                         </NuxtLink>
-                    </IconText>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                        </IconText>
+                    </td>
+                </tr>
+            </template>
+        </List>
+    </div>
 </template>
 
 <script>
 import IconText from './IconText.vue';
+import List from './List.vue';
+
 export default {
     name: 'BooksList',
-    components: { IconText },
+    components: { IconText, List },
     props: {
         'books': Array
     },
+    data() {
+        const columns = [
+            { name: 'Title', hide: false },
+            { name: 'Author', hide: false },
+            { name: 'Rating', hide: true },
+            { name: 'Tags', hide: true },
+        ]
+        return { columns }
+    }
 }
 </script>
 
