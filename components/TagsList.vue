@@ -1,32 +1,29 @@
 <template>
-    <table id="tags-table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Tags</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="entry in entries" :key="entry.slug">
-                <td data-column="Title">
-                    <NuxtLink :to="{ name: 'wiki-slug', params: { slug: entry.slug } }" v-if="entry.dir === '/wiki'">
-                        {{ entry.title }}
-                    </NuxtLink>
-                    <NuxtLink :to="{ name: 'books' }" v-else-if="entry.dir === '/books'">
-                        {{ entry.title }}
-                    </NuxtLink>
-                </td>
-                <td data-column="Tags">
-                    <IconText class="tags-icon-container" icon="sell">
-                        <NuxtLink v-for="tag in entry.tags" :key="tag"
-                            :to="{ name: 'tags-slug', params: { slug: tag } }">
-                            <span>{{ tag }}</span>
+    <div id="tags-table">
+        <List :rows="entries" :columns="columns">
+            <template>
+                <tr v-for="entry in entries" :key="entry.slug">
+                    <td data-column="Title">
+                        <NuxtLink :to="{ name: 'wiki-slug', params: { slug: entry.slug } }"
+                                  v-if="entry.dir === '/wiki'">
+                            {{ entry.title }}
                         </NuxtLink>
-                    </IconText>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                        <NuxtLink :to="{ name: 'books' }" v-else-if="entry.dir === '/books'">
+                            {{ entry.title }}
+                        </NuxtLink>
+                    </td>
+                    <td data-column="Tags" class="portal-td-hide">
+                        <IconText class="tags-icon-container" icon="sell">
+                            <NuxtLink v-for="tag in entry.tags" :key="tag"
+                                :to="{ name: 'tags-slug', params: { slug: tag } }">
+                                <span>{{ tag }}</span>
+                            </NuxtLink>
+                        </IconText>
+                    </td>
+                </tr>
+            </template>
+        </List>
+    </div>
 </template>
 
 <script>
@@ -37,6 +34,14 @@ export default {
     props: {
         'entries': Array
     },
+    data() {
+        const columns = [
+            { name: 'Title', hide: false },
+            { name: 'Tags', hide: true },
+        ];
+
+        return { columns }
+    }
 }
 </script>
 

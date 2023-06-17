@@ -41,8 +41,9 @@ export default {
             { name: 'Title', hide: false },
             { name: 'Author', hide: false },
             { name: 'Rating', hide: true },
-            { name: 'Tags', hide: true },
-        ]
+            { name: 'Tags', hide: true }
+        ];
+
         return { columns }
     }
 }

@@ -5,14 +5,9 @@
             <p>{{ tags.length }} unique tags have been found</p>
             <input type="text" id="tags-search" placeholder="Search Tags..."
                 v-on:keyup="filterTags($event.target.value)" />
-            <table id="tags-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Count</th>
-                    </tr>
-                </thead>
-                <tbody>
+
+            <List :rows="filteredTags" :columns="columns">
+                <template>
                     <tr v-for="tag in filteredTags" :key="tag.slug">
                         <td data-column="Name">
                             <NuxtLink :to="{ name: 'tags-slug', params: { slug: tag.slug } }">
@@ -23,8 +18,8 @@
                             {{ tag.count }}
                         </td>
                     </tr>
-                </tbody>
-            </table>
+                </template>
+            </List>
         </div>
     </div>
 </template>
@@ -51,14 +46,17 @@ export default {
             tags[tag].count = articles.length + books.length;
         }
 
-
-        tags.sort((a, b) => {
-            return a.count < b.count;
-        });
-
         const filteredTags = tags;
 
         return { filteredTags, tags }
+    },
+    data() {
+        const columns = [
+            { name: 'Name', hide: false },
+            { name: 'Count', hide: false },
+        ];
+
+        return { columns }
     },
     methods: {
         filterTags(keyword) {
