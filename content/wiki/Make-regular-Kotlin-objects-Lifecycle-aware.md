@@ -5,7 +5,7 @@ tags: [kotlin, android, wiki]
 
 I've found myself trying to bind a plain old Java object (POJO) to an Android lifecycle so many times. It's really common to have an object that keeps up with the device battery life and posts changes to a `LiveData` object. The problem is, you have to observe the battery life on an Android broadcast which means you need to have a context instance. Of course, this can result in a memory leak if the context is destroyed but the this object still references it, thus it's never garbage collected. Then, the next time the view is created, a new context is passed into a new object.
 
-To deal with this, Android gives us `LifecycleObserver` which allows a regular object to observe the lifecycle changes of an Android view. For example, say we have a `MainActivity` and a helper class that checks the time every 10 seconds. Our helper class may look something like this:
+To deal with this, Android gives us `LifecycleObserver` which allows a regular object to observe the lifecycle changes of an Android view. For example, say we have a `MainActivity` and a helper class that checks the time every second (bad example, I know). Our helper class may look something like this:
 
 ```kotlin
 class TimeHelper
@@ -73,7 +73,7 @@ class TimeHelper : DefaultLifecycleObserver
 }
 ```
 
-Now, based on the state of some lifecycle the `TimerHelper` will start and stop. However, we still haven't hooked up this object to the `MainActivity`. The last step is to register the observer with the `MainAcitivty`'s lifecycle owner.
+Now, based on the state of some lifecycle the `TimerHelper` will start and stop. However, we still haven't hooked up this object to the `MainActivity`. The last step is to register the observer with the `MainActivity`'s lifecycle owner.
 
 ```kotlin
 class MainActivity : AppCompatActivity 
