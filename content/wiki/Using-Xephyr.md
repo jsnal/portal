@@ -1,6 +1,7 @@
 ---
 title: Using Xephyr
 tags: [linux, wiki]
+updated: Dec 31 2022
 ---
 [Xephyr](https://freedesktop.org/wiki/Software/Xephyr) is a nested X server that runs as an X application. You can start a basic nested X window by running the following.
 

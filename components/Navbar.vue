@@ -4,7 +4,7 @@
       <li>
         <NuxtLink class="navbar-logo" to="/">Jason Long</NuxtLink>
         <div class="navbar-toggle">
-          <span class="material-icons-outlined" style="color: #ffffff" v-on:click="is_toggled = !is_toggled">
+          <span class="material-icons-outlined" style="color: #ffffff" @click="is_toggled = !is_toggled">
             menu
           </span>
         </div>
@@ -13,30 +13,16 @@
         <NuxtLink class="navbar-link" to="/wiki">Wiki</NuxtLink>
       </li>
       <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
-        <NuxtLink class="navbar-link" to="/books">Books</NuxtLink>
-      </li>
-      <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
         <NuxtLink class="navbar-link" to="/tags">Tags</NuxtLink>
       </li>
     </ul>
   </nav>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 
-export default {
-  name: 'navbar',
-  data() {
-    return {
-      is_toggled: false,
-    };
-  },
-  watch: {
-    $route(to) {
-      this.is_toggled = false;
-    },
-  },
-};
+const is_toggled = ref(false);
 </script>
 
 <style scoped>
@@ -61,7 +47,7 @@ export default {
   display: none;
 }
 
-.navbar-child-link>a.nuxt-link-active {
+.navbar-child-link>a.router-link-active {
   background: #333333;
 }
 

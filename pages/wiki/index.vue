@@ -8,20 +8,9 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Projects',
-  async asyncData({ $content, params }) {
-    const articles = await $content('wiki')
-      .only(['title', 'slug', 'gitUpdatedAt', 'tags'])
-      .sortBy('gitUpdatedAt', 'desc')
-      .fetch();
-
-    return { articles }
-  },
-};
+<script setup>
+const articles = await queryContent('wiki')
+    .only(['title', '_path', 'updated', 'tags'])
+    .sort({ updated: 1 })
+    .find();
 </script>
-
-<style scoped>
-
-</style>

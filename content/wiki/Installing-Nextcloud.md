@@ -1,6 +1,7 @@
 ---
 title: Installing Nextcloud
 tags: [selfhost, wiki]
+updated: Dec 31 2022
 ---
 If you have snap:
 

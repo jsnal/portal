@@ -3,11 +3,10 @@
     <div class="footer-cell">
       <p class="footer-header">Site</p>
       <ul>
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/books">Books</router-link></li>
-        <li><router-link to="/wiki">Wiki</router-link></li>
-        <li><router-link to="/tags">Tags</router-link></li>
-        <li><router-link to="/resume">Resume</router-link></li>
+        <li><NuxtLink to="/">Home</NuxtLink></li>
+        <li><NuxtLink to="/wiki">Wiki</NuxtLink></li>
+        <li><NuxtLink to="/tags">Tags</NuxtLink></li>
+        <li><NuxtLink to="/resume">Resume</NuxtLink></li>
       </ul>
     </div>
     <div class="footer-cell">

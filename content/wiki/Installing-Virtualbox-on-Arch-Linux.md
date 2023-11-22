@@ -1,6 +1,7 @@
 ---
 title: Install VirtualBox on Arch Linux
 tags: [linux, wiki]
+updated: Dec 31 2022
 ---
 ```
 $ sudo pacman -S linux-headers

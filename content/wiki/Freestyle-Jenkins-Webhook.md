@@ -1,6 +1,7 @@
 ---
 title: Freestyle Jenkins Webhook
 tags: [selfhost, wiki]
+updated: Dec 31 2022
 ---
 1) Create a personal ai token for your user.
 

@@ -1,6 +1,7 @@
 ---
 title: Format JavaScript date
 tags: [javascript, wiki]
+updated: Dec 31 2022
 ---
 
 For custom-delimited date formats, you have to pull out the date (or time) components from a `DateTimeFormat` object (which is part of the ECMAScript Internationalization API), and then manually create a string with the delimiters you want.

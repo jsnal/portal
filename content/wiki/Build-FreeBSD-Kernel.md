@@ -1,11 +1,12 @@
 ---
 title: Build FreeBSD Kernel
 tags: [freebsd, wiki]
+updated: Oct 10 2023
 ---
 
 ## Setup
 
-FreeBSD usually stores the source code in `/usr/src`. If the source isn't there it can be cloned from [https://git.freebsd.org](here). The kernel doesn't need to be built in a specific location, it's just the convention.
+FreeBSD usually stores the source code in `/usr/src`. If the source isn't there it can be cloned from [here](https://git.freebsd.org). The kernel doesn't need to be built in a specific location, it's just the convention.
 
 ## Building
 

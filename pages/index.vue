@@ -4,7 +4,7 @@
     <ul>
       <li>Computer Science Student at North Carolina State University.</li>
       <li>Specifically interested in Low-Level Software.</li>
-      <li>See more <a href="/resume">here</a>.</li>
+      <!-- <li>See more <a href="/resume">here</a>.</li> -->
     </ul>
     <h2>Contact</h2>
     <ul>
@@ -16,18 +16,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'index',
-  async asyncData({ $content, params }) {
-    const articles = await $content('wiki')
-      .only(['title', 'slug', 'gitUpdatedAt', 'tags'])
-      .sortBy('gitUpdatedAt', 'desc')
-      .limit(10)
-      .fetch();
-
-    return { articles }
-  },
-}
+<script setup>
+const articles = await queryContent('wiki')
+    .only(['title', '_path', 'updated', 'tags'])
+    .sort({ updated: 1 })
+    .limit(10)
+    .find();
 </script>
 

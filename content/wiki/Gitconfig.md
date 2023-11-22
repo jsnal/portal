@@ -1,6 +1,7 @@
 ---
 title: Gitconfig
 tags: [git, wiki]
+updated: Nov 10 2023
 ---
 
 This is a living version of my gitconfig.

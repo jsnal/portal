@@ -1,6 +1,7 @@
 ---
 title: Git Cheatsheet
 tags: [git, wiki]
+updated: Dec 31 2022
 ---
 
 ## Install

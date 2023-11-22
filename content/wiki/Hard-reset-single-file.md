@@ -1,6 +1,7 @@
 ---
 title: Hard reset a single file
 tags: [git, wiki]
+updated: July 18 2023
 ---
 Usually I just want to reset the whole project using the following command:
 

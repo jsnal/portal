@@ -1,6 +1,7 @@
 ---
 title: Parsing RadioTap Headers
 tags: [c++, wiki]
+updated: Jan 13 2023
 ---
 
 RadioTap is a small header placed at the beginning of every 802.11 network frame. It provides information about the the packet and the radio that sent the packet. Not all packets come with a RadioTap header so it's important to check that the packet capture actually contains RadioTap header. Using `libpcap`, that can be done like by checking the data-link type.

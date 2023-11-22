@@ -1,6 +1,7 @@
 ---
 title: Command not found hook
 tags: [shell, wiki]
+updated: Dec 31 2022
 ---
 Getting output on commands in the arch repositories
 

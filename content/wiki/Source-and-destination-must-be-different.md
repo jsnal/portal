@@ -1,6 +1,7 @@
 ---
 title: Source and Destination must be different error
 tags: [android, wiki]
+updated: Dec 31 2022
 ---
 When building native NDK cpp code I frequently get an error that looks something like this...
 

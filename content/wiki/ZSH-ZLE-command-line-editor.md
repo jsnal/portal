@@ -1,6 +1,7 @@
 ---
 title: ZSH ZLE command line editor
 tags: [shell, wiki]
+updated: Dec 31 2022
 ---
 Using the built-in zsh zle functionality
 

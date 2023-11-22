@@ -1,6 +1,7 @@
 ---
 title: Enable st bell in PulseAudio
 tags: [linux, wiki]
+updated: Dec 31 2022
 ---
 Edit `/etc/pulse/default.pa` and add the following lines
 

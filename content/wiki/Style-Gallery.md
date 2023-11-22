@@ -1,6 +1,7 @@
 ---
 title: Style Gallery
 tags: [wiki]
+updated: Dec 31 2022
 ---
 
 This is a sample article show-casing how different kinds of Markdown syntax get marked up and styled when rendered on this website.

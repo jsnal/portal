@@ -24,41 +24,33 @@
     </table>
 </template>
 
-<script>
-export default {
-    name: 'List',
-    props: {
-        'columns': Array,
-        'rows': Array
-    },
-    data() {
-        var ascending = false;
-        var sortColumn = '';
+<script setup>
+import { ref } from 'vue';
 
-        return { ascending, sortColumn }
-    },
-    methods: {
-        sortTable: function(column) {
-            if (this.sortColumn === column) {
-                this.ascending = !this.ascending;
-            } else {
-                this.ascending = true;
-                this.sortColumn = column;
-            }
+const props = defineProps(['columns', 'rows']);
 
-            var ascending = this.ascending;
-            var sortIndex = column.toLowerCase();
+const ascending = ref(false);
+const sortColumn = ref('');
 
-            this.rows.sort(function(a, b) {
-                if (a[sortIndex] > b[sortIndex]) {
-                    return ascending ? 1 : -1;
-                } else if (a[sortIndex] < b[sortIndex]) {
-                    return ascending ? -1 : 1;
-                }
-                return 0;
-            });
-        }
+function sortTable(column) {
+    if (this.sortColumn === column) {
+        this.ascending = !this.ascending;
+    } else {
+        this.ascending = true;
+        this.sortColumn = column;
     }
+
+    var ascending = this.ascending;
+    var sortIndex = column.toLowerCase();
+
+    props.rows.sort(function(a, b) {
+        if (a[sortIndex] > b[sortIndex]) {
+            return ascending ? 1 : -1;
+        } else if (a[sortIndex] < b[sortIndex]) {
+            return ascending ? -1 : 1;
+        }
+        return 0;
+    });
 }
 </script>
 

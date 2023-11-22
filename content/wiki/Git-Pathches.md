@@ -1,6 +1,7 @@
 ---
 title: Git Patches
 tags: [git, wiki]
+updated: Dec 31 2022
 ---
 ## Creating a Git Patch
 

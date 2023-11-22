@@ -7,11 +7,6 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'IconText',
-    props: {
-        'icon': String,
-    }
-}
+<script setup>
+defineProps(['icon']);
 </script>

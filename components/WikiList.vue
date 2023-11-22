@@ -1,57 +1,45 @@
 <template>
     <div id="wiki-table">
         <List :rows="articles" :columns="columns">
-            <template>
-                <tr v-for="article in articles" :key="article.slug">
-                    <td data-column="Title">
-                        <NuxtLink :to="{ name: 'wiki-slug', params: { slug: article.slug } }">
-                            {{ article.title }}
+            <tr v-for="article in articles" :key="article.slug">
+                <td data-column="Title">
+                    <NuxtLink :to="{ path: article._path }">
+                    {{ article.title }}
+                    </NuxtLink>
+                </td>
+                <td data-column="Tags" class="portal-td-hide">
+                    <IconText class="tags-icon-container" icon="sell">
+                        <NuxtLink v-for="tag in article.tags" :key="tag"
+                                  :to="{ path: 'tags/' + tag }">
+                            <span>{{ tag }}</span>
                         </NuxtLink>
-                    </td>
-                    <td data-column="Tags" class="portal-td-hide">
-                        <IconText class="tags-icon-container" icon="sell">
-                            <NuxtLink v-for="tag in article.tags" :key="tag"
-                                :to="{ name: 'tags-slug', params: { slug: tag } }">
-                                <span>{{ tag }}</span>
-                            </NuxtLink>
-                        </IconText>
-                    </td>
-                    <td data-column="Updated" class="portal-td-hide">
-                        <IconText class="updated-icon-container" icon="calendar_month">
-                            <span>{{ formatDate(article.gitUpdatedAt) }}</span>
-                        </IconText>
-                    </td>
-                </tr>
-            </template>
+                    </IconText>
+                </td>
+                <td data-column="Updated" class="portal-td-hide">
+                    <IconText class="updated-icon-container" icon="calendar_month">
+                        <span>{{ formatDate(article.updated) }}</span>
+                    </IconText>
+                </td>
+            </tr>
         </List>
     </div>
 </template>
 
-<script>
+<script setup>
 import IconText from './IconText.vue';
 import List from './List.vue';
 
-export default {
-    name: 'WikiList',
-    components: { IconText, List },
-    props: {
-        'articles': Array
-    },
-    data() {
-        const columns = [
-            { name: 'Title', hide: false },
-            { name: 'Tags', hide: true },
-            { name: 'Updated', hide: true }
-        ];
+defineProps(['articles']);
 
-        return { columns }
-    },
-    methods: {
-        formatDate(date) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' }
-            return new Date(date).toLocaleDateString('en', options)
-        }
-    }
+const columns = [
+    { name: 'Title', hide: false },
+    { name: 'Tags', hide: true },
+    { name: 'Updated', hide: true }
+];
+
+function formatDate(date) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(date).toLocaleDateString('en', options);
 }
 </script>
 

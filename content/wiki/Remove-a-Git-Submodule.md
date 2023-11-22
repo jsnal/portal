@@ -1,6 +1,7 @@
 ---
 title: Remove a Git Submodule
 tags: [git, wiki]
+updated: Dec 31 2022
 ---
 1) Delete the relevant section from the `.gitmodules` file.
 

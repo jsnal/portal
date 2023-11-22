@@ -1,6 +1,7 @@
 ---
 title: Using Valgrind
 tags: [c++, wiki]
+updated: Dec 31 2022
 ---
 Valgrind is a programming tool for memory debugging, memory leak detection, and profiling. It is mostly used when debugging C code that heavily uses `malloc` function calls.
 

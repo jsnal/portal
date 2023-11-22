@@ -1,6 +1,7 @@
 ---
 title: Returning ArrayList from Android JNI
 tags: [c++, android, wiki]
+updated: Jan 8 2023
 ---
 
 This is some example code that can be used to return an `ArrayList<String>` from C++ to Kotlin. Since there isn't a `jarraylist` in JNI, we have to use `jobject` and manually invoke the constructor. In this case, we are going from a `std::vector<const char*>` to `ArrayList<String>` so we will have to invoke the `ArrayList` contructor and then start appending `jstring`s to it.

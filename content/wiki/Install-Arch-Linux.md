@@ -1,6 +1,7 @@
 ---
 title: Install Arch Linux
 tags: [linux, wiki]
+updated: Dec 31 2022
 ---
 ## Step 1: Create bootable disk
 

@@ -1,6 +1,7 @@
 ---
 title: Cross Compile GNU Radio for Android
 tags: [android, wiki]
+updated: Dec 31 2022
 ---
 Follow these steps to cross compile the LoRa and all of its dependencies for Android. This example can be used to cross compile most GNU radio applications.
 

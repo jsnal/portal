@@ -1,6 +1,7 @@
 ---
 title: Javadoc Style Guide
 tags: [java, wiki]
+updated: June 30 2023
 ---
 ## What to Document
 
@@ -48,7 +49,7 @@ public void foo() { … }
 
 ## Line Wrap
 
-A line of Javadoc should wrap at 100 characters and continue on the following line. This should be the default Android Studio wrap setting but if it's not, navigate to Editor > Code Style. Set hard wrap to 100. 
+A line of Javadoc should wrap at 100 characters and continue on the following line. This should be the default Android Studio wrap setting but if it's not, navigate to Editor > Code Style. Set hard wrap to 100.
 
 ## Block Tags
 

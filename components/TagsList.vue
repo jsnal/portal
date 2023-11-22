@@ -1,48 +1,34 @@
 <template>
     <div id="tags-table">
         <List :rows="entries" :columns="columns">
-            <template>
-                <tr v-for="entry in entries" :key="entry.slug">
-                    <td data-column="Title">
-                        <NuxtLink :to="{ name: 'wiki-slug', params: { slug: entry.slug } }"
-                                  v-if="entry.dir === '/wiki'">
-                            {{ entry.title }}
+            <tr v-for="entry in entries" :key="entry.slug">
+                <td data-column="Title">
+                    <NuxtLink :to="{ path: entry._path }" >
+                        {{ entry.title }}
+                    </NuxtLink>
+                </td>
+                <td data-column="Tags" class="portal-td-hide">
+                    <IconText class="tags-icon-container" icon="sell">
+                        <NuxtLink v-for="tag in entry.tags" :key="tag"
+                            :to="{ name: 'tags-slug', params: { slug: tag } }">
+                            <span>{{ tag }}</span>
                         </NuxtLink>
-                        <NuxtLink :to="{ name: 'books' }" v-else-if="entry.dir === '/books'">
-                            {{ entry.title }}
-                        </NuxtLink>
-                    </td>
-                    <td data-column="Tags" class="portal-td-hide">
-                        <IconText class="tags-icon-container" icon="sell">
-                            <NuxtLink v-for="tag in entry.tags" :key="tag"
-                                :to="{ name: 'tags-slug', params: { slug: tag } }">
-                                <span>{{ tag }}</span>
-                            </NuxtLink>
-                        </IconText>
-                    </td>
-                </tr>
-            </template>
+                    </IconText>
+                </td>
+            </tr>
         </List>
     </div>
 </template>
 
-<script>
+<script setup>
 import IconText from './IconText.vue';
-export default {
-    name: 'TagsList',
-    components: { IconText },
-    props: {
-        'entries': Array
-    },
-    data() {
-        const columns = [
-            { name: 'Title', hide: false },
-            { name: 'Tags', hide: true },
-        ];
 
-        return { columns }
-    }
-}
+defineProps(['entries']);
+
+const columns = [
+    { name: 'Title', hide: false },
+    { name: 'Tags', hide: true },
+];
 </script>
 
 <style>

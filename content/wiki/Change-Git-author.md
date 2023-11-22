@@ -1,6 +1,7 @@
 ---
 title: Change Git Author
 tags: [git, wiki]
+updated: Nov 10 2023
 ---
 
 Change the author for the last commit:

@@ -1,6 +1,7 @@
 ---
 title: Get APK Data Path
 tags: [android, wiki]
+updated: Dec 31 2022
 ---
 You can get the data path for a specific APK on your phone using adb.
 
