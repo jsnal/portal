@@ -22,6 +22,8 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 const tags = await queryContent('tags')
     .only(['name', 'description', '_path'])
     .find();
@@ -35,7 +37,7 @@ for (let tag in tags) {
     tags[tag].count = articles.length;
 }
 
-const filteredTags = tags;
+const filteredTags = ref(tags);
 
 const columns = [
     { name: 'Name', hide: false },
