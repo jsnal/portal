@@ -6,7 +6,6 @@
         <li><NuxtLink to="/">Home</NuxtLink></li>
         <li><NuxtLink to="/wiki">Wiki</NuxtLink></li>
         <li><NuxtLink to="/tags">Tags</NuxtLink></li>
-        <li><NuxtLink to="/resume">Resume</NuxtLink></li>
       </ul>
     </div>
     <div class="footer-cell">

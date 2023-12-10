@@ -19,10 +19,9 @@ const entries = await queryContent('wiki')
     .sort({ updated: 1 })
     .find();
 
-function formatDate(date) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' }
-    return new Date(date).toLocaleDateString('en', options)
-}
+useHead({
+    title: tag.name
+});
 </script>
 
 <style scoped>

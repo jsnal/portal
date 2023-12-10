@@ -13,9 +13,12 @@
 <script setup>
 import { ref } from 'vue';
 
+useHead({
+    title: 'Portal - Wiki'
+});
+
 const articles = await queryContent('wiki')
     .only(['title', '_path', 'updated', 'tags'])
-    .sort({ updated: 1 })
     .find();
 
 const filteredArticles = ref(articles);

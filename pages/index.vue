@@ -17,6 +17,10 @@
 </template>
 
 <script setup>
+useHead({
+    title: 'Portal'
+});
+
 const articles = await queryContent('wiki')
     .only(['title', '_path', 'updated', 'tags'])
     .sort({ updated: 1 })

@@ -24,6 +24,10 @@
 <script setup>
 import { ref } from 'vue';
 
+useHead({
+    title: 'Portal - Tags'
+});
+
 const tags = await queryContent('tags')
     .only(['name', 'description', '_path'])
     .find();
