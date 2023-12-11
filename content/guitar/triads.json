@@ -1,0 +1,24 @@
+[
+    {
+        "name": "Root of 654",
+        "notes": [
+            { "fret": 4, "text": "1", "color": "red" },
+            { "fret": 3, "text": "3" },
+            { "fret": 1, "text": "5" },
+            { "fret": -1 },
+            { "fret": -1 },
+            { "fret": -1 }
+        ]
+    },
+    {
+        "name": "Root of 543",
+        "notes": [
+            { "fret": 4, "text": "1", "color": "red" },
+            { "fret": 3, "text": "3" },
+            { "fret": 1, "text": "5" },
+            { "fret": -1 },
+            { "fret": -1 },
+            { "fret": -1 }
+        ]
+    }
+]

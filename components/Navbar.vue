@@ -9,11 +9,14 @@
           </span>
         </div>
       </li>
-      <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
+      <li class="navbar-child-link" :class="{ toggle: is_toggled }">
         <NuxtLink class="navbar-link" to="/wiki">Wiki</NuxtLink>
       </li>
-      <li class="navbar-child-link" :class="{ toggle: is_toggled, }">
+      <li class="navbar-child-link" :class="{ toggle: is_toggled }">
         <NuxtLink class="navbar-link" to="/tags">Tags</NuxtLink>
+      </li>
+      <li class="navbar-child-link" :class="{ toggle: is_toggled }">
+        <NuxtLink class="navbar-link" to="/guitar">Guitar</NuxtLink>
       </li>
     </ul>
   </nav>
