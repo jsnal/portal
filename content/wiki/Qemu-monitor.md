@@ -24,3 +24,27 @@ x/80hx 0x000100a8
 ```
 
 More information [here](https://qemu-project.gitlab.io/qemu/system/monitor.html)
+
+QEMU can also take advantage of GDB using the following commands.
+
+1. Enable GDB server in QEMU
+
+```
+-S -s
+```
+
+2. Connect to it with GDB
+
+```
+$ gdb kernel.bin
+
+(gdb) target remote localhost:1234
+```
+
+3. Start execution
+
+```
+(gdb) continue
+```
+
+4. Normal GDB commands should work
