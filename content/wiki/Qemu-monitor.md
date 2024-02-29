@@ -1,7 +1,7 @@
 ---
 title: QEMU Monitor
 tags: [linux, wiki]
-updated: Jan 28 2024
+updated: Feb 29 2024
 ---
 QEMU Monitor is a tool to inspect the running instance of QEMU, similar to GDB.
 
@@ -48,3 +48,10 @@ $ gdb kernel.bin
 ```
 
 4. Normal GDB commands should work
+
+I like to use GDB with the following commands:
+
+
+```
+db Kernel -ex 'target remote localhost:1234' -ex 'layout asm' -ex 'layout regs'
+```
