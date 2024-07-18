@@ -2,9 +2,10 @@
   <div class="portal-body">
     <h1>Jason Long</h1>
     <ul>
-      <li>Computer Science Student at North Carolina State University.</li>
-      <li>Specifically interested in Low-Level Software.</li>
-      <li>See more <a href="/resume.pdf">here</a>.</li>
+      <li>Software Engineer</li>
+      <li>Interested low-level software specifically embedded systems and operating systems </li>
+      <li>Check out my x86 32-bit operating system <a href="https://github.com/jsnal/os">project</a></li>
+      <li>See more <a href="/resume.pdf">here</a></li>
     </ul>
     <h2>Contact</h2>
     <ul>
