@@ -13,16 +13,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 20
-
-      - name: Dependencies
-        run: npm install
-
-      - name: Generate
-        run: npm run generate
+      - name: Build
+        run: ./makes.sh
 
       - name: SSH
         run: |
@@ -33,4 +25,4 @@ jobs:
           chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy
-        run: rsync -avz dist/* root@jalong.xyz:/var/www/portal
+        run: rsync -avz build/* root@jalong.xyz:/var/www/portal
