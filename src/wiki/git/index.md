@@ -1,6 +1,6 @@
 ---
 title: Git
-description:
+description: Tips and tricks related to Git
 ---
 
 ## Cheatsheet
@@ -137,43 +137,41 @@ Show the difference between two branches
 $ git diff branchA...branchB
 ```
 
-## Remove a Git Submodule
+## Remove a Submodule
 
-1) Delete the relevant section from the `.gitmodules` file.
-
-2) Stage the `.gitmodules` changes:
+1. Delete the relevant section from the `.gitmodules` file.
+2. Stage the `.gitmodules` changes:
 
 ```
 git add .gitmodules
 ```
 
-3) Delete the relevant section from `.git/config`.
-
-4) Remove the submodule files from the working tree and index:
+3. Delete the relevant section from `.git/config`.
+4. Remove the submodule files from the working tree and index:
 
 ```
 git rm --cached path_to_submodule (no trailing slash).
 ```
 
-5) Remove the submodule's `.git` directory:
+5. Remove the submodule's `.git` directory:
 
 ```
 rm -rf .git/modules/path_to_submodule
 ```
 
-6) Commit the changes:
+6. Commit the changes:
 
 ```
 git commit -m "Removed submodule NAME"
 ```
 
-7) Delete the now untracked submodule files:
+7. Delete the now untracked submodule files:
 
 ```
 rm -rf path_to_submodule
 ```
 
-## Hard reset a single file
+## Hard reset file or directory
 
 Usually I just want to reset the whole project using the following command:
 
@@ -199,7 +197,7 @@ Or even get the file from another branch/commit.
 git restore -s branch path/to/file
 ```
 
-## Change Git Author
+## Change Author
 
 Change the author for the last commit:
 
@@ -216,35 +214,31 @@ git rebase -i HEAD~4 -x "git commit --amend --author 'Jason Long<jasonlongball@g
 Drop the `--no-edit` flag to get confirmation from amend operation. Use
 `git rebase -i` for manual rebasing for each commit.
 
-## Faster Git in WSL2
+## Search Log
 
-For some reason, the file system is super slow on `/mnt` in WSL2. I have tried
-both Debian and Ubuntu WSL with similar results. The main thing I use WSL for on
-my Windows file system is Git.
-[This](https://github.com/microsoft/WSL/issues/4401) thread has a good
-description of the problem and some solutions. Here is a suggestion someone made
-that I like. These lines go in my shell config somewhere:
+Search across all commits on all branches:
 
 ```
-function isWinDir {
-  case $PWD/ in
-    /mnt/*) return $(true);;
-    *) return $(false);;
-  esac
-}
-
-function git {
-  if isWinDir; then
-    git.exe "$@"
-  else
-    /usr/bin/git "$@"
-  fi
-}
+git log --all --grep="needle"
 ```
 
-## Git Patches
+Walk reglogs to find commits that are dangling:
 
-### Creating a Git Patch
+```
+git log -g --grep="needle"
+```
+
+Search through the diff changes between commits. Useful for finding commits that
+have changed a specific block of code:
+
+```
+git log -S"needle"
+git log -G"needle with regex"
+```
+
+## Patches
+
+### Creating a Patch
 
 First make sure the branch you're on has the commits you want to patch. Find a
 log of your branch with.
@@ -291,8 +285,33 @@ $ git am --signoff < PATCHNAME.patch
 More info [here](https://git-scm.com/docs/git-apply) and
 [here](https://git-scm.com/docs/git-am)
 
+## Faster WSL
 
-## Git Config
+For some reason, the file system is super slow on `/mnt` in WSL2. I have tried
+both Debian and Ubuntu WSL with similar results. The main thing I use WSL for on
+my Windows file system is Git.
+[This](https://github.com/microsoft/WSL/issues/4401) thread has a good
+description of the problem and some solutions. Here is a suggestion someone made
+that I like. These lines go in my shell config somewhere:
+
+```
+function isWinDir {
+  case $PWD/ in
+    /mnt/*) return $(true);;
+    *) return $(false);;
+  esac
+}
+
+function git {
+  if isWinDir; then
+    git.exe "$@"
+  else
+    /usr/bin/git "$@"
+  fi
+}
+```
+
+## Config
 
 Copy of my most recent Git config.
 
