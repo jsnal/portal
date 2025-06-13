@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Wiki - $title$</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+        <meta name="generator" content="pandoc" />
+        <link rel="stylesheet" href="/main.css" />
+    </head>
+    <header>
+        $for(include-before)$
+        $include-before$
+        $endfor$
+    </header>
+    <body>
+        <div id="content">
+            <h1 id="title">$title$</h1>
+            <p id="description">$description$</p>
+            <div id="toc">
+                $toc$
+            </div>
+            $body$
+            <div id="date">
+                <p>Page generated $date$</p>
+            </div>
+        </div>
+    </body>
+    <footer>
+        $for(include-after)$
+        $include-after$
+        $endfor$
+    </footer>
+</html>
+
