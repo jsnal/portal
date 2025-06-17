@@ -316,36 +316,8 @@ function git {
 Copy of my most recent Git config.
 
 ```
-[push]
-    default = matching
-[alias]
-    # Branch
-    co = checkout
-    cob = checkout -b
-    br = branch
-    st = -c color.status=always status -sb
-    cm = commit -v
-    rrh = reset --hard
-
-    # Pushing/Pulling
-    p = push
-    po = push origin
-    pom = push origin master
-    plo = pull origin
-    plom = pull origin master
-    a = add
-    aa = add -A
-
-    # Submodules
-    subi = submodule init
-    suba = submodule add
-    subu = submodule update --recursive --remote
-
-    # Misc
-    ack = grep --break --heading
-    lg = log --pretty=format:'%C(auto)%h%Creset%C(auto)%d%Creset %s %C(magenta bold)(%cr)%Creset %C(cyan)<%aN>%Creset'
 [core]
-    autocrlf = true
+    autocrlf = false
 [color]
     ui = true
 [status]
@@ -356,11 +328,31 @@ Copy of my most recent Git config.
     prompt = false
 [pull]
     rebase = false
+[push]
+    default = matching
 [user]
     # Work
     # name = Long, Jason
     # email = <work-email>
     # Personal
-    # name = Jason Long
-    # email = jasonlongball@gmail.com
+    name = Jason Long
+    email = jasonlongball@gmail.com
+[alias]
+    # Branch
+    co = checkout
+    br = branch
+    st = status -sb
+    cm = commit -v
+    rrh = reset --hard
+
+    # Pushing/Pulling
+    p = push
+    po = push origin
+    plo = pull origin
+    a = add
+    aa = add -A
+
+    # Misc
+    ack = grep --break --heading
+    lg = log --oneline --abbrev-commit
 ```
