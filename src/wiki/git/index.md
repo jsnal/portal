@@ -359,7 +359,7 @@ Copy of my most recent Git config.
 [user]
     # Work
     # name = Long, Jason
-    # email = jasonl@signalscape.com
+    # email = <work-email>
     # Personal
     # name = Jason Long
     # email = jasonlongball@gmail.com
