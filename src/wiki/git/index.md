@@ -236,6 +236,20 @@ git log -S"needle"
 git log -G"needle with regex"
 ```
 
+## Pruning branches
+
+Prune all local remote branches that refer to a deleted remote branch:
+
+```
+git fetch --prune
+```
+
+Prune all local branches that have been merged (excluding some branch names):
+
+```
+git branch --merged | grep -vE 'master$|main$|development$' | xargs -L1 git branch -D
+```
+
 ## Patches
 
 ### Creating a Patch
