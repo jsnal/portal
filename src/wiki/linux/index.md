@@ -3,6 +3,25 @@ title: Linux
 description:
 ---
 
+## Vim
+
+### Search
+
+Search for a string given a list of files. Wildcards may be used to search
+through multiple files. The file path is relative to the current working
+directory which can be found using `pwd`. All search results are added to the
+quickfix list.
+
+```
+vimgrep '<SEARCH>' <FILES>
+```
+
+Open ripgrep search results in vim with the quickfix list opened
+
+```
+rg --vimgrep '<SEARCH>' | vim -c cb -c copen
+```
+
 ## FFmpeg GIF
 
 Here is a way to record an FFmpeg video and covert it to a GIF
