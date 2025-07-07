@@ -22,6 +22,21 @@ Open ripgrep search results in vim with the quickfix list opened
 rg --vimgrep '<SEARCH>' | vim -c cb -c copen
 ```
 
+### Colors
+
+The 'default' Vim colorscheme uses the `background` variable to decide what
+colors to use. Setting the background to 'dark' will use an altered version of
+desert and setting the background to 'light' will use an altered version of
+peachpuff. The default palette used before any colorscheme is loaded can be
+found at `$VIMRUNTIME/syntax/syncolor.vim`. Check the current colorscheme:
+
+```
+:echo g:colors_name
+```
+
+All the active highlight groups can be displayed in a single buffer by editing
+`$VIMRUNTIME/syntax/hitest.vim`.
+
 ## FFmpeg GIF
 
 Here is a way to record an FFmpeg video and covert it to a GIF
