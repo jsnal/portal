@@ -37,6 +37,21 @@ found at `$VIMRUNTIME/syntax/syncolor.vim`. Check the current colorscheme:
 All the active highlight groups can be displayed in a single buffer by editing
 `$VIMRUNTIME/syntax/hitest.vim`.
 
+### Convert to HTML
+
+The current buffer or selected lines can be converted to HTML when syntax is
+enabled. If the current buffer is part of a diff, it will convert all buffers
+also part of the diff and display them in a table.
+
+```
+:10,40TOhtml " convert lines 10-40 to html
+:'<,'>TOhtml " convert current/last visual selection
+:TOhtml      " convert entire buffer
+```
+
+The above commands use the underlying builtin plugin `2html.vim`.There are a ton
+of options listed in `:h 2html.vim`.
+
 ## FFmpeg GIF
 
 Here is a way to record an FFmpeg video and covert it to a GIF
