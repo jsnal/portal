@@ -236,6 +236,22 @@ git log -S"needle"
 git log -G"needle with regex"
 ```
 
+## Finding dangling commits
+
+Full list of dangling commits, blobs, and trees:
+
+```
+git fsck --lost-found
+```
+
+Show the log for each dangling commit. This command can easily be updated to
+work with blobs or trees, or even use a different git command to process the
+hash.
+
+```
+git fsck --lost-found | awk '/dangling commit/ {print $3}' | xargs git log > log.txt
+```
+
 ## Pruning branches
 
 Prune all local remote branches that refer to a deleted remote branch:
