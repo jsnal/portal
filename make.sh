@@ -5,6 +5,7 @@ generate_html() {
         --to html5 \
         --toc \
         --toc-depth=2 \
+        --mathml \
         --standalone \
         --variable=date:"$(date)" \
         --include-before-body="templates/header.html" \
