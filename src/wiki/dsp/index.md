@@ -1,6 +1,5 @@
 ---
-title: Digital Signal Processing
-description:
+Title: Digital Signal Processing
 ---
 
 # Introduction
@@ -17,7 +16,7 @@ Below are the list of resources used to write these notes:
 
 * [PySDR](https://pysdr.org)
 * [Fourier Series](https://mathworld.wolfram.com/FourierSeries.html)
-  
+
 # Frequency Domain
 
 Time domain represents how a signal changes over time, usually showing its
@@ -39,7 +38,7 @@ and infinite amount. A signal can always be approximated with a limited number.
 This is a list of all the attributes a sine wave may have:
 
 * **Amplitude:** How strong the wave is
-* **Frequency:** The number of waves per second. Measured in Hertz.
+* **Frequency:** The number of waves per second. Measured in Hz.
 * **Phase:** How the wave is shifted in time, anywhere from 0 to 360 degrees (or 0
   to 2$\pi$). It must be relative to something to have meaning, such as two
   signals being 30 degrees out of phase with each other.
@@ -62,7 +61,7 @@ theoretically contains every frequency. Of course, this is not possible in
 nature as an impulse in the time domain would need to be infinitely short. The
 takeaway is that quick changes in the time domain result in many frequencies in
 the frequency domain.
-  
+
 ## Fourier Transform
 
 The operation used to go from the time domain to the frequency domain and back
@@ -75,7 +74,7 @@ The $j$ is simply the imaginary unit, used instead of $i$ because electrical
 engineers use $i$ to denote current in circuit diagrams. The continuous form is
 used in mathematics problems, while the discrete form is closer to what is
 implemented in code for engineering purposes.
-  
+
 ## Time-Frequency Properties
 
 There are five properties that tell us what happens in the frequency domain when
@@ -161,7 +160,7 @@ responds in real-time, which is referred to as a waterfall.
 
 IQ sampling is the form of sampling that an SDR performs, as will as many other
 digital receivers and transmitters.
-  
+
 Sampling is the process of periodically taking the value of a continuous, analog
 signal at a specific moment in time. An analog to digital converter (ADC) is
 used to sample and covert the analog electrical voltage into a digital number.
@@ -356,7 +355,7 @@ Technically, dB is not a unit but a relative measurement. An actual unit should
 be included if the measurement isn't being compared relative to something else:
 dBW is relative to 1 W, dBmW or dBm is relative to 1 mW, etc. Below is a table
 of conversions between linear and dB scale
-  
+
 | Linear  | dB  |
 |---------|-----|
 | 10000x  | 40  |
@@ -411,6 +410,34 @@ Most filters are represented as a single array of floats. The floats may be
 complex if the frequency domain is asymmetrical, otherwise they will be real
 floats. The array of floats is often referred to as **float taps** and the
 symbol $h$ used to denote it.
+
+## Convolution
+
+Convolution is another way to combine two signals into one but is different from
+adding. Instead, one of the signals is sliding across the other while
+integrating. Typically convolution is denoted with the $*$ symbol.
+
+Since the operation uses sliding integration, the output length will always be
+longer than the input. If one signal has $M$ samples and the other $N$, the
+convolution of the two will produce $M+N-1$ samples.
+
+![Convolution example](images/convolution.png){ width=50% }
+
+The mathematical equation for a convolution is as follows:
+
+$$(f * g)(t) = \int f(\tau) g(t - \tau) d\tau$$
+
+* $g(t)$ is the input signal that is flipped and slides across $f(t)$.
+* $g(t)$ and $f(t)$ may be swapped and it's still the same expression.
+
+## FIR vs IIR
+
+There are two classes of digital filters:
+
+* **Finite impulse response (FIR):** Easier to design and can do mostly anything
+  with enough taps. **Most** filters use FIR unless otherwise stated.
+* **Infinite impulse response (IIR):** More complicated with the potential to be
+  unstable but are more efficient in CPU and memory.
 
 # Link Budgets
 
@@ -524,3 +551,155 @@ $$P_{noise} = kTB$$
 Using this equation in conjunction with the power budget equation gives us both
 parts of an SNR calculation. Typically, we want an SNR greater than 10 dB but it
 largely depends on the situation.
+
+# Channel Coding
+
+The purpose of channel coding, sometimes referred to as forward error correction
+(FEC), is to detect and correct errors at the receiver end. Allowing for some
+amount of error allows higher order modulation schemes to be used which will
+increase the overall data rate of the connection. Sending too many bytes per
+symbol may also be problematic because it makes it more likely to be interpreted
+as a different bit.
+
+In a protocol like TCP, cyclic redundancy checks (CRCs) are used to detect when a
+message has errors. A failed CRC check usually results in a re-transmission which
+can be costly. Channel coding attempts to reduce the number of these failures by
+introducing redundant information into the transmission.
+
+## Types of Codes and Code-Rate
+
+Channel coding uses an **error correction code** to determine which bits to
+transmit from the bits that must be transmitted. There are two types of codes
+that manipulate the data differently.
+
+* **Block codes:** Work in blocks of definite length.
+* **Convolutional codes:** Work in a stream of data that has an arbitrary length.
+
+Since every channel coding scheme includes some form of redundancy, there will
+always be extra data sent than *needed*. Code-rate is the ratio between the
+number of information bits and the total number of bits sent. As such, the ratio
+will always be less than 1 because like mentioned earlier, there will always be
+some amount of redundancy which causes inefficiencies. A lower code-rate means
+more redundancy and less data throughput.
+
+## Modulation and Coding
+
+Similar to digital modulation, the SNR dictates how much redundancy should be
+used. A low SNR should use a low code-rate channel coding while a high SNR can
+use a code-rate closer to 1. Modern communications systems combine the
+modulation and coding schemes, called **MCS**. Each MCS specifics what
+modulation and coding scheme should be used at a given SNR level. Some modern
+systems are able to adapt the MCS using a feedback loop based on the wireless
+channel conditions.
+
+Since demodulation occurs before decoding, the demodulator is able to make a
+best guess as to which symbol was set. The guess can be of two types:
+
+* **Soft decoding:** Range of values in-between the possible values. The extra
+  information indicates how good of a guess it is.
+* **Hard decoding:** Fixed set of possible values, usually 0 or 1 for binary data.
+
+Soft decoding will typically perform better in the presence of corrupted data
+but adds increased implementation complexity to the decoder.
+
+## Shannon-Hartley Theorem
+
+The Shannon-Hartley theorem, sometimes called just Shannon's limit, describes
+how much data can be sent, measured in bits per second, through a communication
+channel without an error.
+
+$$C = B \cdot log_2 \left( 1 + \frac{S}{N}   \right)$$
+
+* $C$: The channel capacity in bits per second.
+* $B$: The bandwidth of the channel in Hz.
+* $S$: The average received signal power over the bandwidth in Watts.
+* $N$: The average power of the noise and interface over the bandwidth in Watts.
+
+When the SNR is high, 10 dB or higher, the $$(1 + \frac{S}{N})$$ term inside the
+logarithm approaches the SNR itself. This is a specialization called the
+bandwidth-limited regime and can be expressed with the following equation.
+
+$$C \approx 0.332 \cdot B \cdot \text{SNR (in dB)}$$
+
+For example, if the SNR is 24 dB and you have 1 MHz of bandwidth, that's a
+theoretical limit of 7.9 Mbps because $C \approx 0.332 * 1000000 * 24$
+
+# Multipath Fading
+
+In a realistic wireless scenario, signals will bounce many times before arriving
+at the receiver resulting in multiple paths. In such cases, each path will
+experience a different phase shift and attenuation. Once all paths have reached
+the receiver, they are added up which may result in constructive, destructive or
+a mix of both changes to the resulting signal. Usually there will be a
+line-of-sight path (LOS) and then all the other paths the signal may take.
+
+## Fading
+
+The term **fading** is used to refer to the constructive and destructive
+interference that changes over time. As a result of the interference, the SNR
+will continuously vary over time. There are two types of fading as related to
+the time domain:
+
+* **Slow fading:** The channel does not change within one symbol period worth of data
+  and is essentially constant for many transmitted symbols. Sometimes called
+  **shadowing** this happens due to large obstructions like hills or buildings.
+* **Fast fading:** The channel changes very quickly compared to the length of a
+  symbol period. Forward error correction and other techniques can be used to
+  combat fast fading.
+
+In addition to the fading in the time domain, there is also fading in the
+frequency domain that happens from constructive and destructive interference
+between two signals that arrive at the receiver from different paths. There are
+two ways that this can manifest:
+
+* **Flat fading:** The signal's bandwidth is so narrow that all frequencies
+  experience roughly the same fading. The entire signal will essentially
+  disappear if a deep fade happens.
+* **Frequency selective fading:** Different frequencies in a wideband signal
+  will get different levels of fading.
+
+## Mitigating Multipath Fading
+
+There are many ways to mitigate multipath fading that have been developed for
+different wireless technologies.
+
+### CDMA
+
+Code-division multiple access (CDMA) is a channel access method that optimizes
+the use of the available bandwidth as it transmits. It is the access method used
+in the 3G cellular protocol but has largely been replaced. With CDMA a
+narrowband signal is spread over a wide bandwidth before the transmission using
+a direct-sequence spread spectrum (DSSS). It's unlikely that all frequencies in
+the large bandwith will be in a deep null at the same time. The receiver is able
+to reverse and essentially de-spread the signal.
+
+### OFDM
+
+Orthogonal frequency-division multiplexing (OFDM) is a method of digital
+modulation transmission used to combat frequency selective fading. It is used 4G
+and 5G cellular, WiFi, and many other technologies. With OFDM, the single signal
+is split into separate streams that are transmitted simultaneously over
+closely-spaced carrier frequencies called subcarriers. The key is the
+orthogonality of the signals, which allows the subcarrier frequencies to overlap
+without causing interference with each other.
+
+# Synchronization
+
+Synchronization is a set of processing that occurs before demodulation and
+channel decoding that corrects for carrier frequency offsets and performs timing
+alignment at the smybol and frame level. This processing can be done in the time
+and frequency domain.
+
+Since signals arrive at the receiver with a random phase shift due to time
+travelled, we cannot just start sampling wherever because it's unlikely to be in
+the correct spot in the pulse. Most timing synchronization techniques use a
+phase lock loop (PLL). A PLL is a closed-loop system that use a feedback loop to
+continuously adjust something, in this case the phase shift.
+
+Synchronization can be thought of as another block in the receiver which takes
+in a stream of samples and outputs a new stream of samples. This block must know
+the number of samples per symbol, or at least an estimate since there is no way
+to be certain. This is a **decimator**, meaning the output samples will be a
+fraction of the number of samples in. Most techniques rely on the fact that
+digital symbols rise and fall, where the peak is the most optimal point to
+sample.
