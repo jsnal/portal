@@ -1,15 +1,13 @@
----
-title: Wiki
----
+# Wiki
 
 * [Android](./android)
-* [Digital Signal Processing](./dsp)
 * [C++](./c++)
-* [Linux](./linux)
+* [DSP](./dsp)
+* [FreeBSD](./freebsd)
 * [Git](./git)
 * [Java](./java)
-* [Networking](./networking)
 * [Links](./links)
-* [Guides](./guides)
+* [Linux](./linux)
 * [Misc](./misc)
+* [Networking](./networking)
 

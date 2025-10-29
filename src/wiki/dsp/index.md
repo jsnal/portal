@@ -1,6 +1,4 @@
----
-Title: Digital Signal Processing
----
+# Digital Signal Processing
 
 # Introduction
 
@@ -25,7 +23,7 @@ constituent frequencies and their magnitudes. Signals are always sampled in the
 time domain because there is no way to directly sample a signal in the frequency
 domain.
 
-## Fourier Series
+**Fourier Series**
 
 Any signal can be represented by sine waves summed together. When a single
 signal is broken down into its composite sine waves, this is called a **Fourier
@@ -45,7 +43,7 @@ This is a list of all the attributes a sine wave may have:
 * **Period:** The amount of time, in seconds, for the wave to finish one cycle. It
   is the inverse of frequency or (1 / Frequency).
 
-## Time-Frequency Pairs
+**Time-Frequency Pairs**
 
 While the time domain show how a signal changes over time, the frequency domain
 shows how much of a signal rests in which frequencies. As such, the x-axis will
@@ -62,7 +60,7 @@ nature as an impulse in the time domain would need to be infinitely short. The
 takeaway is that quick changes in the time domain result in many frequencies in
 the frequency domain.
 
-## Fourier Transform
+**Fourier Transform**
 
 The operation used to go from the time domain to the frequency domain and back
 is called a **Fourier transform**. Below are the continuous and discrete
@@ -75,7 +73,7 @@ engineers use $i$ to denote current in circuit diagrams. The continuous form is
 used in mathematics problems, while the discrete form is closer to what is
 implemented in code for engineering purposes.
 
-## Time-Frequency Properties
+**Time-Frequency Properties**
 
 There are five properties that tell us what happens in the frequency domain when
 a change is made in the time domain.
@@ -97,7 +95,7 @@ a change is made in the time domain.
 * **Convolution in frequency:** The convolution property also works in reverse
   although it's far less common.
 
-## Fast Fourier Transform (FFT)
+**Fast Fourier Transform (FFT)**
 
 Fast Fourier transform is an algorithm used to compute discrete Fourier
 transform developed decades ago. An FFT will have one input, a vector of
@@ -127,7 +125,7 @@ Changing the order things happen in the time domain does not change the
 frequency components that exist in the signal. This is because the order in time
 does not matter.
 
-## Windowing
+**Windowing**
 
 An FFT mathematically assumes that the input signal is periodic. It treats the
 final sample as if it connects directly back to the first sample, creating an
@@ -141,14 +139,14 @@ on both ends. This ensure the signal smoothly starts and ends at zero. Popular
 window functions: Hamming, Hanning, Blackman, and Kaiser. Applying no window is
 often referred to as using a rectangular window.
 
-## FFT Sizing
+**FFT Sizing**
 
 The best FFT size is always a power of 2 due to the algorithm used. Other sizes
 may be used but the computation will be noticeably slower. The most common sizes
 range from 128 to 4096. For signals with millions or billions of samples, the
 signals can be broken up into blocks where each one gets an FFT computed.
 
-## Spectrogram
+**Spectrogram**
 
 A spectrogram is a plot that shows the frequency over time. It can be thought of
 as stacking a bunch of FFTs together vertically. We can also display how the FFT
@@ -169,7 +167,7 @@ The values of the continuous signal are recorded in regular intervals called the
 is the **sample rate** measured in Hz. The sample rate is the inverse of the
 sample period.
 
-## Nyquist Sampling
+**Nyquist Sampling**
 
 We must sample at twice the frequency of the signal in order to remove false
 data, referred to as the Nyquist frequency. This is simple when the signal is a
@@ -183,7 +181,7 @@ performed to reduce aliasing. Because the SDR anti-aliasing filter doesn't go
 from passband to stopband instantly, the rule of thumb is to assume only the
 center 4/5 of the sample rate is usable bandwidth, known as Sean's 4/5 rule.
 
-## Quadrature Sampling
+**Quadrature Sampling**
 
 Quadrature is a term that refers to two waves that are 90 degrees out of phase,
 making them orthogonal to each other. Usually $I$ is used for cos and $Q$ for
@@ -211,7 +209,7 @@ numbers.
 
 ![Receiving IQ data](images/iq_data_receive.png){ width=50% }
 
-## Carrier and Downconversion
+**Carrier and Downconversion**
 
 The **carrier frequency** is the high frequency wave that is used to transmit
 the signal through the air. It's called the carrier because it physically
@@ -228,7 +226,7 @@ a component called a mixer.
 
 ![Receiving IQ data](images/receiver_arch_diagram.svg){ width=50% }
 
-## Speed of Signals
+**Speed of Signals**
 
 Radio waves are just electromagnetic waves at low frequencies, between roughly 3
 kHz to 80 GHz. Visible light and even higher frequencies waves are also part of
@@ -237,7 +235,7 @@ which is about 3e8 m/s through air. The distance the wave travels in one full
 oscillation, a single cycle of the sine wave, depends on its frequency. This
 distance is known as the wavelength and is denoted as $\lambda$.
 
-## Baseband and Bandpass Signals
+**Baseband and Bandpass Signals**
 
 A signal centered around 0 Hz is referred to as **baseband**. A signal that
 exists at some RF frequency nowhere near 0 Hz, that has been shifted for
@@ -247,7 +245,7 @@ Baseband signals are always complex while bandpass signals are also real. There
 is also **intermediate frequency**, IF, which is the intermediate conversion
 step with in the radio between baseband and bandpass.
 
-## DC Spike and Offset Tuning
+**DC Spike and Offset Tuning**
 
 Oftentimes there is a large spike in the center of an FFT. This is called a DC
 offset or DC spike or LO (local oscillator) leakage. This happens because SDRs
@@ -270,7 +268,7 @@ The goal of modulation is to squeeze as much data into the least amount of
 spectrum as possible. Transmitting faster will increase the bandwidth, which
 means more spectrum is used.
 
-## Symbols
+**Symbols**
 
 The transmit signal is made up of **symbols**, where each symbol will carry some
 number of bits of information. For example, A binary symbol has two values, 0
@@ -281,7 +279,7 @@ In addition, it would require huge antennas that transmit at baseband, which
 isn't possible. Instead, wireless signals are modulated in some way to encode
 data.
 
-## Modulation Techniques
+**Modulation Techniques**
 
 A modulation technique is a method of encoding data on a carrier wave. There are
 more modulation techniques than listed here but these are the main ones.
@@ -301,7 +299,7 @@ more modulation techniques than listed here but these are the main ones.
 
 ![Modulation techniques visualized](images/modulation_techniques.png){ width=50% }
 
-## Differential Coding
+**Differential Coding**
 
 Differential coding is technique to provide unambiguous signal reception when
 using PSK or QAM modulation. Usually this step occurs right before bits are
@@ -326,7 +324,7 @@ to apply it to QPSK you work with pairs of bits at a time.
 
 Noise is unwanted fluctuations that can obscure the desired signals.
 
-## Gaussian Noise
+**Gaussian Noise**
 
 Gaussian noise is a type of random noise that follows a bell-shaped curve where
 smaller values are more common than larger ones. The central limit theorem tells
@@ -338,7 +336,7 @@ two parameters: mean and variance.
 * Variance changes how strong the noise is. A higher variance will result in
   larger numbers.
 
-## Decibels (dB)
+**Decibels (dB)**
 
 Working in dB is useful when we need to deal with small and large numbers at the
 same time. It allows both scales to be displayed simultaneously while maintained
@@ -370,7 +368,7 @@ of conversions between linear and dB scale
 | 0.001x  | -30 |
 | 0.0001x | -40 |
 
-## SNR and SINR
+**SNR and SINR**
 
 Signal-to-Noise ratio (SNR) is how we measure the differences between in
 strength between the signal and the noise. It is a ratio of two values, so it's
@@ -411,7 +409,7 @@ complex if the frequency domain is asymmetrical, otherwise they will be real
 floats. The array of floats is often referred to as **float taps** and the
 symbol $h$ used to denote it.
 
-## Convolution
+**Convolution**
 
 Convolution is another way to combine two signals into one but is different from
 adding. Instead, one of the signals is sliding across the other while
@@ -430,7 +428,7 @@ $$(f * g)(t) = \int f(\tau) g(t - \tau) d\tau$$
 * $g(t)$ is the input signal that is flipped and slides across $f(t)$.
 * $g(t)$ and $f(t)$ may be swapped and it's still the same expression.
 
-## FIR vs IIR
+**FIR vs IIR**
 
 There are two classes of digital filters:
 
@@ -458,7 +456,7 @@ parameters are used to determine the received power:
 * $L_{misc}$: Miscellanies loss such as cable loss, atmospheric loss, antenna
   pointing, weather, etc. These could account for 1 to 3 dB of loss.
 
-## Transmit Power
+**Transmit Power**
 
 Transmit power is measured in Watts, dbW, or dBm. This value will be a function
 of the internal electronics used to send the signal, usually one or more
@@ -471,7 +469,7 @@ amplifiers. This is a list of transmit powers of common technologies:
 | LTE base station | 1 W, 0 dBW      |
 | FM station       | 10 kW, 40 dBW   |
 
-## Antenna Gains
+**Antenna Gains**
 
 The antenna gain indicates the directivity of the antenna and is specified in
 dB. It is sometimes referred to as antenna power gain but this is slightly
@@ -487,7 +485,7 @@ Directional antennas must be pointed in the correct direction while that's not
 possible with omnidirectional antennas. When calculating link budgets, we always
 assume that a directional antenna is pointed the right direction.
 
-## Path Loss
+**Path Loss**
 
 Signals reduce in strength as they move through the air. The free space path
 loss (FSPL) tells us the path loss when there are no obstacles for a given
@@ -515,14 +513,14 @@ $$L_{\text{path}} = 69.55 + 26.16 \log_{10}f - 13.82 \log_{10}{h_B} - C_H + [44.
   of the city and carrier frequency range. See the
   [Wikipedia](https://en.wikipedia.org/wiki/Hata_model) page for more detail.
 
-## Signal Power Equation
+**Signal Power Equation**
 
 All of the losses can be added together to calculate the signal power at the
 receiver, $P_r$.
 
 $$P_r = P_t + G_t + G_r - L_p - L_{misc} \quad \text{dBW}$$
 
-## EIRP
+**EIRP**
 
 Effective isotropic radiated power (EIRP) is the hypothetical power that would
 have to be radiated by an isotropic antenna to give the same signal strength as
@@ -534,7 +532,7 @@ simple equation can be used to model it.
 
 $$P_t + G_t - L_{cable}$$
 
-## Noise Power Budget
+**Noise Power Budget**
 
 Noise always enters the communication link at the receiver. Noise comes from the
 internal electronics in the receiver and the temperature variations the
@@ -566,7 +564,7 @@ message has errors. A failed CRC check usually results in a re-transmission whic
 can be costly. Channel coding attempts to reduce the number of these failures by
 introducing redundant information into the transmission.
 
-## Types of Codes and Code-Rate
+**Types of Codes and Code-Rate**
 
 Channel coding uses an **error correction code** to determine which bits to
 transmit from the bits that must be transmitted. There are two types of codes
@@ -582,7 +580,7 @@ will always be less than 1 because like mentioned earlier, there will always be
 some amount of redundancy which causes inefficiencies. A lower code-rate means
 more redundancy and less data throughput.
 
-## Modulation and Coding
+**Modulation and Coding**
 
 Similar to digital modulation, the SNR dictates how much redundancy should be
 used. A low SNR should use a low code-rate channel coding while a high SNR can
@@ -602,7 +600,7 @@ best guess as to which symbol was set. The guess can be of two types:
 Soft decoding will typically perform better in the presence of corrupted data
 but adds increased implementation complexity to the decoder.
 
-## Shannon-Hartley Theorem
+**Shannon-Hartley Theorem**
 
 The Shannon-Hartley theorem, sometimes called just Shannon's limit, describes
 how much data can be sent, measured in bits per second, through a communication
@@ -633,7 +631,7 @@ the receiver, they are added up which may result in constructive, destructive or
 a mix of both changes to the resulting signal. Usually there will be a
 line-of-sight path (LOS) and then all the other paths the signal may take.
 
-## Fading
+**Fading**
 
 The term **fading** is used to refer to the constructive and destructive
 interference that changes over time. As a result of the interference, the SNR
@@ -658,12 +656,12 @@ two ways that this can manifest:
 * **Frequency selective fading:** Different frequencies in a wideband signal
   will get different levels of fading.
 
-## Mitigating Multipath Fading
+**Mitigating Multipath Fading**
 
 There are many ways to mitigate multipath fading that have been developed for
 different wireless technologies.
 
-### CDMA
+***CDMA***
 
 Code-division multiple access (CDMA) is a channel access method that optimizes
 the use of the available bandwidth as it transmits. It is the access method used
@@ -673,7 +671,7 @@ a direct-sequence spread spectrum (DSSS). It's unlikely that all frequencies in
 the large bandwith will be in a deep null at the same time. The receiver is able
 to reverse and essentially de-spread the signal.
 
-### OFDM
+***OFDM***
 
 Orthogonal frequency-division multiplexing (OFDM) is a method of digital
 modulation transmission used to combat frequency selective fading. It is used 4G

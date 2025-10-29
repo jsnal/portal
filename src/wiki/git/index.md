@@ -1,15 +1,14 @@
----
-title: Git
-description: Tips and tricks related to Git
----
+# Git
+
+Tips and tricks related to Git.
 
 ## Cheatsheet
 
-### Install
+**Install**
 
 [https://git-scm.com](https://git-scm.com)
 
-### Setup
+**Setup**
 
 Set a name that is identifiable for credit when review version history.
 
@@ -23,7 +22,7 @@ Set an email address that will be associated with each history marker.
 $ git config --global user.email “[valid-email]”
 ```
 
-### Repository Setup
+**Repository Setup**
 
 Initialize current directory as a Git repository.
 
@@ -37,7 +36,7 @@ Retrieve a remote repository from a host such as Github or Gitlab.
 $ git clone [url]
 ```
 
-### Staging
+**Staging**
 
 Show the current status of all the files in your Git repository.
 
@@ -69,7 +68,7 @@ Commit the staged files and create a new commit.
 $ git commit -m "[message]"
 ```
 
-### Remote Sharing
+**Remote Sharing**
 
 Add a valid Git host as a new remote server.
 
@@ -95,7 +94,7 @@ Push  local repository changes to the remote repository.
 $ git push [alias] [branch]
 ```
 
-### Branches
+**Branches**
 
 List all the current branches and tags.
 
@@ -123,7 +122,7 @@ Merge the specified branch into the current branch.
 $ git merge [branch]
 ```
 
-### Inspect
+**Inspect**
 
 Show the commit history of the repository.
 
@@ -143,32 +142,32 @@ $ git diff branchA...branchB
 2. Stage the `.gitmodules` changes:
 
 ```
-git add .gitmodules
+$ git add .gitmodules
 ```
 
 3. Delete the relevant section from `.git/config`.
 4. Remove the submodule files from the working tree and index:
 
 ```
-git rm --cached path_to_submodule (no trailing slash).
+$ git rm --cached path_to_submodule (no trailing slash).
 ```
 
 5. Remove the submodule's `.git` directory:
 
 ```
-rm -rf .git/modules/path_to_submodule
+$ rm -rf .git/modules/path_to_submodule
 ```
 
 6. Commit the changes:
 
 ```
-git commit -m "Removed submodule NAME"
+$ git commit -m "Removed submodule NAME"
 ```
 
 7. Delete the now untracked submodule files:
 
 ```
-rm -rf path_to_submodule
+$ rm -rf path_to_submodule
 ```
 
 ## Hard reset file or directory
@@ -176,25 +175,25 @@ rm -rf path_to_submodule
 Usually I just want to reset the whole project using the following command:
 
 ```bash
-git reset --hard
+$ git reset --hard
 ```
 
 But, sometimes I just need to reset a single file (or a couple of files):
 
 ```bash
-git checkout HEAD -- path/to/file
+$ git checkout HEAD -- path/to/file
 ```
 
 Since Git 2.23, there is a `restore` command that does the same thing
 
 ```bash
-git restore path/to/file
+$ git restore path/to/file
 ```
 
 Or even get the file from another branch/commit.
 
 ```bash
-git restore -s branch path/to/file
+$ git restore -s branch path/to/file
 ```
 
 ## Change Author
@@ -202,13 +201,13 @@ git restore -s branch path/to/file
 Change the author for the last commit:
 
 ```
-git commit --amend --author 'Jason Long <jasonlongball@gmail.com>'
+$ git commit --amend --author 'Jason Long <jasonlongball@gmail.com>'
 ```
 
 Change the author for the last N commits:
 
 ```
-git rebase -i HEAD~4 -x "git commit --amend --author 'Jason Long<jasonlongball@gmail.com>' --no-edit"
+$ git rebase -i HEAD~4 -x "git commit --amend --author 'Jason Long<jasonlongball@gmail.com>' --no-edit"
 ```
 
 Drop the `--no-edit` flag to get confirmation from amend operation. Use
@@ -219,21 +218,21 @@ Drop the `--no-edit` flag to get confirmation from amend operation. Use
 Search across all commits on all branches:
 
 ```
-git log --all --grep="needle"
+$ git log --all --grep="needle"
 ```
 
 Walk reglogs to find commits that are dangling:
 
 ```
-git log -g --grep="needle"
+$ git log -g --grep="needle"
 ```
 
 Search through the diff changes between commits. Useful for finding commits that
 have changed a specific block of code:
 
 ```
-git log -S"needle"
-git log -G"needle with regex"
+$ git log -S"needle"
+$ git log -G"needle with regex"
 ```
 
 ## Finding dangling commits
@@ -241,7 +240,7 @@ git log -G"needle with regex"
 Full list of dangling commits, blobs, and trees:
 
 ```
-git fsck --lost-found
+$ git fsck --lost-found
 ```
 
 Show the log for each dangling commit. This command can easily be updated to
@@ -249,7 +248,7 @@ work with blobs or trees, or even use a different git command to process the
 hash.
 
 ```
-git fsck --lost-found | awk '/dangling commit/ {print $3}' | xargs git log > log.txt
+$ git fsck --lost-found | awk '/dangling commit/ {print $3}' | xargs git log > log.txt
 ```
 
 ## Pruning branches
@@ -257,18 +256,18 @@ git fsck --lost-found | awk '/dangling commit/ {print $3}' | xargs git log > log
 Prune all local remote branches that refer to a deleted remote branch:
 
 ```
-git fetch --prune
+$ git fetch --prune
 ```
 
 Prune all local branches that have been merged (excluding some branch names):
 
 ```
-git branch --merged | grep -vE 'master$|main$|development$' | xargs -L1 git branch -D
+$ git branch --merged | grep -vE 'master$|main$|development$' | xargs -L1 git branch -D
 ```
 
 ## Patches
 
-### Creating a Patch
+**Creating a Patch**
 
 First make sure the branch you're on has the commits you want to patch. Find a
 log of your branch with.
@@ -283,7 +282,7 @@ When you're on the branch you want to make patch of run
 $ git format-patch master --stdout > PATCHNAME.patch
 ```
 
-### Applying the patch
+**Applying the patch**
 
 Before applying you should probably look at the changes that patch comes with.
 

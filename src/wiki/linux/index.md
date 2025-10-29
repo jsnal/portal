@@ -1,11 +1,8 @@
----
-title: Linux
-description:
----
+# Linux
 
 ## Vim
 
-### Search
+**Search**
 
 Search for a string given a list of files. Wildcards may be used to search
 through multiple files. The file path is relative to the current working
@@ -22,7 +19,7 @@ Open ripgrep search results in vim with the quickfix list opened
 rg --vimgrep '<SEARCH>' | vim -c cb -c copen
 ```
 
-### Colors
+**Colors**
 
 The 'default' Vim colorscheme uses the `background` variable to decide what
 colors to use. Setting the background to 'dark' will use an altered version of
@@ -37,7 +34,7 @@ found at `$VIMRUNTIME/syntax/syncolor.vim`. Check the current colorscheme:
 All the active highlight groups can be displayed in a single buffer by editing
 `$VIMRUNTIME/syntax/hitest.vim`.
 
-### Convert to HTML
+**Convert to HTML**
 
 The current buffer or selected lines can be converted to HTML when syntax is
 enabled. If the current buffer is part of a diff, it will convert all buffers
@@ -51,6 +48,520 @@ also part of the diff and display them in a table.
 
 The above commands use the underlying builtin plugin `2html.vim`.There are a ton
 of options listed in `:h 2html.vim`.
+
+**Defaults**
+
+The location to default vim configuration is in `/usr/share/vim/vim<VERSION>`.
+You can also find the default vimrc in `/etc/vim/vimrc` which is often symlinked
+to other locations on the system. This sources a file called `vimrc.local` and
+then the whole vim bootstrapping process starts.
+
+## ZSH
+
+**Keymaps**
+
+Set zsh to emacs keybinds
+
+```
+$ bindkey -e
+```
+
+Create a simple function
+
+```
+function edit-zshrc() {
+  vim $HOME/.zshrc
+}
+```
+
+Create a new zle widget
+
+```
+$ zle -N edit-zshrc
+```
+
+Call the widget
+
+```
+$ bindkey '^e' edit-zshrc
+```
+
+**Standard Widgets**
+
+```
+forward-word           Go forward by one word
+backward-word          Go backward by one word
+kill-whole-line        Remove all text on the current line
+backward-kill-word     Kill one word backwards
+kill-word              Kill one word forwards
+
+See zshzle(1) line 855
+```
+
+**Loading Built-in Widgets**
+
+```
+autoload -U edit-command-line
+zle -N edit-command-line
+
+bindkey '^x^x' edit-command-line
+```
+
+**Other Commands**
+
+Delete widget
+
+```
+$ zle -D [widget]
+```
+
+Alias a widget to another widget
+
+```
+$ zle -A [old-widget] [new-widget]
+```
+
+See zshzle(1) for more info
+
+**Command not Found Hook**
+
+Getting output on commands in the arch repositories
+
+For Example:
+
+```
+$ htop
+htop may be found in the following packages:
+extra/htop
+```
+
+Install pkgfile:
+
+```
+$ sudo pacman -S pkgfile
+```
+
+Creates a directory in `/usr/share/doc/pkgfile` that contains bash, zsh and fish
+
+```
+$ source /usr/share/doc/pkgfile/command-not-found.zsh
+```
+
+You can also just put the source code straight into your `.zshrc`
+
+Make sure the function name is the same.
+
+```
+command_not_found_handler() {
+  local pkgs cmd="$1"
+
+  pkgs=(${(f)"$(pkgfile -i -b -- "$cmd" 2>/dev/null)"})
+  if [[ -n "$pkgs"  ]]; then
+    printf '%s may be found in the following packages:\n' "$cmd"
+    printf '  %s\n' $pkgs[@]
+    return 0
+  fi
+
+  printf 'zsh: command not found: %s\n' "$cmd" 1>&2
+  return 127
+
+}
+```
+
+## VirtualBox
+
+**Install on Arch Linux**
+
+```
+$ sudo pacman -S linux-headers
+$ sudo pacman -S virtualbox virtualbox-guest-iso
+$ sudo modprobe vboxdrv
+```
+
+Avoid doing this at every startup:
+
+```
+$ sudo vim /etc/modules-load.d/virtualbox.conf
+```
+
+Add to the current file:
+
+```
+vboxnetadp
+vboxnetflt
+vboxpci
+vboxdrv
+```
+
+Add your user to the vboxusers group
+
+```
+$ sudo gpasswd -a $USER vboxusers
+```
+
+Install guest additions:
+
+```
+$ sudo pacman -S virtualbox-guest-utils virtualbox-guest-iso
+$ sudo rcvboxdrv
+```
+
+* [Useful post](https://unix.stackexchange.com/a/303118)
+* [Arch wiki](https://wiki.archlinux.org/index.php/VirtualBox#Install_the_Guest_Additions)
+
+**Mount Shared Folder**
+
+These instructions have been tested on a host of Windows 10 and a guest of
+Ubuntu 20.04 LTS. Make sure that Guest Additions are installed on the guest
+machine or else folder sharing will never work.
+
+1. Open VirtualBox settings
+2. Go to **Shared Folders** section
+3. Add a new shared folder
+4. **Folder path** should be a path to the folder on the host machine
+5. **Folder name** can be anything, just remember it for later
+6. Check **Make Permanent**
+7. Start the VM
+8. Create a shared directory somwhere
+
+```sh
+mkdir ~/shared
+```
+
+9. Mount the shared directory as a `vboxsf`
+
+```sh
+sudo mount -t vboxsf <FOLDER NAME FROM STEP 5> ~/shared
+```
+
+If you want to the folder to be automatically mounted when the system reboots,
+you can edit the fstab.
+
+1. Find user's UID and GID
+
+```sh
+echo $UID
+echo $GID
+```
+
+2. Open the system fstab file
+
+```sh
+sudo vim /etc/fstab
+```
+
+3. Add an entry for the shared directory
+
+```sh
+<FOLDER NAME FROM STEP 5> /home/<USER>/shared vboxsf defaults,uid=<UID>,gid=<GID>,umask=0022 0 0
+```
+
+4. Reboot
+
+
+## Xephyr
+
+[Xephyr](https://freedesktop.org/wiki/Software/Xephyr) is a nested X server that
+runs as an X application. You can start a basic nested X window by running the
+following.
+
+```sh
+$ Xephyr -br -ac -noreset -screen 800x600 :1
+```
+
+This will put a new "nested" X window on DISPLAY `:1`. You can then launch an
+application on that window by running the following.
+
+```sh
+$ DISPLAY=:1 st
+```
+
+You can unlock the pointer by pressing `Ctrl + Shift`. The same keys will lock
+the pointer. Sometimes the keyboard configuration on the opened display may be
+wrong. This happens especially often in a window manager or desktop environment.
+To solve this you can copy the keyboard configure of display `:0` to display
+`:1`.
+
+```sh
+$ setxkbmap -display :0 -print | xkbcomp - :1
+```
+
+## Desktop
+
+**Autorepeat Rate**
+
+You can change the rate at which a key repeats if your holding is using the
+following command.
+
+```sh
+$ xset r rate 200 20
+```
+
+This command could be perfect in an `.xinitrc`
+
+**Startup Applications in Xfce**
+
+Set startup applications to run on Login or other times during the Xfce
+lifecycle. This could be useful for sourcing keybindings like `Xmodmap` for
+example.
+
+* Find Session and Startup preferences.
+* Application Startup and add a new Application
+* Change the trigger for when you want it to run at
+
+Quick menu path
+
+`Session and Startup > Application Startup > New`
+
+
+## QEMU
+
+**Monitor**
+
+QEMU Monitor is a tool to inspect the running instance of QEMU, similar to GDB.
+
+1. Add the following to the QEMU command
+
+```
+-monitor tcp:127.0.0.1:55555,server,nowait
+```
+
+2. Connect to it using netcat
+
+```
+nc localhost 55555
+```
+
+3. List some memory
+
+```
+x/80hx 0x000100a8
+```
+
+More information [here](https://qemu-project.gitlab.io/qemu/system/monitor.html)
+
+QEMU can also take advantage of GDB using the following commands.
+
+1. Enable GDB server in QEMU
+
+```
+-S -s
+```
+
+2. Connect to it with GDB
+
+```
+$ gdb kernel.bin
+
+(gdb) target remote localhost:1234
+```
+
+3. Start execution
+
+```
+(gdb) continue
+```
+
+4. Normal GDB commands should work
+
+I like to use GDB with the following commands:
+
+```
+db Kernel -ex 'target remote localhost:1234' -ex 'layout asm' -ex 'layout regs'
+```
+
+## Install Arch
+
+**Create bootable disk**
+
+Download an iso from https://www.archlinux.org/download and flash it to a usb stick.
+
+```
+# lsblk
+# sudo dd bs=4M if=arch.iso of=/dev/sd<?> conv=fdatasync
+```
+
+**Connect to the internet**
+
+If you connect via ethernet just be sure you can ping a website.
+
+```
+# ping -c2 google.com
+```
+
+Connect via wifi... First try wifi-menu
+
+```
+# wifi-menu
+```
+
+If that doesn't work try making a profile manually
+
+```
+# ip addr
+# cp /etc/netctl/examples/wireless-wpa /etc/netctl/<interface>
+# netctl start <interface>
+```
+
+**Partitioning**
+
+The general outline of partition table on UEFI systems are as follows
+
+```
+EFI System partition   /dev/sda1  300M  FAT32
+Swap partition         /dev/sda2  1-2G  Swap On
+Root partition         /dev/sda3  REST  ext4
+```
+
+```
+# cfdisk /dev/sda
+```
+
+Pick GPT label type
+
+Verify partitions are right
+
+```
+# fdisk -l
+```
+
+Format the filesystem for each partition
+
+```
+# mkfs.fat -F32 /dev/sda1
+# mkfs.ext4 /dev/sda3
+# mkswap /dev/sda2
+```
+
+**Install Base Arch**
+
+Mount the root partition to /mnt to work on
+
+```
+# mount /dev/sda3 /mnt
+# swapon /dev/sda2
+```
+
+Enable multilib pacman support
+
+```
+# vi /etc/pacman.d/mirrorlist
+```
+
+Uncomment
+
+```
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+```
+
+Start the base package install
+
+```
+# pacstrap /mnt base base-devel
+```
+
+Generate fstab file
+
+```
+# genfstab -U -p /mnt >> /mnt/etc/fstab
+# cat /mnt/etc/fstab
+```
+
+**System Configuration**
+
+```
+# arch-chroot /mnt
+# vi /etc/hostname
+```
+
+Set system language
+
+```
+# vi /etc/locale.gen
+```
+
+Uncomment your personal system language
+
+```
+# locale-gen
+# echo LANG=en_US.UTF-8 > /etc/locale.conf
+# export LANG=en_US.UTF-8
+```
+
+Set the timezone
+
+```
+# ls /usr/share/zoneinfo
+# ln -s /usr/share/zoneinfo/<zone> /etc/localtime
+# hwclock --systohc --utc
+```
+
+Set a root password and add your first user
+
+```
+# passwd
+# useradd -mg users -G wheel,storage,power -s /bin/bash <user>
+# passwd <user>
+```
+
+Enable root control for your new user
+
+```
+# pacman -S sudo
+# visudo
+```
+
+Uncomment
+
+```
+%wheel ALL=(ALL) ALL
+```
+
+**Install Bootloader**
+
+```
+# pacman -S grub efibootmgr dosfstools os-prober mtools
+# mkdir /boot/EFI
+# mount /dev/sda1 /boot/EFI
+# grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
+# grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+**Reboot**
+
+```
+# exit
+# umount -a
+# telinit 6
+```
+
+**Installing X11**
+
+```
+$ sudo pacman -S xorg-server xorg-xinit
+$ sudo pacman -S xf86-input-keyboard xorg-xkbcomp xbindkeys
+```
+
+Setup a window manager to startup with X.
+
+```
+$ sudo pacman -S i3
+$ echo "exec i3" >> ~/.xinitrc
+# startx
+```
+
+**Fonts**
+
+```
+$ sudo pacman -S ttf-dejavu terminus-font fontconfig
+```
+
+Extras
+
+```
+$ sudo pacman -S noto-fonts-cjk noto-fonts-emoji noto-fonts-extra libx11 libxft
+```
 
 ## FFmpeg GIF
 
@@ -107,7 +618,7 @@ ffmpeg -f x11grab -framerate 25 -video_size ${width}x${height} -i +${x},${y} "wi
 
 Source: [StackOverflow](https://stackoverflow.com/a/75453458)
 
-## Enable st Bell in PulseAudio
+## Enable Bell in PulseAudio
 
 Edit `/etc/pulse/default.pa` and add the following lines
 
@@ -126,321 +637,3 @@ $ pulseaudio -k
 If that doesn't work check volume and see if there is something specific you
 have to do for your window manager or desktop environment.
 
-## Zsh Command not Found Hook
-
-Getting output on commands in the arch repositories
-
-For Example:
-
-```
-$ htop
-htop may be found in the following packages:
-extra/htop
-```
-
-Install pkgfile:
-
-```
-$ sudo pacman -S pkgfile
-```
-
-Creates a directory in `/usr/share/doc/pkgfile` that contains bash, zsh and fish
-
-```
-$ source /usr/share/doc/pkgfile/command-not-found.zsh
-```
-
-You can also just put the source code straight into your `.zshrc`
-
-Make sure the function name is the same.
-
-```
-command_not_found_handler() {
-  local pkgs cmd="$1"
-
-  pkgs=(${(f)"$(pkgfile -i -b -- "$cmd" 2>/dev/null)"})
-  if [[ -n "$pkgs"  ]]; then
-    printf '%s may be found in the following packages:\n' "$cmd"
-    printf '  %s\n' $pkgs[@]
-    return 0
-  fi
-
-  printf 'zsh: command not found: %s\n' "$cmd" 1>&2
-  return 127
-
-}
-```
-
-## ZSH ZLE command line editor
-
-Using the built-in zsh zle functionality
-
-### Keymaps:
-
-Set zsh to emacs keybinds
-
-```
-bindkey -e
-```
-
-Create a simple function
-
-```
-function edit-zshrc() {
-  vim $HOME/.zshrc
-
-}
-```
-
-Create a new zle widget
-
-```
-zle -N edit-zshrc
-```
-
-Call the widget
-
-```
-bindkey '^e' edit-zshrc
-```
-
-### Standard Widgets:
-
-```
-forward-word           Go forward by one word
-backward-word          Go backward by one word
-kill-whole-line        Remove all text on the current line
-backward-kill-word     Kill one word backwards
-kill-word              Kill one word forwards
-
-See zshzle(1) line 855
-```
-
-### Loading Built-in Widgets:
-
-```
-autoload -U edit-command-line
-zle -N edit-command-line
-
-bindkey '^x^x' edit-command-line
-```
-
-### Other commands:
-
-Delete widget
-
-```
-zle -D [widget]
-```
-
-Alias a widget to another widget
-
-```
-zle -A [old-widget] [new-widget]
-```
-
-See zshzle(1) for more info
-
-## Install VirtualBox on Arch Linux
-
-```
-$ sudo pacman -S linux-headers
-$ sudo pacman -S virtualbox virtualbox-guest-iso
-$ sudo modprobe vboxdrv
-```
-
-Avoid doing this at every startup:
-
-```
-$ sudo vim /etc/modules-load.d/virtualbox.conf
-```
-
-Add to the current file:
-
-```
-vboxnetadp
-vboxnetflt
-vboxpci
-vboxdrv
-```
-
-Add your user to the vboxusers group
-
-```
-$ sudo gpasswd -a $USER vboxusers
-```
-
-Install guest additions:
-
-```
-$ sudo pacman -S virtualbox-guest-utils virtualbox-guest-iso
-$ sudo rcvboxdrv
-```
-
-[Useful post](https://unix.stackexchange.com/a/303118)
-[Arch wiki](https://wiki.archlinux.org/index.php/VirtualBox#Install_the_Guest_Additions)
-
-
-## Mount VirtualBox shared folder
-
-These instructions have been tested on a host of Windows 10 and a guest of
-Ubuntu 20.04 LTS. Make sure that Guest Additions are installed on the guest
-machine or else folder sharing will never work.
-
-1. Open VirtualBox settings
-2. Go to **Shared Folders** section
-3. Add a new shared folder
-4. **Folder path** should be a path to the folder on the host machine
-5. **Folder name** can be anything, just remember it for later
-6. Check **Make Permanent**
-7. Start the VM
-8. Create a shared directory somwhere
-
-```sh
-mkdir ~/shared
-```
-
-9. Mount the shared directory as a `vboxsf`
-
-```sh
-sudo mount -t vboxsf <FOLDER NAME FROM STEP 5> ~/shared
-```
-
-If you want to the folder to be automatically mounted when the system reboots,
-you can edit the fstab.
-
-1. Find user's UID and GID
-
-```sh
-echo $UID
-echo $GID
-```
-
-2. Open the system fstab file
-
-```sh
-sudo vim /etc/fstab
-```
-
-3. Add an entry for the shared directory
-
-```sh
-<FOLDER NAME FROM STEP 5> /home/<USER>/shared vboxsf defaults,uid=<UID>,gid=<GID>,umask=0022 0 0
-```
-
-4. Reboot
-
-## Startup Applications in Xfce
-
-Set startup applications to run on Login or other times during the Xfce
-lifecycle. This could be useful for sourcing keybindings like `Xmodmap` for
-example.
-
-* Find Session and Startup preferences.
-* Application Startup and add a new Application
-* Change the trigger for when you want it to run at
-
-Quick menu path
-
-`Session and Startup > Application Startup > New`
-
-
-## Using Xephyr
-
-[Xephyr](https://freedesktop.org/wiki/Software/Xephyr) is a nested X server that
-runs as an X application. You can start a basic nested X window by running the
-following.
-
-```sh
-$ Xephyr -br -ac -noreset -screen 800x600 :1
-```
-
-This will put a new "nested" X window on DISPLAY `:1`. You can then launch an
-application on that window by running the following.
-
-```sh
-$ DISPLAY=:1 st
-```
-
-You can unlock the pointer by pressing `Ctrl + Shift`. The same keys will lock
-the pointer. Sometimes the keyboard configuration on the opened display may be
-wrong. This happens especially often in a window manager or desktop environment.
-To solve this you can copy the keyboard configure of display `:0` to display
-`:1`.
-
-```sh
-$ setxkbmap -display :0 -print | xkbcomp - :1
-```
-
-## X11 autorepeat rate
-
-You can change the rate at which a key repeats if your holding is using the
-following command.
-
-```sh
-$ xset r rate 200 20
-```
-
-This command could be perfect in an `.xinitrc`
-
-
-## QEMU Monitor
-
-QEMU Monitor is a tool to inspect the running instance of QEMU, similar to GDB.
-
-1. Add the following to the QEMU command
-
-```
--monitor tcp:127.0.0.1:55555,server,nowait
-```
-
-2. Connect to it using netcat
-
-```
-nc localhost 55555
-```
-
-3. List some memory
-
-```
-x/80hx 0x000100a8
-```
-
-More information [here](https://qemu-project.gitlab.io/qemu/system/monitor.html)
-
-QEMU can also take advantage of GDB using the following commands.
-
-1. Enable GDB server in QEMU
-
-```
--S -s
-```
-
-2. Connect to it with GDB
-
-```
-$ gdb kernel.bin
-
-(gdb) target remote localhost:1234
-```
-
-3. Start execution
-
-```
-(gdb) continue
-```
-
-4. Normal GDB commands should work
-
-I like to use GDB with the following commands:
-
-```
-db Kernel -ex 'target remote localhost:1234' -ex 'layout asm' -ex 'layout regs'
-```
-
-## Vim defaults
-
-The location to default vim configuration is in `/usr/share/vim/vim<VERSION>`.
-You can also find the default vimrc in `/etc/vim/vimrc` which is often symlinked
-to other locations on the system. This sources a file called `vimrc.local` and
-then the whole vim bootstrapping process starts.

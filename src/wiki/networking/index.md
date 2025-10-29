@@ -1,7 +1,4 @@
----
-title: Networking
-description: bleh bleh bleh
----
+# Networking
 
 ## Parsing RadioTap Headers
 
@@ -52,7 +49,7 @@ rough outline of how that can be done:
 
 Notes taken for CSC 474 - Network Security with Dr. Enck.
 
-### Cloud Security
+**Cloud Security**
 
 * The cloud is an on-demand network access to shared resources
 * Traditional cloud types
@@ -68,7 +65,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
 * Private clouds are managed within a company
 * Public cloud platforms pool resources across many different users
 
-##### Virtualized Execution
+**Virtualized Execution**
 
 * Protection domain is extended to operating systems on one physical
     platform
@@ -109,7 +106,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Involves some amount of overhead
     * Specifically does not handle address side-channel attacks
 
-##### Cloud Storage Security
+**Cloud Storage Security**
 
 * VM OS and Container images are read-only
 * Performance: enables elasticity (on-demand)
@@ -121,7 +118,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     the ciphertext is equivalent to some algebraic operation
     * Way too slow
 
-### DNS Security
+**DNS Security**
 
 * Maps a domain name to an IP address
 * Old way:
@@ -146,7 +143,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
         * SOA records: specifies authoritative info about zone
         * TXT records: originally notes, now also machine data
 
-##### Attacking DNS
+***Attacking DNS***
 
 * Nothing is authenticated
 * Spoofing DNS becomes a dangerous problem
@@ -182,9 +179,9 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Firefox and Chrome enabled by default
     * ISPs want DNS data, so it hasn't happened
 
-### Firewalls and Tunnels
+**Firewalls and Tunnels**
 
-##### Firewalls
+***Firewalls***
 
 * Firewalls filter traffic based on policy
     * Determines acceptable traffic
@@ -229,14 +226,14 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Firewall policies are typically a script with iptables commands
     * Rules are then added (using -A)
 
-##### Tunnels
+***Tunnels***
 
 * Virtual Private Networks (VPNs)
     * Provides secure access to private network over public links
     * Often, goal is to provide access to intranet from outside
     * Achieves confidentiality, integrity, mutual authentication
 
-###### Building a VPN
+***Building a VPN***
 
 * Cannot change the underlying protocol
 * Mostly uses IPsec
@@ -247,7 +244,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
         * Key management
         * Packet processing
 
-###### IPsec: Packet Processing
+***IPsec: Packet Processing***
 
 * Two modes: Transport and Tunnel
     * Transport
@@ -271,7 +268,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
         * The whole packet is fully secured
         * TCP/UDP ports are hidden when encrypted
 
-###### Configuration and Policy
+**Configuration and Policy**
 
 * Security Associations (SAs): keys, cipher suites
 * Security Policy (SP): what SAs to apply
@@ -284,7 +281,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     incoming traffic been properly secured
     * Discard, bypass, protect
 
-### Intrusion Detection Systems
+***Intrusion Detection Systems***
 
 * Authorized eavesdropper that listens in on network traffic
 * Makes determination if traffic contains malware
@@ -322,7 +319,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Get more flexibility within your network stack (especially
         routing)
 
-### Malware
+***Malware***
 
 * **Malware** is a generic term for 'malicious software'
 * It can target any type of computer system
@@ -352,7 +349,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
 * Drive-by download is when a browser is exploited to install malware
     withot the victim's knowledge
 
-##### Ransomware
+***Ransomware***
 
 * Designed to extort the user in exchange for access to something of
     value
@@ -374,7 +371,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
 * Don't pay to get the data back so it doesn't motivate the developers
     more
 
-##### Malware Defense
+***Malware Defense***
 
 * Run updated software from trusted sources
 * Be wary of removable media from untrusted sources
@@ -386,9 +383,9 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Monitor what happens to programs as it runs
     * Sequence of system calls made by a program
 
-### Network Security
+**Network Security**
 
-##### Basics of Web Development
+***Basics of Web Development***
 
 * Uniform Resource Identifier (URI)
     * More generic form of resource access
@@ -409,7 +406,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Interface to everything outside the document
     * Not a real standard but supported by most browsers
 
-##### Browser Security
+**Browser Security**
 
 * Same Origin Policy
     * Document or script cannot access data from another origin
@@ -430,7 +427,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Inject advertisements, keylogger, steal credentials
 * Browsers should separate privilege between tabs
 
-##### Server Security
+***Server Security***
 
 * Common Gateway Interface (CGI)
     * Generic way to call external applications on the server
@@ -448,9 +445,9 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * SQL inject: inserts escaped code into the input to read from
         database
 
-### Routing
+**Routing**
 
-##### Primer on Routing
+***Primer on Routing***
 
 * Each host knows the prefix of the local network
 * All nodes within a local network are reachable within 1 hop
@@ -463,7 +460,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Specifies router's MAC address in ethernet header
     * Router relays message
 
-##### Routing Attacks
+***Routing Attacks***
 
 * Attacker can change path of traffic to: see, modify, or drop traffic
 * Routers exchange topology and cost information
@@ -521,7 +518,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
         * Challenges: validating signatures is expensive, all routers
             must change
 
-### Net Background
+**Net Background**
 
 * Structure of the internet (OSI layers):
     1.  Physical layer
@@ -549,7 +546,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
 * Person in the middle and denial of service attacks are the largest
     areas of attacks
 
-##### Layer 4 Attacks
+***Layer 4 Attacks***
 
 * Transport layer is the last layer before the application, think
     process-to-process communication
@@ -568,21 +565,21 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Provides congestion control to handle congestion
     * TCP initializes the connection with a three-way handshake
 
-###### SYN Flooding
+***SYN Flooding***
 
 * Attacker sends many TCP SYN packets without responding with SYN-ACK
 * A type of denial of service attacks
 * Solutions: filtering, recycle oldest half-open TCP connection, SYN
     cookies
 
-###### TCP Reset (RST) Attacks
+***TCP Reset (RST) Attacks***
 
 * RST header flag is set, the TCP connection is dropped
 * Attacker can forge TCP packets from sender with RST header set, but
     they must get the sequence number correct
 * Used to stop traffic
 
-###### Port Scanning
+***Port Scanning***
 
 * A port scan is a method to determine
     * what hosts are on a network
@@ -601,7 +598,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * X-mas scan: similar to FIN scan but sends packets with FIN, URG,
         and PUSH flags
 
-##### Layer 3 Attacks
+***Layer 3 Attacks***
 
 * Deliver a packet to a network destination
 * Perform segmentation and reassembly
@@ -610,13 +607,13 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Allows applications to function on all networks
 * All of the network header is unencrypted
 
-###### IP Spoofing
+***IP Spoofing***
 
 * Set your IP to something else to appear as someone else
 * Used for firewall allowlists and possibly authentication
 * Easier to perform DoS attacks if it's from different IPs
 
-###### TCP Sequence Numbers
+***TCP Sequence Numbers***
 
 * ISN are predictable based on the TCP implementation
 * Possible solutions:
@@ -624,26 +621,26 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
     * Randomize ISNs using the port numbers: ISN = Timer +
         F(localhost, localport, remotehost, remoteport)
 
-###### Source Routing
+***Source Routing***
 
 * Can specify the route that the packet takes
 * Problems: Access control and denial of service
 * Block packets with a source-routing flag enabled
 
-###### Network Address Translation (NAT)
+***Network Address Translation (NAT)***
 
 * Take a single public IP addresses and map it to many private IP
     addresses
 * UPnP can tunnel traffic from a private IP directly
 
-##### Layer 2 Attacks
+***Layer 2 Attacks***
 
 * Combine a stream of bits into frames
 * Send data frames between peers
 * MAC address is a hardware address of a device
 * Use a MAC address to send datagram
 
-### Wireless Security
+**Wireless Security**
 
 * Everybody is broadcasts as load as possible
 * Easier to eavesdrop
@@ -665,7 +662,7 @@ Notes taken for CSC 474 - Network Security with Dr. Enck.
 * Service Set Identifiers (SSID) hiding
     * Anyone could still join the network if they could guess the SSID
 
-##### Solving with Cryptography
+***Solving with Cryptography***
 
 * Wired Equivalent Privacy (WEP)
     * Part of 802.11 standard, used a stream cipher

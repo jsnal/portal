@@ -1,7 +1,4 @@
----
-title: C++
-description:
----
+# C++
 
 ## Using Valgrind
 
@@ -9,7 +6,7 @@ Valgrind is a programming tool for memory debugging, memory leak detection, and
 profiling. It is mostly used when debugging C code that heavily uses `malloc`
 function calls.
 
-### Memory leak
+**Memory Leaks**
 
 You can perform a general memory leak check by running just valgrind on it.
 
@@ -23,40 +20,44 @@ To get things like where the memory leak is from and specific output you can do 
 $ valgrind --verbose --leak-check=full ./a.out
 ```
 
-## Read ELF Symbols
+## ELF
 
 I always seem to forget these commands so here is a list of commands to read
 ELF symbols.
 
-### Read ELF Header
+**Read ELF Header**
 
-`readelf -h /path/to/bin`
+```
+$ readelf -h /path/to/bin
+```
 
-### Read Symbols
+**Read Symbols**
 
 `objdump` is the best tool for this in my experience.
 
 ```
-objdump -d /path/to/executable
-objdump -D /path/to/so
-objdump -s /path/to/a
+$ objdump -d /path/to/executable
+$ objdump -D /path/to/so
+$ objdump -s /path/to/a
 ```
 
 Append a `-C` to any of those commands to demangle C++ symbols. The `nm`
 command can also be used to read symbols and is very similar to `objdump`.
 
 ```
-nm /path/to/executable
-nm -gD /path/to/so
-nm -gs /path/to/a
+$ nm /path/to/executable
+$ nm -gD /path/to/so
+$ nm -gs /path/to/a
 ```
 
-### Reading Addresses
+**Reading Addresses**
 
 Sometimes I want to find the line of code that corresponds to an address. This
 can be done using the `addr2line` command.
 
-`addr2line -e /path/to/binary -fp 0xdeadbeef`
+```
+$ addr2line -e /path/to/binary -fp 0xdeadbeef
+```
 
 ## Custom CMake Toolchain
 

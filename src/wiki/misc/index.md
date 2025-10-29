@@ -1,7 +1,6 @@
----
-title: Miscellaneous
-description: Everything else that doesn't fit into another category
----
+# Miscellaneous
+
+Everything else that doesn't fit into another category.
 
 ## Format JavaScript date
 

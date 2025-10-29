@@ -1,68 +1,8 @@
----
-title: Android
-description:
----
+# Android
 
-## Returning ArrayList from Android JNI
+## General
 
-This is some example code that can be used to return an `ArrayList<String>` from
-C++ to Kotlin. Since there isn't a `jarraylist` in JNI, we have to use `jobject`
-and manually invoke the constructor. In this case, we are going from a
-`std::vector<const char*>` to `ArrayList<String>` so we will have to invoke the
-`ArrayList` contructor and then start appending `jstring`s to it.
-
-```cpp
-extern "C"
-JNIEXPORT jobject JNICALL
-Java_com_example_jni_JNITest_testing(JNIEnv *env, jobject)
-    // Setup a sample vector
-    std::vector<std::string> my_strings;
-    my_strings.push_back("A");
-    my_strings.push_back("B");
-    my_strings.push_back("C");
-    my_strings.push_back("D");
-
-    // Kotlin ArrayList Class
-    jclass array_class = (*env).FindClass("java/util/ArrayList");
-    jmethodID array_class_init = (*env).GetMethodID(array_class, "<init>", "(I)V");
-    jmethodID array_class_add = (*env).GetMethodID(array_class, "add", "(Ljava/lang/Object;)Z");
-
-    // Create the ArrayList
-    jobject string_array_list = (*env).NewObject(array_class, array_class_init, (int) my_strings.size());
-
-    for (const auto &string : my_strings) {
-        jstring j_string = (*env).NewStringUTF(string);
-
-        (*env).CallBooleanMethod(packet_information_array_list, array_class_add, j_string);
-
-        (*env).DeleteLocalRef(j_string);
-    }
-
-    return string_array_list;
-}
-```
-
-> Note that when creating `string_array_list`, we cast the `size_t` to an `int`.
-> If your vector is huge, you may want to cast to a `long`.
-
-## Get APK Data Path
-
-You can get the data path for a specific APK on your phone using adb.
-
-```
-$ adb shell pm list packages -f -3
-```
-
-For example, I can get the data path for some app.
-
-```bash
-$ adb shell pm list packages -f -3 | grep <APP_NAME>
-package:/data/app/<APP_NAME>-7MStonnG3kpngakuEmnwEw==/...
-$ cd /data/app/<APP_NAME>-7MStonnG3kpngakuEmnwEw==
-$ ls
-base.apk lib
-```
-## Make regular Kotlin objects Lifecycle aware
+**Bind Kotlin object to Lifecycle**
 
 I've found myself trying to bind a plain old Java object (POJO) to an Android
 lifecycle so many times. It's really common to have an object that keeps up with
@@ -171,14 +111,74 @@ of the `MainActivity`. So if the `MainActivity` were to be destroyed, the
 Learn more about the [Android
 lifecycle](https://developer.android.com/topic/libraries/architecture/lifecycle)
 
-## Cross Compile GNU Radio for Android
+**Returning an `ArrayList`**
+
+This is some example code that can be used to return an `ArrayList<String>` from
+C++ to Kotlin. Since there isn't a `jarraylist` in JNI, we have to use `jobject`
+and manually invoke the constructor. In this case, we are going from a
+`std::vector<const char*>` to `ArrayList<String>` so we will have to invoke the
+`ArrayList` contructor and then start appending `jstring`s to it.
+
+```cpp
+extern "C"
+JNIEXPORT jobject JNICALL
+Java_com_example_jni_JNITest_testing(JNIEnv *env, jobject)
+    // Setup a sample vector
+    std::vector<std::string> my_strings;
+    my_strings.push_back("A");
+    my_strings.push_back("B");
+    my_strings.push_back("C");
+    my_strings.push_back("D");
+
+    // Kotlin ArrayList Class
+    jclass array_class = (*env).FindClass("java/util/ArrayList");
+    jmethodID array_class_init = (*env).GetMethodID(array_class, "<init>", "(I)V");
+    jmethodID array_class_add = (*env).GetMethodID(array_class, "add", "(Ljava/lang/Object;)Z");
+
+    // Create the ArrayList
+    jobject string_array_list = (*env).NewObject(array_class, array_class_init, (int) my_strings.size());
+
+    for (const auto &string : my_strings) {
+        jstring j_string = (*env).NewStringUTF(string);
+
+        (*env).CallBooleanMethod(packet_information_array_list, array_class_add, j_string);
+
+        (*env).DeleteLocalRef(j_string);
+    }
+
+    return string_array_list;
+}
+```
+
+> Note that when creating `string_array_list`, we cast the `size_t` to an `int`.
+> If your vector is huge, you may want to cast to a `long`.
+
+## ADB
+
+**APK Data Path**
+
+You can get the data path for a specific APK on your phone using adb.
+
+```
+$ adb shell pm list packages -f -3
+```
+
+For example, I can get the data path for some app.
+
+```bash
+$ adb shell pm list packages -f -3 | grep <APP_NAME>
+package:/data/app/<APP_NAME>-7MStonnG3kpngakuEmnwEw==/...
+$ cd /data/app/<APP_NAME>-7MStonnG3kpngakuEmnwEw==
+$ ls
+base.apk lib
+```
+
+## NDK
+
+**Cross Compile GNU Radio for Android**
 
 Follow these steps to cross compile the GNU radio applications and all of its
 dependencies for Android.
-
-### Preparation
-
-#### Get the Android NDK
 
 Grab the latest Standalone Android NDK toolchain. At the time of writing this
 the latest version is 21 but it may different by the time you're reading this.
@@ -187,8 +187,6 @@ the latest version is 21 but it may different by the time you're reading this.
 $ wget http://dl.google.com/android/repository/android-ndk-r<VERSION>b-linux-x86_64.zip
 $ unzip android-ndk-r<VERSION>b-linux-x86_64.zip
 ```
-
-#### Create a standalone toolchain
 
 You then need to make your own standalone toolchain. The command below will
 build the toolchain for `arm64` and put it in `~/android/arm64`. If you need
@@ -202,8 +200,6 @@ command, it will assume version 21 for `arm64` and 16 for `arm`
 $ cd android-ndk-r<VERSION>b/build/tools
 $ ./make_standalone_toolchain.py --arch arm64 --install-dir=/path/to/android/arm64
 ```
-
-#### Add it your PATH
 
 Next we want to add the new toolchain you just generated to your PATH and other
 build variables. To do this, I just wrote a simple script to source the
@@ -236,8 +232,6 @@ $ chmod +x env.sh
 $ source env.sh
 ```
 
-#### Dependencies
-
 These are some dependencies that you are going to need to compile one or more of
 the libraries below.
 
@@ -245,7 +239,7 @@ the libraries below.
 $ sudo apt install cmake make autoconf automake binutils python3-distutils
 ```
 
-### FFTW
+***FFTW***
 
 Now it's time to build [FFTW](http://www.fftw.org/). Assuming you have sourced
 the NDK into your PATH, these are the steps you should follow.
@@ -259,7 +253,7 @@ $ make -j
 $ make install
 ```
 
-### Liquid-dsp
+***Liquid-dsp***
 
 You can find liquid-dsp [here](https://github.com/jgaeddert/liquid-dsp.git).
 Liquid-dsp **requires** Android API 23 or higher to build. Make sure
@@ -297,7 +291,7 @@ $ make -j
 $ make install
 ```
 
-### Boost
+***Boost***
 
 Cross compiling Boost takes some configuration in the build files so pay
 attention closely. To begin grab the latest release and untar it.
@@ -339,7 +333,7 @@ $ ./b2 architecture=arm toolset=clang-android target-os=android link=static inst
 $ ./b2 architecture=arm toolset=clang-android target-os=android install
 ```
 
-### Volk
+***Volk***
 
 You should have built and installed Boost in the last step. This is important
 because Volk heavily depends on Boost. Get started by cloning Volk.
@@ -359,6 +353,8 @@ comment out these two lines.
 # add_subdirectory(apps)
 # add_subdirectory(python/volk_modtool)
 ```
+
+***Toolchain***
 
 Next, you need to add a cmake toolchain. Create and edit a file in
 `cmake/Toolchains/aarch64-linux-android.cmake`
@@ -416,23 +412,3 @@ $ cmake .. -DCMAKE_INSTALL_PREFIX=/path/to/volk/ -DBOOST_ROOT=/path/to/boost/ -D
 $ make -j
 $ make install
 ```
-
-## Source and Destination must be different error
-
-When building native NDK cpp code I frequently get an error that looks something
-like this...
-
-```
-Source path/to/libfoo.so and destination path/to/libfoo.so must be different
-```
-
-After looking into it I found that the root cause was that the model generation
-task was broken if ran from a non-clean build. It seems the temporary fix for
-now is to run clean, refresh the linked C++ projects, and then finally build the
-project. If this doesn't work, it'll likely something in the build is causing
-the project to regenerate. The best solution in that case is to downgrade gradle
-from plugin 4.0.0 to 3.6.2.
-
-There is a issue thread
-[here](https://issuetracker.google.com/issues/158317988). A fix has been
-scheduled to be released with gradle plugin 4.0.1.

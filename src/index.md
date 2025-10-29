@@ -1,6 +1,4 @@
----
-title: Jason Long
----
+# Jason Long
 
 * Software Engineer specializing in low-level software
 * Particularly interesting in embedded systems and operating systems
