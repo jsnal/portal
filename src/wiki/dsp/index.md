@@ -1,6 +1,6 @@
 # Digital Signal Processing
 
-# Introduction
+## Introduction
 
 Notes taken while working through various readings on DSP and SDR.
 
@@ -15,7 +15,7 @@ Below are the list of resources used to write these notes:
 * [PySDR](https://pysdr.org)
 * [Fourier Series](https://mathworld.wolfram.com/FourierSeries.html)
 
-# Frequency Domain
+## Frequency Domain
 
 Time domain represents how a signal changes over time, usually showing its
 amplitude at each point in time. Frequency domain represents the signal's
@@ -154,7 +154,7 @@ responds in real-time, which is referred to as a waterfall.
 
 ![Example waterfall](images/waterfall.png){ width=50% }
 
-# IQ Sampling
+## IQ Sampling
 
 IQ sampling is the form of sampling that an SDR performs, as will as many other
 digital receivers and transmitters.
@@ -262,7 +262,7 @@ may sample 20 MHz at 95 MHz which will shift the DC spike away from our desired
 signal. This does require the signal to be frequency shifted, filtered, and
 downsampled ourselves after the SDR.
 
-# Digital Modulation
+## Digital Modulation
 
 The goal of modulation is to squeeze as much data into the least amount of
 spectrum as possible. Transmitting faster will increase the bandwidth, which
@@ -320,7 +320,7 @@ The downside of using differential coding is if there is a one bit error, it
 will lead to two bit errors. Differential coding happens at the symbol level, so
 to apply it to QPSK you work with pairs of bits at a time.
 
-# Noise and dB
+## Noise and dB
 
 Noise is unwanted fluctuations that can obscure the desired signals.
 
@@ -385,7 +385,7 @@ Signal-to-Interference-plus-Noise ration (SINR) is almost the same as SNR except
 the interference is included with the noise in the denominator. What constitutes
 as interference is based on the situation.
 
-# Filters
+## Filters
 
 Filters are used to separate signals that have been combined, remove excess
 noise after receiving a signal, and restoration of signals that may have been
@@ -437,7 +437,7 @@ There are two classes of digital filters:
 * **Infinite impulse response (IIR):** More complicated with the potential to be
   unstable but are more efficient in CPU and memory.
 
-# Link Budgets
+## Link Budgets
 
 The link budget is an accounting for all of the gains and losses from the
 transmitter to the receiver in a communication system. Link budgets describe one
@@ -550,7 +550,7 @@ Using this equation in conjunction with the power budget equation gives us both
 parts of an SNR calculation. Typically, we want an SNR greater than 10 dB but it
 largely depends on the situation.
 
-# Channel Coding
+## Channel Coding
 
 The purpose of channel coding, sometimes referred to as forward error correction
 (FEC), is to detect and correct errors at the receiver end. Allowing for some
@@ -622,7 +622,7 @@ $$C \approx 0.332 \cdot B \cdot \text{SNR (in dB)}$$
 For example, if the SNR is 24 dB and you have 1 MHz of bandwidth, that's a
 theoretical limit of 7.9 Mbps because $C \approx 0.332 * 1000000 * 24$
 
-# Multipath Fading
+## Multipath Fading
 
 In a realistic wireless scenario, signals will bounce many times before arriving
 at the receiver resulting in multiple paths. In such cases, each path will
@@ -681,7 +681,7 @@ closely-spaced carrier frequencies called subcarriers. The key is the
 orthogonality of the signals, which allows the subcarrier frequencies to overlap
 without causing interference with each other.
 
-# Synchronization
+## Synchronization
 
 Synchronization is a set of processing that occurs before demodulation and
 channel decoding that corrects for carrier frequency offsets and performs timing
