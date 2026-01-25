@@ -8,11 +8,12 @@ generate_html() {
         --mathml \
         --standalone \
         --variable=date:"$(date)" \
+        --metadata=title:"$4" \
         --include-before-body="templates/header.html" \
         --include-after-body="templates/footer.html" \
         --template="templates/$3.html" \
-        --output $2 \
-        $1
+        --output "$2" \
+        "$1"
 }
 
 make() {
@@ -30,10 +31,11 @@ make() {
                     output=build/$path/$(basename $entry .md).html
                 fi
 
+                title=$(grep -E -m1 '^#\s+.*' $entry | cut -c 3-)
                 if echo $path | grep -qE "wiki/[[:alnum:]]"; then
-                    generate_html $entry $output wiki
+                    generate_html "$entry" "$output" wiki "$title"
                 else
-                    generate_html $entry $output base
+                    generate_html "$entry" "$output" base "$title"
                 fi
                 echo "Generated $output"
             else

@@ -1,6 +1,4 @@
----
-title: OS
----
+# Operating System
 
 This page is used to track my progress building a 32-bit x86 operating system
 completely from scratch. The entire codebase is written by me in C++ and
