@@ -10,13 +10,37 @@ directory which can be found using `pwd`. All search results are added to the
 quickfix list.
 
 ```
-vimgrep '<SEARCH>' <FILES>
+:vimgrep '<SEARCH>' <FILES>
 ```
 
 Open ripgrep search results in vim with the quickfix list opened
 
 ```
 rg --vimgrep '<SEARCH>' | vim -c cb -c copen
+```
+
+**Clipboard**
+
+Copying to the system clipboard can be difficult. The official way is to yank
+text into the `+` register.
+
+```
+"+y
+```
+
+This only works if you have a clipboard utility like `xclip` or `pbcopy`
+installed. See the `clipboard-tool` help for all of the supported tools. It is
+also possible to pipe text straight into one of these tools.
+
+```
+:'<,'>w !xclip -sel clip
+```
+
+Regular yank can always go to the system clipboard by changing the `clipboard`
+variable.
+
+```
+:set clipboard+=unnamedplus
 ```
 
 **Colors**
